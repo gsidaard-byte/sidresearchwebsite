@@ -1,0 +1,220 @@
+# Codex Context
+
+## Purpose
+
+This project is a public-facing research-group website for Dr. Sidaard Gunasekaran at the University of Dayton.
+
+The website exists to share:
+
+- the research group's work with a broader public audience
+- the lab's research themes, categories, and subcategories in a structured and understandable way
+- videos and infographics that explain what the research is about and why it matters
+- the full publication record across journal articles, conference papers, patents, and related scholarly work
+- teaching philosophy and student-centered educational work
+- AI in education initiatives and public-facing teaching efforts
+- Crescendo workshops on AI and entrepreneurial-minded learning
+- the community, mentorship, and legacy built through current students, alumni, and outreach
+
+The most important framing for the website is that it is not only a research archive. It is also a record of community, mentorship, teaching, workshops, and the long-term impact built with students.
+
+## High-Level Site Structure
+
+The generated website currently includes top-level pages such as:
+
+- `website/index.html`
+- `website/research.html`
+- `website/students.html`
+- `website/alumni.html`
+- `website/publications.html`
+- `website/teaching.html`
+- `website/facilities.html`
+- `website/news.html`
+- `website/community.html`
+- `website/crescendo-workshops.html`
+
+Research content is structured into category pages and subcategory pages under:
+
+- `website/research/`
+
+Student profile pages are generated under:
+
+- `website/profiles/`
+
+## Source of Truth
+
+The repo contains both source content and generated output.
+
+Primary source content folders:
+
+- `Current Projects/`
+- `Current Students/`
+- `Teaching Activities/`
+- `Teaching Photos/`
+- `News/`
+- `Awards/`
+- `Research Publications/`
+- `Students/`
+- `Students/Profiles/`
+- `Community/`
+- `Facilities/`
+- `Pictures from Workshops/`
+- `Papers/`
+
+Important source files:
+
+- `website-design-brief.md`
+- `Current Projects/current-projects.md`
+- `Current Students/current-students.md`
+- `Teaching Activities/teaching-overview.md`
+- `News/featured-news.md`
+- `Awards/honors-and-awards.md`
+- `Research Publications/journal-articles.md`
+- `Research Publications/conference-publications.md`
+- `Students/student-profiles-index.md`
+
+Generated output folder:
+
+- `website/`
+
+## Generation Workflow
+
+Main generator:
+
+- `generate_research_site.py`
+
+Research taxonomy and paper organization:
+
+- `paper_reorg.py`
+- `paper_subcategorize.py`
+
+Supporting script:
+
+- `create_notebooklm_subcategory_notebooks.py`
+
+Important implementation detail:
+
+- `generate_research_site.py` uses the local content folders and the `Papers/` archive to generate much of the static site output in `website/`.
+- `paper_reorg.py` defines the research-category ordering and paper mapping logic that drives the research taxonomy.
+
+## Editing Rules
+
+Default editing approach:
+
+- Prefer editing source content and generator logic.
+- Treat `website/` as generated output unless there is a deliberate reason to make a direct HTML or CSS change.
+- If a content issue appears in generated pages, first determine whether the correct fix belongs in source markdown/data or in the generator.
+
+Practical rule of thumb:
+
+- Edit source markdown when the problem is factual copy, biography content, awards/news/teaching content, or project descriptions.
+- Edit `generate_research_site.py` when the problem is repeated layout/content assembly behavior.
+- Edit `paper_reorg.py` when the problem is research taxonomy, category summaries, paper classification, or subcategory organization.
+- Edit `website/styles.css` when the problem is shared visual styling.
+- Only edit individual HTML pages in `website/` directly when the page is clearly hand-maintained or when a one-off patch is intentionally faster than regenerating.
+
+## Design Direction
+
+The design brief selects the `Ocean Depths` theme.
+
+Core design intent:
+
+- academically credible
+- visually polished
+- technically grounded
+- student-centered
+
+The site should feel like a serious aerospace research presence with strong mentoring and teaching values, not a generic university template and not a startup landing page.
+
+## Product Priorities
+
+The site should present several interconnected identities at once:
+
+- a serious research program with clear themes and strong technical depth
+- a teaching-centered academic presence
+- a public-facing platform for AI in education and entrepreneurial-minded learning
+- a place where Crescendo workshops and related outreach can be discovered
+- a record of student development, lab culture, and alumni legacy
+
+The community and student legacy are central, not secondary.
+
+## Research Experience Goals
+
+Research pages should:
+
+- organize work by category and subcategory
+- explain not just what the papers are, but what each area studies and why it matters
+- surface videos and infographics where available
+- make the work legible to visitors outside the immediate specialty
+- still preserve technical credibility for academic and professional audiences
+
+## Teaching and Workshop Goals
+
+The teaching side of the site should clearly communicate:
+
+- teaching philosophy
+- hands-on, student-centered learning
+- AI in education work
+- entrepreneurial-minded learning
+- Crescendo workshops
+- public-facing teaching features, talks, and workshops
+
+## Student and Community Goals
+
+The student/community side of the site should clearly communicate:
+
+- current student work
+- alumni legacy
+- lab culture and shared experiences
+- mentorship and student growth
+- community photos and workshop photos
+- the broader story of what this group has built together over time
+
+## Current Observations
+
+Based on the current repo state:
+
+- The project already contains a substantial amount of source material and generated site output.
+- The site is already far beyond a simple landing page and includes research, publications, teaching, facilities, community, and student pages.
+- The research section is one of the most structurally developed parts of the site, with category and subcategory pages and linked media assets.
+- The teaching page already includes teaching philosophy, classroom imagery, workshop-related content, and AI/EM-related framing.
+- The publications page appears comprehensive and organized by year.
+- The student and profile system is already fairly extensive and is important to preserve and polish carefully.
+- There may still be content inconsistencies, typos, and places where generated output needs cleanup or stronger source discipline.
+
+## Workflow for Future Codex Sessions
+
+At the start of a new session:
+
+1. Read this file first.
+2. Inspect the repo structure and `git status`.
+3. Treat this file as the continuity handoff from prior sessions.
+4. Confirm whether the requested change belongs in source content, generator logic, taxonomy logic, styling, or generated output.
+
+At the end of a session:
+
+1. Update this file if priorities, architecture, workflow, or key decisions changed.
+2. Add a short status note under `Session Notes`.
+3. Record any new known issues or next tasks.
+
+Suggested prompt for future sessions:
+
+`Read CODEX_CONTEXT.md, inspect git status, and continue from the current project state.`
+
+## Known Rules for This Repo
+
+- Preserve the student-centered voice and purpose of the site.
+- Preserve the importance of research explanation, not just publication listing.
+- Preserve the teaching and workshop presence as a first-class part of the site.
+- Preserve the community and legacy framing across students, alumni, outreach, and photos.
+- Avoid turning the site into a generic academic CV mirror.
+
+## Next Tasks
+
+- Continue improving polish, consistency, and clarity across the generated site.
+- Tighten the relationship between source content and generated output so future updates are easier.
+- Review pages for factual consistency, copy quality, naming consistency, and visual cohesion.
+- Strengthen the storytelling around research impact, teaching philosophy, workshops, and student legacy.
+
+## Session Notes
+
+- 2026-04-23: Created this context file to preserve continuity across Codex sessions. The repo was inspected at a high level, and the current understanding is that this project is a content-driven static site generated largely from local markdown, media, and paper archives.
