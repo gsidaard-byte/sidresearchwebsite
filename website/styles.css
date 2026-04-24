@@ -317,15 +317,20 @@ body.research-page .page-hero {
   padding: 52px 0 76px;
 }
 
-body.research-page .page-hero h1 {
-  font-size: clamp(3.2rem, 7vw, 5.6rem);
-  line-height: 0.94;
-  max-width: 9ch;
+body.research-index-page .page-hero h1 {
+  font-size: clamp(2.8rem, 5.8vw, 4.7rem);
+  line-height: 0.96;
+  max-width: 10ch;
 }
 
-body.research-page .page-hero p {
-  font-size: 1.04rem;
-  max-width: 32ch;
+body.research-index-page .page-hero-grid > div > p {
+  font-size: 1.06rem;
+  line-height: 1.72;
+  max-width: 34ch;
+  text-align: justify;
+  text-justify: inter-word;
+  text-wrap: pretty;
+  hyphens: auto;
 }
 
 section {

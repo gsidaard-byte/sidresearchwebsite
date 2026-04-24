@@ -28,136 +28,217 @@ CATEGORY_ORDER = [
 CATEGORY_SUMMARIES = {
     "Propeller Aerodynamics and Distributed Propulsion": {
         "summary": (
-            "These papers build a coherent picture of how small propellers behave when they are "
-            "installed near wings, near the ground or ceiling, or in tandem and vertically offset "
-            "layouts. Across the set, the work moves from isolated propeller characterization to "
-            "installed and multi-rotor interactions, showing when superposition works, when wake "
-            "interference matters, and how geometry can be exploited for thrust vectoring or "
-            "efficiency gains."
+            "This research examines how propeller performance changes once a rotor operates in a real "
+            "aircraft configuration rather than in isolation. Ground and ceiling proximity, nearby "
+            "wings and rotors, pitch changes, and flight attitude all reshape the inflow and wake, "
+            "often in ways that strongly affect efficiency and controllability. Across these studies, "
+            "wake interaction is treated not as a secondary effect, but as a central design variable "
+            "in distributed propulsion systems."
         ),
         "methods": (
-            "Wind-tunnel force measurements, smoke visualization, PIV, pressure-sensitive paint, "
-            "flight testing, machine-learning regressors, and parametric prediction models."
+            "The work combines wind-tunnel force and moment measurements, smoke visualization, "
+            "particle image velocimetry, pressure-sensitive paint, forward-flight testing, and "
+            "full vehicle validation. It also includes reduced-order prediction methods, parametric "
+            "correlations, and data-driven models aimed at connecting installed propeller behavior "
+            "to practical aircraft design decisions."
         ),
         "importance": (
             "This theme matters because distributed propulsion systems rise or fall on installation "
-            "effects. Quantifying those effects improves performance prediction, control authority, "
-            "power budgeting, and practical design for multirotors, blown wings, and propeller-in-wing aircraft."
+            "effects rather than isolated-propeller performance alone. Once a rotor begins operating "
+            "near a surface, another rotor, or an integrated lifting surface, the inflow changes in "
+            "ways that can affect thrust, efficiency, controllability, and usable flight envelope. "
+            "Understanding those interactions improves performance prediction, power budgeting, "
+            "control authority, and the practical design of multirotors, blown wings, and "
+            "propeller-in-wing aircraft."
         ),
     },
     "Morphing Wings and Lift Distribution": {
         "summary": (
-            "This theme collects papers that reshape the lifting surface or redistribute lift across "
-            "multiple wings. The papers span deployable flap/spoiler concepts, morphing skins with "
-            "camber and twist authority, and multi-wing interaction studies motivated by distributed-lift configurations."
+            "This research explores how aerodynamic performance changes when lift is deliberately "
+            "redistributed across a wing or across multiple lifting surfaces. The work spans morphing "
+            "concepts, spanloading studies, and multi-wing configurations, with emphasis on how lift "
+            "distribution shapes wake structure, induced drag, control authority, and overall system "
+            "performance. Together, these papers show that changing where lift is produced can be just "
+            "as important as changing how much lift is produced."
         ),
         "methods": (
-            "Force-balance testing, morphing-wing prototyping, numerical aerodynamics, comparative "
-            "wind-tunnel studies, and configuration-level interaction experiments."
+            "The work combines force-balance testing, morphing-wing prototyping, comparative "
+            "wind-tunnel studies, numerical aerodynamic analysis, and systematic interaction "
+            "experiments across multi-wing configurations. These methods are used to connect "
+            "geometry change and wing placement to spanwise loading, wake structure, induced drag, "
+            "and control response."
         ),
         "importance": (
-            "The category advances fluid-dynamic application by linking geometry change directly to lift, drag, "
-            "stall behavior, and spanwise loading, which are central to efficient low-speed vehicles and unconventional aircraft layouts."
+            "This theme matters because efficient aircraft are shaped not only by how much lift they "
+            "produce, but by where and how that lift is distributed. Morphing surfaces, spanloading "
+            "strategies, and multi-wing arrangements offer new ways to manage induced drag, "
+            "stability, compactness, and low-speed performance. That is especially important for UAVs "
+            "and unconventional aircraft concepts, where footprint, adaptability, and aerodynamic "
+            "efficiency must often be balanced simultaneously."
         ),
     },
     "Understanding Spray Drift": {
         "summary": (
-            "These papers study how droplets are formed, measured, and distorted by surrounding flow, "
-            "especially in agricultural contexts. Together they move from image-based atomization classification "
-            "to propeller-wake spray deformation and broader droplet-breakup physics."
+            "This research studies how sprays form, deform, and disperse in complex aerodynamic "
+            "environments. The work connects droplet generation, propeller-wake interaction, and "
+            "transport physics to build a clearer picture of how drift develops and how it can be "
+            "measured. Taken together, these papers link fundamental multiphase flow behavior to "
+            "practical questions in agricultural spray applications."
         ),
         "methods": (
-            "Shadowgraph imaging, convolutional neural networks, spray patternators, controlled nozzle and "
-            "atomizer experiments, and shock-induced droplet breakup testing."
+            "The work uses shadowgraph imaging, spray patternation, controlled nozzle and atomizer "
+            "experiments, propeller-wake transport studies, and data-driven interpretation using "
+            "convolutional neural networks. Together, these methods connect droplet formation, spray "
+            "geometry, breakup behavior, and transport physics under realistic application conditions."
         ),
         "importance": (
-            "Spray drift is fundamentally a multiphase fluid-dynamics problem. Better characterization of droplet "
-            "size, geometry, and breakup improves application precision, chemical-use efficiency, and environmental stewardship."
+            "This theme matters because spray drift is fundamentally a multiphase fluid-dynamics "
+            "problem with practical agricultural consequences. Better characterization of droplet "
+            "size, plume shape, breakup, and transport improves application precision, helps reduce "
+            "off-target deposition, and supports more efficient chemical use. The research also "
+            "strengthens the measurement tools needed to evaluate how real aerodynamic environments "
+            "reshape sprays after atomization."
         ),
     },
     "Flow Diagnostics and Event-Based Sensing": {
         "summary": (
-            "The papers in this group develop or validate sensing methods that recover flow information "
-            "with higher temporal resolution, greater robustness, or lower instrumentation burden. "
-            "The work ranges from wake sensing and lidar to event-camera velocimetry and flow-processing testbeds."
+            "This research focuses on new ways to measure and reconstruct complex flow fields, "
+            "especially when the flow is highly unsteady or difficult to capture with conventional "
+            "tools. The work spans event-based cameras, optical diagnostics, embedded sensing, and "
+            "algorithm development aimed at improving temporal resolution, spatial fidelity, and "
+            "measurement robustness. Together, these studies advance both the instrumentation and the "
+            "analysis methods needed for modern experimental fluid mechanics."
         ),
         "methods": (
-            "Event cameras, Kalman-filter-based particle tracking, experimental 2D2C velocimetry, Doppler lidar, "
-            "pressure-sensitive paint, piezoelectric wake sensors, and dedicated sensing testbeds."
+            "The work spans event cameras, Kalman-filter-based particle tracking, experimental 2D2C "
+            "velocimetry, Doppler lidar, pressure-sensitive paint, piezoelectric wake sensors, and "
+            "dedicated sensing testbeds. Just as important, it includes algorithm development, "
+            "sensitivity analysis, and validation experiments that connect new instruments to "
+            "interpretable flow measurements."
         ),
         "importance": (
-            "Advancing fluid dynamics depends on better measurements. These papers matter because they expand what can be measured, "
-            "how cheaply and quickly it can be measured, and how sensing can be integrated into future flow-control systems."
+            "This theme matters because progress in fluid dynamics depends on better measurements, "
+            "not only better theories. These studies expand what can be measured, how quickly it can "
+            "be measured, and how sensing can be embedded into future flow-aware and flow-control "
+            "systems. That makes the work valuable both as instrumentation development and as a way "
+            "to open difficult, highly unsteady flows to more reliable experimental analysis."
         ),
     },
     "Wing Aerodynamics and Wake Physics": {
         "summary": (
-            "This category focuses on how wing geometry, surface modifications, icing, and active blowing alter "
-            "the wake, vortex system, and aerodynamic efficiency. The collection develops a wake-based understanding "
-            "of aerodynamic performance rather than relying only on integrated force coefficients."
+            "This research examines how wings generate, reshape, and shed vorticity under a wide range "
+            "of passive and active modifications. Geometry changes, surface treatments, icing, "
+            "blowing, and boundary-layer control are used to connect local flow physics to lift, "
+            "drag, stall behavior, and aerodynamic efficiency. Across the category, wake structure is "
+            "treated as a key window into aerodynamic performance rather than just a downstream consequence."
         ),
         "methods": (
-            "Particle image velocimetry, wake interrogation, force-based testing, icing verification experiments, "
-            "flow visualization, and delta-wing active-flow-control experiments."
+            "The work uses particle image velocimetry, wake interrogation, force-based testing, flow "
+            "visualization, icing verification experiments, and active-flow-control studies on wings "
+            "and delta-wing configurations. These methods are used to connect local flow structure, "
+            "separation, vorticity, and wake evolution to measurable changes in aerodynamic "
+            "efficiency and controllability."
         ),
         "importance": (
-            "These papers help explain why aerodynamic efficiency changes, not just that it changes. "
-            "That deeper wake-physics view is useful for designing passive devices, validating models, and guiding active-flow-control concepts."
+            "This theme matters because aerodynamic performance is easier to improve when the flow "
+            "mechanisms behind that performance are clearly understood. By treating the wake as a "
+            "diagnostic window into lift, drag, separation, and vortex behavior, the research helps "
+            "explain why efficiency changes, not just that it changes. That perspective is useful for "
+            "designing passive devices, validating models, and guiding active-flow-control concepts."
         ),
     },
     "Wake Characteristics of Bell-Shaped Lift Distribution": {
         "summary": (
-            "The papers here isolate the wake signatures associated with non-elliptical and bell-shaped lift distributions, "
-            "including Prandtl-D3-style configurations. They collectively document how spanwise loading can weaken, redistribute, "
-            "or fundamentally alter tip-vortex roll-up."
+            "This research focuses on how spanwise lift distribution changes the structure of the wake, "
+            "especially near the wingtip. The papers examine bell-shaped and other non-elliptical "
+            "loading strategies and show how load shaping can redistribute circulation, weaken "
+            "conventional tip vortices, and alter the evolution of the near wake. Together, they "
+            "provide an experimental view of wake control as a pathway toward lower induced drag and "
+            "more efficient lifting-surface design."
         ),
         "methods": (
-            "Cross-stream PIV, near-wake measurements, wake-structure comparisons across angle of attack, and load-distribution-driven wing design."
+            "The work combines cross-stream and streamwise particle image velocimetry, near-wake "
+            "measurements, load-distribution-driven wing design, and comparisons across angle of "
+            "attack and wing geometry. These methods are used to observe how bell-shaped and other "
+            "non-elliptical loadings alter circulation placement, vortex formation, and near-wake "
+            "structure."
         ),
         "importance": (
-            "Bell-shaped loading is important because it offers a path to induced-drag management and different wake topologies. "
-            "These studies make that concept experimentally legible and connect lift distribution directly to vortex formation."
+            "This theme matters because bell-shaped loading offers a physically different way to think "
+            "about induced drag and wake control. Instead of treating the wingtip vortex as an "
+            "inevitable outcome to be managed afterward, the work asks how lift distribution can "
+            "reshape the wake from the outset. These studies make that idea experimentally legible and "
+            "connect spanwise loading directly to vortex formation and aerodynamic efficiency."
         ),
     },
     "Gust Encounters and Closed-Loop Aerodynamic Control": {
         "summary": (
-            "These papers examine how wings respond to unsteady inflow and how feedback control can regulate or mitigate that response. "
-            "The collection progresses from lift tracking beyond stall to periodic and discrete vortical gust encounters and powered-wing response."
+            "This research investigates how aerodynamic systems respond to unsteady inflow and how "
+            "sensing and feedback can be used to shape that response. The work spans gust encounters "
+            "on propellers, lift regulation, powered-wing response, and closed-loop mitigation "
+            "strategies aimed at improving predictability in disturbed flow environments. Taken "
+            "together, these studies connect unsteady aerodynamics with control, actuation, and "
+            "system-level resilience."
         ),
         "methods": (
-            "Closed-loop control, PID and state-feedback control, water-tunnel experiments, unsteady panel methods, TR-PIV, and modal analysis."
+            "The work combines closed-loop control, PID and state-feedback methods, gust-generation "
+            "experiments, powered-wing and propeller testing, time-resolved PIV, and supporting "
+            "modeling tools such as unsteady panel methods and modal analysis. Together, these "
+            "methods link unsteady flow structures to aerodynamic response and control action."
         ),
         "importance": (
-            "Unsteady environments are unavoidable in flight. This theme matters because it links flow structures, loads, and control action in a way "
-            "that supports gust alleviation, agile maneuvering, and more resilient aerodynamic systems."
+            "This theme matters because unsteady environments are unavoidable in flight. Gusts, wake "
+            "encounters, and rapidly changing inflow conditions affect both aerodynamic loads and the "
+            "ability to control a vehicle. By linking flow structures, measured loads, and feedback "
+            "control in the same research program, the work supports gust alleviation, agile "
+            "maneuvering, and more resilient aerodynamic systems."
         ),
     },
     "Experimental Platforms and Cross-Domain Fluid Systems": {
         "summary": (
-            "This category groups papers where the main contribution is an experimental platform or a cross-domain fluid system such as "
-            "wind-energy lenses or turbine-endwall vortices. Together they show how the research program builds infrastructure and transfers methods "
-            "across aerospace, manufacturing, and energy applications."
+            "This research highlights the experimental platforms, teaching tools, and cross-domain "
+            "applications that support and extend fluid-dynamics work. The papers span wind-tunnel "
+            "development, additive-manufactured facilities, wind-energy studies, and pedagogical "
+            "models for aerodynamics education. Together, they show that research capability is built "
+            "not only through technical results, but also through the facilities, methods, and "
+            "educational infrastructure that make those results possible."
         ),
         "methods": (
-            "Wind-tunnel design, additive manufacturing, modal decomposition, PIV, hot-wire anemometry, and cross-domain experimental studies."
+            "The work includes wind-tunnel design, additive manufacturing, hot-wire anemometry, PIV, "
+            "modal decomposition, wake diagnostics, and cross-domain experimental studies in both "
+            "aerodynamic and energy-related systems. These methods are used not only to study flows, "
+            "but also to create and validate the facilities and platforms that make those studies possible."
         ),
         "importance": (
-            "Fluid-dynamics progress depends on good facilities, interpretable experiments, and transfer of ideas between domains. "
-            "These papers extend the reach of the work beyond a single aircraft-configuration problem."
+            "This theme matters because fluid-dynamics progress depends on good facilities, "
+            "interpretable experiments, and the ability to transfer ideas across domains. Research "
+            "capability is built not only through findings, but through the tunnels, instrumentation, "
+            "platforms, and experimental methods that make reliable findings possible. These studies "
+            "extend the reach of the work beyond a single aircraft-configuration problem and into the "
+            "infrastructure of research itself."
         ),
     },
     "Engineering Education and Entrepreneurial Learning": {
         "summary": (
-            "This category groups papers where the main contribution is pedagogical design, learning structure, or research on how engineering "
-            "concepts are taught. It creates a dedicated home for educational scholarship and future entrepreneurial-minded learning modules "
-            "connected to the broader research program."
+            "This research highlights the experimental platforms, teaching tools, and cross-domain "
+            "applications that support and extend fluid-dynamics work. The papers span wind-tunnel "
+            "development, additive-manufactured facilities, wind-energy studies, and pedagogical "
+            "models for aerodynamics education. Together, they show that research capability is built "
+            "not only through technical results, but also through the facilities, methods, and "
+            "educational infrastructure that make those results possible."
         ),
         "methods": (
-            "Course design, experiential learning models, classroom-based assessment, context-rich instruction, and entrepreneurial mindset development."
+            "The work combines course design, experiential learning models, classroom-based "
+            "assessment, context-rich instruction, reflective portfolios, and entrepreneurial-mindset "
+            "development. These methods are used to connect analytical rigor, physical intuition, "
+            "hands-on learning, and long-term ownership of engineering ideas."
         ),
         "importance": (
-            "Engineering progress depends not only on discoveries, but also on how effectively new engineers learn to reason, design, and create. "
-            "These papers make education a visible and scholarly part of the research portfolio."
+            "This theme matters because engineering progress depends not only on discoveries, but also "
+            "on how effectively new engineers learn to reason, design, communicate, and create. "
+            "Treating teaching as a scholarly activity makes educational infrastructure visible as "
+            "part of the broader research mission, especially in areas such as aerodynamics, AI in "
+            "education, and entrepreneurial-minded learning."
         ),
     },
 }

@@ -8,6 +8,7 @@ from pathlib import Path
 from urllib.parse import quote
 
 import paper_reorg
+from subcategory_site_copy import SUBCATEGORY_SITE_COPY
 
 
 ROOT = Path("/Users/sidg/Downloads/Research Website Codex")
@@ -83,6 +84,14 @@ AUTHOR_ALIASES = {
 
 
 PAPER_DETAIL_OVERRIDES = {
+    "B2_s00348-024-03877-y.pdf": {
+        "title": "Causal Kalman Filtering for Particle Tracking Velocimetry Using an Event Camera",
+        "summary": "Develops a causal Kalman-filtering approach for event-camera particle tracking, aimed at more reliable real-time velocimetry in unsteady flows.",
+        "citations": [
+            "Khan, Abdul R., Michael P. Mongin, Andrew Killian, Keigo Hirakawa, and Sidaard Gunasekaran. \"Causal Kalman Filtering for Particle Tracking Velocimetry Using an Event Camera.\" Experiments in Fluids (2024)."
+        ],
+        "students": [("Abdul Khan", "abdul-khan"), ("Andrew Killian", "andrew-killian"), ("Michael Mongin", "michael-mongin")],
+    },
     "B1_gunasekaran-et-al-2019-effect-of-flexible-inverted-pvdf-in-free-shear-layer-wake.pdf": {
         "title": "Effect of Flexible Inverted PVDF in Free Shear Layer Wake",
         "summary": "Introduces a flexible piezoelectric flag as a wake-sensing approach for unsteady free-shear-layer measurements.",
@@ -149,6 +158,15 @@ PAPER_DETAIL_OVERRIDES = {
         ],
         "students": [],
     },
+    "E1_PLhhwQ-cai-et-al-2019-changes-in-propeller-performance-due-to-ground-proximity.pdf": {
+        "title": "Changes In Propeller Performance Due to Ground Proximity",
+        "summary": "Examines how nearby ground surfaces reshape propeller inflow, wake behavior, and installed aerodynamic performance.",
+        "citations": [
+            "Cai, Jielong, Sidaard Gunasekaran, Anwar Ahmed, and Michael V. Ol. \"Changes In Propeller Performance Due to Ground Proximity.\" In AIAA Scitech 2019 Forum, p. 1097. 2019. https://doi.org/10.2514/6.2019-1097"
+        ],
+        "students": [("Jacky Cai", "jacky-cai")],
+        "doi": "https://doi.org/10.2514/6.2019-1097",
+    },
 }
 
 
@@ -176,6 +194,18 @@ def normalize_title(text: str) -> str:
 
 def escape(text: str) -> str:
     return html.escape(text, quote=True)
+
+
+def unique_preserving_order(items: list[str]) -> list[str]:
+    seen = set()
+    ordered = []
+    for item in items:
+        key = re.sub(r"\s+", " ", strip_citation_numbers(item)).strip()
+        if key in seen:
+            continue
+        seen.add(key)
+        ordered.append(item)
+    return ordered
 
 
 def strip_citation_numbers(text: str) -> str:
@@ -287,37 +317,27 @@ def build_infographic_registry(taxonomy: dict[str, dict[str, object]]) -> dict[t
 
 
 def parse_category_summary(category: str) -> dict[str, str]:
-    path = ROOT / "Papers" / category / "README.md"
-    text = path.read_text(encoding="utf-8")
-    before_subcategories = text.split("## Subcategories")[0]
-    parts = [p.strip() for p in before_subcategories.split("\n\n") if p.strip()]
-    title = parts[0].lstrip("# ").strip()
-    summary = []
-    methods = ""
-    why = []
-    mode = "summary"
-    for part in parts[1:]:
-        if part == "## Methods and Tools":
-            mode = "methods"
-            continue
-        if part == "## Why It Matters":
-            mode = "why"
-            continue
-        if mode == "summary":
-            summary.append(part)
-        elif mode == "methods":
-            methods = part
-        elif mode == "why":
-            why.append(part)
+    info = paper_reorg.CATEGORY_SUMMARIES[category]
     return {
-        "title": title,
-        "summary": sanitize_public_copy("\n\n".join(summary)),
-        "methods": sanitize_public_copy(methods),
-        "why": sanitize_public_copy("\n\n".join(why)),
+        "title": category,
+        "summary": sanitize_public_copy(info["summary"]),
+        "methods": sanitize_public_copy(info["methods"]),
+        "why": sanitize_public_copy(info["importance"]),
     }
 
 
 def parse_subcategory_summary(category: str, subcategory: str) -> dict[str, str]:
+    override = SUBCATEGORY_SITE_COPY.get((category, subcategory))
+    if override:
+        return {
+            "Important Findings": override["Overview"],
+            "Value": override["Why It Matters"],
+            "Key Takeaways": override["Research Focus"],
+            "Overview": override["Overview"],
+            "Why It Matters Expanded": override["Why It Matters"],
+            "Research Focus Expanded": override["Research Focus"],
+            "Blurb": subcategory_card_blurb({"Important Findings": override["Overview"], "Key Takeaways": override["Research Focus"]}),
+        }
     path = ROOT / "Papers" / category / subcategory / "README.md"
     text = path.read_text(encoding="utf-8")
     sections = {"Important Findings": "", "Value": "", "Key Takeaways": ""}
@@ -328,7 +348,117 @@ def parse_subcategory_summary(category: str, subcategory: str) -> dict[str, str]
             continue
         if current in sections:
             sections[current] += line + "\n"
-    return {k: sanitize_public_copy(v.strip()) for k, v in sections.items()}
+    cleaned = {k: polish_research_copy(v.strip()) for k, v in sections.items()}
+    overview_parts = [cleaned["Important Findings"], cleaned["Value"]]
+    overview = "\n\n".join(part for part in overview_parts if part)
+    why_it_matters = cleaned["Value"]
+    if cleaned["Key Takeaways"]:
+        why_it_matters = "\n\n".join(part for part in [cleaned["Value"], cleaned["Key Takeaways"]] if part)
+    research_focus = "\n\n".join(part for part in [cleaned["Important Findings"], cleaned["Key Takeaways"]] if part)
+    return {
+        **cleaned,
+        "Overview": overview,
+        "Why It Matters Expanded": why_it_matters,
+        "Research Focus Expanded": research_focus,
+        "Blurb": subcategory_card_blurb(cleaned),
+    }
+
+
+def polish_research_copy(text: str) -> str:
+    text = sanitize_public_copy(text).strip()
+    replacements = [
+        (r"\bThese papers isolate how\b", "This research examines how"),
+        (r"\bThese papers isolate\b", "This research examines"),
+        (r"\bThese papers show\b", "The work shows"),
+        (r"\bThese papers move\b", "This research moves"),
+        (r"\bThese papers treat\b", "This research treats"),
+        (r"\bThese papers provide\b", "This research provides"),
+        (r"\bThese papers broaden\b", "This research broadens"),
+        (r"\bThese papers trace\b", "This research traces"),
+        (r"\bThese papers study\b", "This research studies"),
+        (r"\bThese papers examine\b", "This research examines"),
+        (r"\bThese papers capture\b", "This research examines"),
+        (r"\bThese papers identify\b", "The work identifies"),
+        (r"\bThese studies define\b", "The work defines"),
+        (r"\bThe papers\b", "The work"),
+        (r"\bthe papers\b", "the work"),
+        (r"^These papers\b", "This research"),
+        (r"^These studies\b", "This research"),
+        (r"^This paper\b", "This work"),
+        (r"^This set\b", "This research"),
+        (r"^This subcategory\b", "This line of research"),
+        (r"^Its value is in closing the loop between aerodynamic theory and vehicle behavior\.", "This work matters because it closes the loop between aerodynamic theory and vehicle behavior."),
+        (r"^Its value is in design guidance for distributed propulsion\.", "This work matters because it offers design guidance for distributed propulsion."),
+        (r"^Its value is in defining the uncontrolled aerodynamic baseline that later control systems must outperform or exploit\.", "This work matters because it defines the uncontrolled aerodynamic baseline that later control systems must outperform or exploit."),
+        (r"^The value is in design guidance for distributed propulsion\.", "This work matters because it offers design guidance for distributed propulsion."),
+        (r"^Their value is in defining the uncontrolled aerodynamic baseline that later control systems must outperform or exploit\.", "This work matters because it defines the uncontrolled aerodynamic baseline that later control systems must outperform or exploit."),
+        (r"^This work matters because in design guidance for distributed propulsion\.", "This work matters because it offers design guidance for distributed propulsion."),
+        (r"^This work matters because in defining the uncontrolled aerodynamic baseline that later control systems must outperform or exploit\.", "This work matters because it defines the uncontrolled aerodynamic baseline that later control systems must outperform or exploit."),
+        (r"^The value is operational:\s*", "This work matters operationally because "),
+        (r"^Their value is operational\.\s*", "This work matters operationally because "),
+        (r"^This work matters because operational\.\s*", "This work matters operationally because "),
+        (r"^Their value is direct design guidance for blown-wing and propeller-in-wing concepts\.", "This work matters because it offers direct design guidance for blown-wing and propeller-in-wing concepts."),
+        (r"^The value is direct design guidance for blown-wing and propeller-in-wing concepts\.", "This work matters because it offers direct design guidance for blown-wing and propeller-in-wing concepts."),
+        (r"^This work matters because direct design guidance for blown-wing and propeller-in-wing concepts\.", "This work matters because it offers direct design guidance for blown-wing and propeller-in-wing concepts."),
+        (r"^Their value is methodological and applied:\s*", "This work matters both methodologically and practically: "),
+        (r"^The value is immediately practical for agricultural application,\s*", "This work matters because it directly informs agricultural spray application, "),
+        (r"^Their value is that they connect sensing to actuation and experimentation in a way that supports future closed-loop systems rather than passive observation alone\.", "This work matters because it connects sensing, experimentation, and future closed-loop control rather than treating measurement as passive observation alone."),
+        (r"^Their value is that they lower the barrier\b", "This work matters because it lowers the barrier"),
+        (r"^Their value is measurement reach:\s*", "This work matters because it extends what can be measured: "),
+        (r"^Its value is foundational:\s*", "This work matters because it provides a stronger experimental foundation: "),
+        (r"^Its value is generalization:\s*", "This work matters because it shows how aerodynamic methods can transfer across fluid systems: "),
+        (r"^Their value is practical and predictive:\s*", "This work matters in practical and predictive terms: "),
+        (r"^Their value is practical and predictive\.\s*", "This work matters in practical and predictive terms. "),
+        (r"^Their value is architectural:\s*", "This work matters at the system-design level: "),
+        (r"^The value is architectural:\s*", "This work matters at the system-design level: "),
+        (r"^The value is design flexibility:\s*", "This work matters because it expands aerodynamic design flexibility: "),
+        (r"^The value is system-level realism:\s*", "This work matters because it brings system-level realism to the problem: "),
+        (r"^Its value is conceptual clarity:\s*", "This work matters because it clarifies the governing aerodynamic idea: "),
+        (r"^Its value is practical:\s*", "This work matters in practice because "),
+        (r"^Its value is methodological:\s*", "This work matters methodologically because "),
+        (r"^Its value is operational realism:\s*", "This work matters because it extends aerodynamic understanding into operational conditions: "),
+        (r"^Their value is interpretive:\s*", "This work matters because it turns performance changes into an interpretable flow-physics question: "),
+        (r"^The value is design specificity:\s*", "This work matters because it links aerodynamic gains to specific flow mechanisms: "),
+        (r"^The value is conceptual generality:\s*", "This work matters because it clarifies a broader aerodynamic principle: "),
+        (r"^Their value is experimental legitimacy for an induced-drag-control idea that is often discussed conceptually but is much stronger when observed directly in the near wake\.", "This work matters because it brings direct experimental evidence to an induced-drag-control idea that is often discussed more conceptually than observed."),
+        (r"^Its value is human infrastructure:\s*", "This work matters because strong pedagogy is part of the infrastructure that sustains research and engineering practice: "),
+        (r"^Their value is that\s*", "This work matters because "),
+        (r"^Their value is\s*", "This work matters because "),
+        (r"^The value is that\s*", "This work matters because "),
+        (r"^The value is\s*", "This work matters because "),
+        (r"^Its value is that\s*", "This work matters because "),
+        (r"^Its value is\s*", "This work matters because "),
+        (r"\bThe work connect\b", "The work connects"),
+        (r"\bThe work help\b", "The work helps"),
+        (r"\bthe work provide\b", "the work provides"),
+        (r"\bthe work connect\b", "the work connects"),
+        (r"\bthey show\b", "it shows"),
+        (r"\bthey turn\b", "it turns"),
+        (r"\bthey lower the barrier\b", "it lowers the barrier"),
+        (r"\band make event cameras usable\b", "and makes event cameras usable"),
+        (r"^This work matters in practice because the work provides\b", "This work matters in practice because it provides"),
+        (r"^This work matters operationally because The work\b", "This work matters operationally because the work"),
+        (r"^This work matters because measurement reach:\s*", "This work matters because it extends measurement reach: "),
+        (r"^This work matters because foundational:\s*", "This work matters because it provides a stronger experimental foundation: "),
+        (r"^This work matters because generalization:\s*", "This work matters because it shows how aerodynamic methods can transfer across fluid systems: "),
+        (r"^This work matters because human infrastructure:\s*", "This work matters because pedagogy is part of the human infrastructure that sustains research and engineering practice: "),
+        (r"^This work matters because it offers design guidance for distributed propulsion\.\s*The work identifies\b", "This work matters because it offers design guidance for distributed propulsion. The work identifies"),
+        (r"^This work matters operationally because\s*", "This work matters operationally because "),
+        (r"^This work matters because it offers direct design guidance for blown-wing and propeller-in-wing concepts\.\s*The work helps\b", "This work matters because it offers direct design guidance for blown-wing and propeller-in-wing concepts. The work helps"),
+        (r"^This work matters because it defines the uncontrolled aerodynamic baseline that later control systems must outperform or exploit\.", "This work matters because it defines the uncontrolled aerodynamic baseline that later control systems must outperform or exploit."),
+    ]
+    for pattern, replacement in replacements:
+        text = re.sub(pattern, replacement, text)
+    return text.strip()
+
+
+def subcategory_card_blurb(summary: dict[str, str]) -> str:
+    findings = summary.get("Important Findings", "")
+    takeaways = summary.get("Key Takeaways", "")
+    first_sentence = re.split(r"(?<=[.!?])\s+", findings, maxsplit=1)[0].strip()
+    if first_sentence and len(first_sentence) <= 260:
+        return first_sentence
+    return takeaways or findings
 
 
 def profile_display_name(slug: str) -> str:
@@ -435,6 +565,7 @@ def extract_paper_details(taxonomy: dict[str, dict[str, object]]) -> dict[str, d
             if doi:
                 citation += f" https://doi.org/{doi}"
             citations = [citation]
+        citations = unique_preserving_order(citations)
         normalized_snippet = normalize_title(f"{snippet} {title} {filename}")
         for alias, slug in AUTHOR_ALIASES.items():
             if slug in PROFILE_SLUGS and alias in normalized_snippet:
@@ -451,6 +582,7 @@ def extract_paper_details(taxonomy: dict[str, dict[str, object]]) -> dict[str, d
         }
         if filename in PAPER_DETAIL_OVERRIDES:
             details[filename].update(PAPER_DETAIL_OVERRIDES[filename])
+            details[filename]["citations"] = unique_preserving_order(details[filename].get("citations", []))
     return details
 
 
@@ -506,6 +638,22 @@ def aggregate_students(filenames: list[str], paper_details: dict[str, dict[str, 
     for filename in filenames:
         students.update(paper_details[filename]["students"])
     return sorted(students, key=lambda item: item[0].split()[-1].lower())
+
+
+def unique_publication_filenames(filenames: list[str], paper_details: dict[str, dict[str, object]]) -> list[str]:
+    seen = set()
+    ordered = []
+    for filename in filenames:
+        data = paper_details[filename]
+        key = (
+            normalize_title(data["title"]),
+            tuple(unique_preserving_order(data.get("citations", []))),
+        )
+        if key in seen:
+            continue
+        seen.add(key)
+        ordered.append(filename)
+    return ordered
 
 
 def student_photo_src(slug: str, prefix: str) -> str | None:
@@ -576,7 +724,6 @@ def render_paper_card(filename: str, paper_details: dict[str, dict[str, object]]
     return (
         '<article class="pub-card research-paper-card">'
         f"<h3>{escape(data['title'])}</h3>"
-        f"<p>{escape(data['summary'])}</p>"
         '<div class="paper-meta"><strong>Students</strong></div>'
         f"{render_students(data['students'], prefix)}"
         '<div class="paper-meta"><strong>Citation</strong></div>'
@@ -648,7 +795,7 @@ def category_page(category: str, taxonomy: dict[str, dict[str, object]], paper_d
         subcards.append(
             '<article class="card research-subcard">'
             f"<h3><a href=\"{cat_slug}/{sub_slug}.html\">{escape(subcategory)}</a></h3>"
-            f"<p>{escape(subinfo['Key Takeaways'])}</p>"
+            f"{paragraph_html(subinfo['Overview'])}"
             f"<div class=\"meta-row\"><span>{len(papers)} papers</span></div>"
             f'<a class="button secondary inner-link" href="{cat_slug}/{sub_slug}.html">Open Subcategory</a>'
             "</article>"
@@ -658,8 +805,10 @@ def category_page(category: str, taxonomy: dict[str, dict[str, object]], paper_d
     for subcategory in subcategories:
         for filename in subcategories[subcategory]:
             category_filenames.append(filename)
-            all_papers.append(render_paper_card(filename, paper_details, "../"))
-    contributor_section = render_contributor_section(aggregate_students(category_filenames, paper_details), "../")
+    unique_category_filenames = unique_publication_filenames(category_filenames, paper_details)
+    for filename in unique_category_filenames:
+        all_papers.append(render_paper_card(filename, paper_details, "../"))
+    contributor_section = render_contributor_section(aggregate_students(unique_category_filenames, paper_details), "../")
     return f"""<!doctype html>
 <html lang="en">
   <head>
@@ -689,10 +838,10 @@ def category_page(category: str, taxonomy: dict[str, dict[str, object]], paper_d
       <section>
         <div class="shell">
           <div class="section-header">
-            <div><div class="section-kicker">Subcategories</div><h2>Focused lines of work inside this category</h2></div>
-            <p class="section-copy">Each subcategory highlights a focused line of work within this broader theme.</p>
+            <div><div class="section-kicker">Research Directions</div><h2>Focused lines of work within this area</h2></div>
+            <p class="section-copy">Each subcategory offers a more focused view of the questions, methods, and applications that shape this broader research area.</p>
           </div>
-          <div class="grid-3">
+          <div class="grid-2">
             {"".join(subcards)}
           </div>
         </div>
@@ -701,8 +850,8 @@ def category_page(category: str, taxonomy: dict[str, dict[str, object]], paper_d
       <section>
         <div class="shell">
           <div class="section-header">
-            <div><div class="section-kicker">Papers</div><h2>Category publication set</h2></div>
-            <p class="section-copy">Each paper includes a summary, citation, and student contributors where available.</p>
+            <div><div class="section-kicker">Publications</div><h2>Research publications in this area</h2></div>
+            <p class="section-copy">Publication entries include citation details and student contributors where available.</p>
           </div>
           <div class="pub-list">
             {"".join(all_papers)}
@@ -725,7 +874,7 @@ def subcategory_page(
 ) -> str:
     cat_slug = slugify(category)
     summary = parse_subcategory_summary(category, subcategory)
-    filenames = taxonomy[category]["subcategories"][subcategory]
+    filenames = unique_publication_filenames(taxonomy[category]["subcategories"][subcategory], paper_details)
     papers = "".join(render_paper_card(filename, paper_details, "../../") for filename in filenames)
     infographic_section = render_infographic_section(infographic_registry.get((category, subcategory), []))
     contributor_section = render_contributor_section(aggregate_students(filenames, paper_details), "../../")
@@ -740,27 +889,29 @@ def subcategory_page(
   <body class="research-page">
     {nav("../../")}
     <div class="page-hero">
-      <div class="shell">
-        <div class="section-kicker">Research Subcategory</div>
-        <h1>{escape(subcategory)}</h1>
-        <p class="breadcrumb-trail"><a href="../{cat_slug}.html">{escape(category)}</a> / {escape(subcategory)}</p>
+      <div class="shell page-hero-grid">
+        <div>
+          <div class="section-kicker">Research Subcategory</div>
+          <h1>{escape(subcategory)}</h1>
+          <p class="breadcrumb-trail"><a href="../{cat_slug}.html">{escape(category)}</a> / {escape(subcategory)}</p>
+          {paragraph_html(summary["Overview"])}
+        </div>
+        <aside class="panel">
+          <h3>Why It Matters</h3>
+          {paragraph_html(summary["Why It Matters Expanded"])}
+          <h3>Research Focus</h3>
+          {paragraph_html(summary["Research Focus Expanded"])}
+        </aside>
       </div>
     </div>
     <main>
-      <section>
-        <div class="shell grid-3 research-summary-grid">
-          <article class="card"><h3>Important Findings</h3>{paragraph_html(summary["Important Findings"])}</article>
-          <article class="card"><h3>Value</h3>{paragraph_html(summary["Value"])}</article>
-          <article class="card"><h3>Key Takeaways</h3>{paragraph_html(summary["Key Takeaways"])}</article>
-        </div>
-      </section>
       {infographic_section}
       {contributor_section}
       <section>
         <div class="shell">
           <div class="section-header">
-            <div><div class="section-kicker">Papers</div><h2>Subcategory publication set</h2></div>
-            <p class="section-copy">Paper entries include summaries, citations, and student contributors where available.</p>
+            <div><div class="section-kicker">Publications</div><h2>Research publications in this area</h2></div>
+            <p class="section-copy">Publication entries include citation details and student contributors where available.</p>
           </div>
           <div class="pub-list">
             {papers}
@@ -828,8 +979,8 @@ def update_research_index() -> None:
       <section>
         <div class="shell">
           <div class="section-header">
-            <div><div class="section-kicker">Research Taxonomy</div><h2>Primary categories</h2></div>
-            <p class="section-copy">The pages below organize the group’s work into primary research themes and focused subtopics.</p>
+            <div><div class="section-kicker">Research Taxonomy</div><h2>Research Themes and Focus Areas</h2></div>
+            <p class="section-copy">Explore the major research areas and the focused project themes within each one.</p>
           </div>
           <div class="grid-2">
             {"".join(category_cards)}
