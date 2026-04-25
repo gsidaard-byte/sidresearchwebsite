@@ -287,6 +287,29 @@ def infographic_title_from_path(path: Path) -> str:
     return path.stem.replace("-", " ").replace("_", " ").strip()
 
 
+def build_category_infographic_registry() -> dict[str, list[dict[str, str]]]:
+    registry: dict[str, list[dict[str, str]]] = {}
+    for category in ordered_categories():
+        cat_slug = slugify(category)
+        source_dir = PAPERS_DIR / category
+        asset_dir = RESEARCH_INFOGRAPHICS_DIR / cat_slug
+        items = []
+        for image_path in infographic_files_in(source_dir):
+            asset_dir.mkdir(parents=True, exist_ok=True)
+            dest_path = asset_dir / image_path.name
+            shutil.copy2(image_path, dest_path)
+            items.append(
+                {
+                    "title": infographic_title_from_path(image_path),
+                    "filename": image_path.name,
+                    "kind": "video" if image_path.suffix.lower() in VIDEO_EXTENSIONS else "image",
+                    "src": f"../assets/research-infographics/{quote(cat_slug)}/{quote(image_path.name)}",
+                }
+            )
+        registry[category] = items
+    return registry
+
+
 def build_infographic_registry(taxonomy: dict[str, dict[str, object]]) -> dict[tuple[str, str], list[dict[str, str]]]:
     registry: dict[tuple[str, str], list[dict[str, str]]] = {}
     if RESEARCH_INFOGRAPHICS_DIR.exists():
@@ -733,7 +756,12 @@ def render_paper_card(filename: str, paper_details: dict[str, dict[str, object]]
     )
 
 
-def render_infographic_section(infographics: list[dict[str, str]]) -> str:
+def render_infographic_section(
+    infographics: list[dict[str, str]],
+    heading: str = "Research infographic",
+    description: str = "NotebookLM-generated infographic and video assets for this research subcategory. Click any image to open the full-size file, or play videos directly on the page.",
+    section_class: str = "",
+) -> str:
     if not infographics:
         return ""
 
@@ -769,12 +797,13 @@ def render_infographic_section(infographics: list[dict[str, str]]) -> str:
             )
         media = f'<div class="infographic-grid">{"".join(cards)}</div>'
 
+    class_attr = f' class="{escape(section_class)}"' if section_class else ""
     return f"""
-      <section>
+      <section{class_attr}>
         <div class="shell">
           <div class="section-header">
-            <div><div class="section-kicker">Infographic</div><h2>Research infographic</h2></div>
-            <p class="section-copy">NotebookLM-generated infographic and video assets for this research subcategory. Click any image to open the full-size file, or play videos directly on the page.</p>
+            <div><div class="section-kicker">Infographic</div><h2>{escape(heading)}</h2></div>
+            <p class="section-copy">{escape(description)}</p>
           </div>
           <div class="infographic-section">
             {media}
@@ -784,7 +813,12 @@ def render_infographic_section(infographics: list[dict[str, str]]) -> str:
 """
 
 
-def category_page(category: str, taxonomy: dict[str, dict[str, object]], paper_details: dict[str, dict[str, object]]) -> str:
+def category_page(
+    category: str,
+    taxonomy: dict[str, dict[str, object]],
+    paper_details: dict[str, dict[str, object]],
+    category_infographic_registry: dict[str, list[dict[str, str]]],
+) -> str:
     info = parse_category_summary(category)
     cat_slug = slugify(category)
     subcards = []
@@ -809,6 +843,12 @@ def category_page(category: str, taxonomy: dict[str, dict[str, object]], paper_d
     for filename in unique_category_filenames:
         all_papers.append(render_paper_card(filename, paper_details, "../"))
     contributor_section = render_contributor_section(aggregate_students(unique_category_filenames, paper_details), "../")
+    category_infographic = render_infographic_section(
+        category_infographic_registry.get(category, []),
+        "Research category infographic",
+        "Generated infographic for this full research category. Click the image to open the full-size PNG.",
+        "category-infographic-section",
+    )
     return f"""<!doctype html>
 <html lang="en">
   <head>
@@ -835,6 +875,7 @@ def category_page(category: str, taxonomy: dict[str, dict[str, object]], paper_d
       </div>
     </div>
     <main>
+      {category_infographic}
       <section>
         <div class="shell">
           <div class="section-header">
@@ -1128,10 +1169,14 @@ def write_pages() -> None:
     RESEARCH_DIR.mkdir(exist_ok=True)
     paper_details = extract_paper_details(taxonomy)
     infographic_registry = build_infographic_registry(taxonomy)
+    category_infographic_registry = build_category_infographic_registry()
     for category in ordered_categories():
         cat_slug = slugify(category)
         (RESEARCH_DIR / cat_slug).mkdir(exist_ok=True)
-        (RESEARCH_DIR / f"{cat_slug}.html").write_text(category_page(category, taxonomy, paper_details), encoding="utf-8")
+        (RESEARCH_DIR / f"{cat_slug}.html").write_text(
+            category_page(category, taxonomy, paper_details, category_infographic_registry),
+            encoding="utf-8",
+        )
         for subcategory in taxonomy[category]["subcategories"]:
             sub_slug = slugify(subcategory)
             (RESEARCH_DIR / cat_slug / f"{sub_slug}.html").write_text(
