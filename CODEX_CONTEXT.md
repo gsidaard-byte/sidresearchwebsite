@@ -209,6 +209,23 @@ Suggested prompt for future sessions:
 
 `Read CODEX_CONTEXT.md, inspect git status, and continue from the current project state.`
 
+## Session Keywords
+
+Use these exact keywords as shorthand in future Codex sessions:
+
+- `BOOT`
+  - Read `CODEX_CONTEXT.md`
+  - Inspect `git status`
+  - Inspect recent commits
+  - Identify what is generator-backed versus hand-maintained
+  - Continue from the current project state without overwriting existing work
+
+- `WRAP`
+  - Summarize what changed in the session
+  - Update `CODEX_CONTEXT.md` if needed
+  - Run `./save_snapshot.sh "short description of today's changes"`
+  - Report the snapshot commit hash back to the user
+
 ## Known Rules for This Repo
 
 - Preserve the student-centered voice and purpose of the site.
