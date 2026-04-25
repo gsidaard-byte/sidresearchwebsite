@@ -245,3 +245,4 @@ Use these exact keywords as shorthand in future Codex sessions:
 
 - 2026-04-23: Created this context file to preserve continuity across Codex sessions. The repo was inspected at a high level, and the current understanding is that this project is a content-driven static site generated largely from local markdown, media, and paper archives.
 - 2026-04-24: Research category and subcategory pages were rewritten to use fuller public-facing summaries with safer generator-backed sources. Publication cards were cleaned up to reduce duplicate citations and bad OCR-derived titles. The current Students page hero and undergraduate section copy were also manually updated in `website/students.html`.
+- 2026-04-24: Added `BOOT` and `WRAP` session keywords for future continuity and removed the accidentally committed `research_OLDVERSION.html` backup file.
