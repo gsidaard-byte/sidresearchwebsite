@@ -17,6 +17,7 @@ Source: extracted from `Sid_Most Recent_CV (Jan 2026).pdf`
 ## AI in Education
 
 - [`UD freshmen required to take two AI classes next school year`](https://www.daytondailynews.com/community/dayton/ud-freshmen-required-to-take-two-ai-classes-next-school-year/article_6bf2b9fd-f62f-4166-b9b1-2400663db31e.html) - Dayton Daily News
+- [`AI in the Classroom: Ohio Universities Making AI Part of the Curriculum`](https://spectrumnews1.com/oh/columbus/news/2026/04/27/ai-in-the-classroom--ohio-universities-making-ai-part-of-the-curriculum) - Spectrum News 1 (2026)
 
 ## Teaching and University Features
 

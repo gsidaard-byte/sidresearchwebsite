@@ -8,7 +8,7 @@
   <link rel="stylesheet" href="styles.css" />
 </head>
 
-<body>
+<body class="teaching-page">
   <header class="site-header">
     <div class="shell"><a class="brand" href="index.html"><span class="brand-mark">Welcome to Our Community </span><span
           class="brand-name">Dr. Sidaard Gunasekaran, Ph.D., University of Dayton</span></a>
@@ -51,13 +51,93 @@
           </div>
           <p class="section-copy">This teaching philosophy centers curiosity, agency, hands-on exploration, and meaningful connections between engineering ideas and the people they serve.</p>
         </div>
-        <div class="infographic-section">
-          <figure class="infographic-frame infographic-single teaching-philosophy-infographic">
-            <a href="../Teaching Activities/TeachingPhilosophyInfographic.png" target="_blank" rel="noopener noreferrer">
-              <img src="../Teaching Activities/TeachingPhilosophyInfographic.png" alt="Infographic summarizing Dr. Sid Gunasekaran's teaching philosophy" loading="lazy" />
-            </a>
-            <figcaption class="infographic-caption">Teaching philosophy infographic.</figcaption>
-          </figure>
+        <div class="philosophy-journey" data-philosophy-journey>
+          <div class="philosophy-goal-card">
+            <div class="section-kicker">Goal</div>
+            <blockquote>My goal is to make a tangible impact on students by helping them find their passion, build confidence, and speak intelligently about a subject without hesitation.</blockquote>
+          </div>
+
+          <div class="philosophy-scrolly">
+            <aside class="philosophy-rail" aria-label="Teaching philosophy progress">
+              <div class="philosophy-plane" data-journey-plane aria-hidden="true">
+                <svg viewBox="0 0 24 24">
+                  <path d="M12 2l2 8 7 3v2l-7-1-1 6 3 2v1l-4-1-4 1v-1l3-2-1-6-7 1v-2l7-3 2-8z" />
+                </svg>
+              </div>
+              <button class="rail-node is-active" type="button" data-journey-target="foundation"><span>1</span>Foundation</button>
+              <button class="rail-node" type="button" data-journey-target="learning"><span>2</span>Learning</button>
+              <button class="rail-node" type="button" data-journey-target="mindset"><span>3</span>Mindset</button>
+              <button class="rail-node" type="button" data-journey-target="classroom"><span>4</span>Classroom</button>
+              <button class="rail-node" type="button" data-journey-target="outcomes"><span>5</span>Outcomes</button>
+            </aside>
+
+            <div class="philosophy-waypoints">
+              <article class="philosophy-waypoint is-active" id="foundation" data-journey-section="foundation">
+                <div class="wp-eyebrow">Section 01 · Foundation</div>
+                <h3>Three principles that ground the work.</h3>
+                <div class="philosophy-mini-grid">
+                  <div><strong>Experiential learning</strong><p>Students use their unique talents through doing, testing, writing, and reflecting.</p></div>
+                  <div><strong>Ownership over grades</strong><p>Learning moves toward curiosity, agency, and a personal record of growth.</p></div>
+                  <div><strong>Clear explanation</strong><p>Students should leave able to explain ideas clearly, not just repeat equations.</p></div>
+                </div>
+              </article>
+
+              <article class="philosophy-waypoint" id="learning" data-journey-section="learning">
+                <div class="wp-eyebrow">Section 02 · How Learning Happens</div>
+                <h3>Five pillars that build the room.</h3>
+                <div class="philosophy-chip-grid">
+                  <span>Portfolio-based assessment</span>
+                  <span>Story-driven teaching</span>
+                  <span>Active and interactive learning</span>
+                  <span>Real-world context</span>
+                  <span>Inquiry-based learning</span>
+                </div>
+              </article>
+
+              <article class="philosophy-waypoint" id="mindset" data-journey-section="mindset">
+                <div class="wp-eyebrow">Section 03 · Entrepreneurially Minded Learning</div>
+                <h3>The KEEN 3 C's.</h3>
+                <div class="keen-three-grid">
+                  <div><span>Curiosity</span><p>A habit of asking better questions and pursuing what is needed to answer them well.</p></div>
+                  <div><span>Connections</span><p>Link equations, concepts, experience, and personal understanding into a coherent whole.</p></div>
+                  <div><span>Creating Value</span><p>Use knowledge in meaningful ways for current work, future work, and ongoing learning.</p></div>
+                </div>
+              </article>
+
+              <article class="philosophy-waypoint" id="classroom" data-journey-section="classroom">
+                <div class="wp-eyebrow">Section 04 · What This Looks Like in Class</div>
+                <h3>Five stages, one takeoff.</h3>
+                <div class="class-flow" data-class-flow>
+                  <ol class="class-flow-steps">
+                    <li class="is-active">Guided notes</li>
+                    <li>Discussion-based learning</li>
+                    <li>Hands-on or role-play</li>
+                    <li>Reflection in portfolios</li>
+                    <li>Confidence and mastery</li>
+                  </ol>
+                  <button class="button secondary philosophy-replay" type="button" data-class-flow-replay>Replay Class Flow</button>
+                </div>
+              </article>
+
+              <article class="philosophy-waypoint" id="outcomes" data-journey-section="outcomes">
+                <div class="wp-eyebrow">Section 05 · What Students Gain</div>
+                <h3>Six things that stay with them.</h3>
+                <div class="philosophy-chip-grid">
+                  <span>Confidence</span>
+                  <span>Deep understanding</span>
+                  <span>Long-term retention</span>
+                  <span>Ability to explain ideas clearly</span>
+                  <span>Ownership of learning</span>
+                  <span>A meaningful record of growth</span>
+                </div>
+              </article>
+            </div>
+          </div>
+
+          <div class="philosophy-line-card">
+            <div class="section-kicker">Philosophy in One Line</div>
+            <p>Teach for <strong>confidence</strong>. Design for <strong>curiosity</strong>. Assess for <strong>reflection</strong>. Create learning <strong>that lasts</strong>.</p>
+          </div>
         </div>
       </div>
     </section>
@@ -211,6 +291,56 @@
         </article>
       </div>
     </section>
+    <section class="workshop-tour">
+      <div class="shell">
+        <div class="tour-header">
+          <div class="section-kicker">Crescendo Workshop Tour</div>
+          <h2>Empowering Faculty Across the Country with Entrepreneurial Mindset and AI Tools for Modern Academia</h2>
+          <p>Rethinking how we teach, learn, and find joy of learning in the age of AI in Higher Education.</p>
+        </div>
+
+        <div class="tour-layout">
+          <div class="tour-map-wrap">
+            <svg class="tour-map" viewBox="0 0 800 460" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Crescendo workshop tour map">
+              <image class="tour-us-map-image" href="assets/news/blank-us-map-states.png" x="70" y="42" width="660" height="408" preserveAspectRatio="xMidYMid meet" />
+              <polyline class="tour-route" points="566,184 561,184 500,155 655,172 195,126 515,209" />
+              <g class="tour-pin-group" data-stop="1">
+                <circle class="tour-pin-halo" cx="566" cy="184" r="22" /><circle class="tour-pin-dot" cx="566" cy="184" r="11" /><text class="tour-pin-num" x="566" y="184">1</text><text class="tour-pin-label" x="578" y="214">Toledo, OH</text>
+              </g>
+              <g class="tour-pin-group" data-stop="2">
+                <circle class="tour-pin-halo" cx="561" cy="184" r="22" /><circle class="tour-pin-dot" cx="561" cy="184" r="11" /><text class="tour-pin-num" x="561" y="184">2</text><text class="tour-pin-label" x="540" y="214">Angola, IN</text>
+              </g>
+              <g class="tour-pin-group" data-stop="3">
+                <circle class="tour-pin-halo" cx="500" cy="155" r="22" /><circle class="tour-pin-dot" cx="500" cy="155" r="11" /><text class="tour-pin-num" x="500" y="155">3</text><text class="tour-pin-label" x="500" y="134">Milwaukee, WI</text>
+              </g>
+              <g class="tour-pin-group" data-stop="4">
+                <circle class="tour-pin-halo" cx="655" cy="172" r="22" /><circle class="tour-pin-dot" cx="655" cy="172" r="11" /><text class="tour-pin-num" x="655" y="172">4</text><text class="tour-pin-label" x="655" y="151">Old Westbury, NY</text>
+              </g>
+              <g class="tour-pin-group" data-stop="5">
+                <circle class="tour-pin-halo" cx="195" cy="126" r="22" /><circle class="tour-pin-dot" cx="195" cy="126" r="11" /><text class="tour-pin-num" x="195" y="126">5</text><text class="tour-pin-label" x="195" y="105">Moscow, ID</text>
+              </g>
+              <g class="tour-pin-group" data-stop="6">
+                <circle class="tour-pin-halo" cx="515" cy="209" r="22" /><circle class="tour-pin-dot" cx="515" cy="209" r="11" /><text class="tour-pin-num" x="515" y="209">6</text><text class="tour-pin-label" x="515" y="239">Bradley, IL</text>
+              </g>
+            </svg>
+          </div>
+
+          <ol class="tour-stops">
+            <li class="tour-stop" data-stop="1"><div class="stop-num">1</div><div class="stop-info"><div class="stop-title">Mastering Modern Academia</div><div class="stop-venue">University of Toledo</div><div class="stop-date">June 15, 2025</div></div></li>
+            <li class="tour-stop" data-stop="2"><div class="stop-num">2</div><div class="stop-info"><div class="stop-title">Mastering Modern Academia</div><div class="stop-venue">Trine University</div><div class="stop-date">August 13, 2025</div></div></li>
+            <li class="tour-stop" data-stop="3"><div class="stop-num">3</div><div class="stop-info"><div class="stop-title">Mastering Modern Academia</div><div class="stop-venue">KEEN Leader Meeting, Milwaukee</div><div class="stop-date">September 25, 2025</div></div></li>
+            <li class="tour-stop" data-stop="4"><div class="stop-num">4</div><div class="stop-info"><div class="stop-title">The Intentional Joy of Learning</div><div class="stop-venue">New York Institute of Technology</div><div class="stop-date">November 5, 2025</div></div></li>
+            <li class="tour-stop" data-stop="5"><div class="stop-num">5</div><div class="stop-info"><div class="stop-title">The Intentional Joy of Learning (online)</div><div class="stop-venue">University of Idaho</div><div class="stop-date">December 4, 2025</div></div></li>
+            <li class="tour-stop" data-stop="6"><div class="stop-num">6</div><div class="stop-info"><div class="stop-title">Crescendo Workshop</div><div class="stop-venue">Bradley, Illinois</div><div class="stop-date">January 2026</div></div></li>
+          </ol>
+        </div>
+
+        <div class="tour-cta">
+          <div class="tour-cta-text">Bring the Crescendo workshop to your campus.</div>
+          <a class="button secondary" href="crescendo-workshops.html">Get in touch</a>
+        </div>
+      </div>
+    </section>
   </main>
   <footer class="footer">
     <div class="shell">
@@ -219,6 +349,63 @@
     </div>
   </footer>
   <script>
+    document.querySelectorAll("[data-philosophy-journey]").forEach((root) => {
+      const nodes = Array.from(root.querySelectorAll("[data-journey-target]"));
+      const sections = Array.from(root.querySelectorAll("[data-journey-section]"));
+      const plane = root.querySelector("[data-journey-plane]");
+
+      function setActive(id) {
+        nodes.forEach((node) => node.classList.toggle("is-active", node.dataset.journeyTarget === id));
+        sections.forEach((section) => section.classList.toggle("is-active", section.dataset.journeySection === id));
+        if (plane) {
+          const index = nodes.findIndex((node) => node.dataset.journeyTarget === id);
+          if (index >= 0) plane.style.setProperty("--plane-y", index * 60 + "px");
+        }
+      }
+
+      nodes.forEach((node) => {
+        node.addEventListener("click", () => {
+          const target = root.querySelector("#" + node.dataset.journeyTarget);
+          if (target) target.scrollIntoView({ behavior: "smooth", block: "center" });
+          setActive(node.dataset.journeyTarget);
+        });
+      });
+
+      if ("IntersectionObserver" in window) {
+        const observer = new IntersectionObserver((entries) => {
+          entries.forEach((entry) => {
+            if (entry.isIntersecting) setActive(entry.target.dataset.journeySection);
+          });
+        }, { threshold: 0.45, rootMargin: "-15% 0px -30% 0px" });
+        sections.forEach((section) => observer.observe(section));
+      }
+    });
+
+    document.querySelectorAll("[data-class-flow]").forEach((flow) => {
+      const steps = Array.from(flow.querySelectorAll(".class-flow-steps li"));
+      const replay = flow.querySelector("[data-class-flow-replay]");
+      let timeouts = [];
+
+      function clearFlow() {
+        timeouts.forEach((timeout) => window.clearTimeout(timeout));
+        timeouts = [];
+      }
+
+      function playFlow() {
+        clearFlow();
+        steps.forEach((step) => step.classList.remove("is-active"));
+        steps.forEach((step, index) => {
+          timeouts.push(window.setTimeout(() => {
+            steps.forEach((item) => item.classList.remove("is-active"));
+            step.classList.add("is-active");
+          }, index * 520));
+        });
+      }
+
+      replay.addEventListener("click", playFlow);
+      playFlow();
+    });
+
     document.querySelectorAll("[data-carousel]").forEach((carousel) => {
       const slides = Array.from(carousel.querySelectorAll(".teaching-slide"));
       const prevButton = carousel.querySelector("[data-carousel-prev]");
@@ -274,6 +461,29 @@
       setActive(0);
       restartAutoplay();
     });
+    (function () {
+      const pins = Array.from(document.querySelectorAll(".tour-pin-group"));
+      const stops = Array.from(document.querySelectorAll(".tour-stop"));
+
+      function setActive(stopId) {
+        pins.forEach((pin) => pin.classList.toggle("is-active", pin.dataset.stop === stopId));
+        stops.forEach((stop) => stop.classList.toggle("is-active", stop.dataset.stop === stopId));
+      }
+
+      function clearActive() {
+        pins.forEach((pin) => pin.classList.remove("is-active"));
+        stops.forEach((stop) => stop.classList.remove("is-active"));
+      }
+
+      pins.forEach((pin) => {
+        pin.addEventListener("mouseenter", () => setActive(pin.dataset.stop));
+        pin.addEventListener("mouseleave", clearActive);
+      });
+      stops.forEach((stop) => {
+        stop.addEventListener("mouseenter", () => setActive(stop.dataset.stop));
+        stop.addEventListener("mouseleave", clearActive);
+      });
+    })();
   </script>
 </body>
 

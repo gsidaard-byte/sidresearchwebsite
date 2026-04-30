@@ -1,0 +1,1114 @@
+<!doctype html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>News | Sidaard Gunasekaran Research Group</title>
+  <link rel="stylesheet" href="styles.css" />
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,400;9..144,500;9..144,600;9..144,700;9..144,800&family=DM+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
+
+  <style>
+    /* =========================================================
+       NEWS PAGE — additions for redesigned sections.
+       Drop these rules into styles.css. They use new class
+       names and won't conflict with existing styles.
+       ========================================================= */
+
+    :root {
+      --news-ink: #0f1729;
+      --news-muted: #5b6478;
+      --news-paper: #fafaf7;
+      --news-rule: #e6e3da;
+      --news-accent: #b8860b;
+      --news-hero: #0c2340;       /* assumed; matches your existing blue */
+      --cat-research: #0d6b4f;
+      --cat-teaching: #a86a00;
+      --cat-recognition: #a31c30;
+      --cat-workshops: #1e3a8a;
+      --font-display: "Fraunces", Georgia, serif;
+      --font-body: "DM Sans", system-ui, sans-serif;
+    }
+
+    .news-page main { background: var(--news-paper); }
+
+    /* ---------- 1. STATS BAR ---------- */
+    .impact-stats {
+      background: var(--news-paper);
+      border-bottom: 1px solid var(--news-rule);
+      padding: 3rem 0;
+    }
+    .impact-stats .shell {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 2rem;
+      align-items: end;
+    }
+    .stat {
+      position: relative;
+      padding-top: 1rem;
+      border-top: 2px solid var(--news-ink);
+    }
+    .stat-num {
+      font-family: var(--font-display);
+      font-weight: 600;
+      font-size: clamp(2.6rem, 5vw, 4rem);
+      line-height: 1;
+      letter-spacing: -0.02em;
+      color: var(--news-ink);
+      font-variant-numeric: lining-nums;
+    }
+    .stat-num sup {
+      font-size: 0.45em;
+      font-weight: 500;
+      vertical-align: top;
+      margin-left: 0.1em;
+      color: var(--news-accent);
+    }
+    .stat-label {
+      font-family: var(--font-body);
+      font-size: 0.78rem;
+      letter-spacing: 0.18em;
+      text-transform: uppercase;
+      color: var(--news-muted);
+      margin-top: 0.6rem;
+      font-weight: 500;
+    }
+    @media (max-width: 720px) {
+      .impact-stats .shell { grid-template-columns: repeat(2, 1fr); gap: 1.6rem; }
+    }
+
+    /* ---------- 2. AS FEATURED IN ---------- */
+    .featured-in {
+      padding: 2.5rem 0 3rem;
+      border-bottom: 1px solid var(--news-rule);
+      background: #fff;
+    }
+    .featured-in-label {
+      font-family: var(--font-body);
+      font-size: 0.72rem;
+      letter-spacing: 0.32em;
+      text-transform: uppercase;
+      color: var(--news-muted);
+      text-align: center;
+      margin-bottom: 1.6rem;
+    }
+    .featured-in-label::before,
+    .featured-in-label::after {
+      content: "";
+      display: inline-block;
+      width: 32px;
+      height: 1px;
+      background: var(--news-rule);
+      vertical-align: middle;
+      margin: 0 1rem;
+    }
+    .logo-strip {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: center;
+      align-items: center;
+      gap: 0.5rem 2.6rem;
+    }
+    .logo-strip .logo-item {
+      font-family: var(--font-display);
+      font-weight: 600;
+      font-size: 1.05rem;
+      color: var(--news-ink);
+      letter-spacing: -0.01em;
+      opacity: 0.78;
+      transition: opacity 0.2s;
+      white-space: nowrap;
+    }
+    .logo-strip .logo-item.italic { font-style: italic; }
+    .logo-strip .logo-item.caps {
+      font-family: var(--font-body);
+      font-weight: 700;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      font-size: 0.85rem;
+    }
+    .logo-strip .logo-item:hover { opacity: 1; }
+    .logo-strip .logo-divider {
+      width: 4px; height: 4px; border-radius: 50%;
+      background: var(--news-rule);
+    }
+
+    /* ---------- 3. FILTERABLE CARD GRID ---------- */
+    .news-grid-section {
+      padding: 4rem 0 5rem;
+    }
+    .grid-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: flex-end;
+      flex-wrap: wrap;
+      gap: 1.5rem;
+      margin-bottom: 2rem;
+      padding-bottom: 1.5rem;
+      border-bottom: 1px solid var(--news-rule);
+    }
+    .grid-header h2 {
+      font-family: var(--font-display);
+      font-weight: 500;
+      font-size: clamp(1.8rem, 3.5vw, 2.6rem);
+      letter-spacing: -0.02em;
+      margin: 0;
+      color: var(--news-ink);
+    }
+    .grid-header h2 em {
+      font-style: italic;
+      color: var(--news-accent);
+    }
+    .filter-tabs {
+      display: flex;
+      gap: 0.4rem;
+      flex-wrap: wrap;
+    }
+    .filter-tab {
+      font-family: var(--font-body);
+      font-size: 0.82rem;
+      font-weight: 500;
+      letter-spacing: 0.04em;
+      padding: 0.5rem 1rem;
+      border: 1px solid var(--news-rule);
+      background: #fff;
+      color: var(--news-ink);
+      border-radius: 999px;
+      cursor: pointer;
+      transition: all 0.2s;
+      display: inline-flex;
+      align-items: center;
+      gap: 0.5rem;
+    }
+    .filter-tab:hover { border-color: var(--news-ink); }
+    .filter-tab.active {
+      background: var(--news-ink);
+      color: #fff;
+      border-color: var(--news-ink);
+    }
+    .filter-tab .tab-count {
+      font-size: 0.7rem;
+      font-variant-numeric: tabular-nums;
+      opacity: 0.6;
+    }
+    .filter-tab.active .tab-count { opacity: 0.85; }
+
+    .news-cards {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+      gap: 1.5rem;
+    }
+    .news-card {
+      background: #fff;
+      border: 1px solid var(--news-rule);
+      padding: 1.6rem 1.5rem 1.4rem;
+      display: flex;
+      flex-direction: column;
+      gap: 0.9rem;
+      text-decoration: none;
+      color: inherit;
+      transition: transform 0.25s ease, box-shadow 0.25s ease, border-color 0.25s ease;
+      position: relative;
+      overflow: hidden;
+    }
+    .news-card::before {
+      content: "";
+      position: absolute;
+      top: 0; left: 0; right: 0;
+      height: 3px;
+      background: var(--card-color, var(--news-ink));
+      transform-origin: left;
+      transform: scaleX(0.15);
+      transition: transform 0.3s ease;
+    }
+    .news-card:hover {
+      transform: translateY(-3px);
+      box-shadow: 0 12px 28px -16px rgba(15, 23, 41, 0.25);
+      border-color: var(--card-color, var(--news-ink));
+    }
+    .news-card:hover::before { transform: scaleX(1); }
+    .news-card[data-category="research"]    { --card-color: var(--cat-research); }
+    .news-card[data-category="teaching"]    { --card-color: var(--cat-teaching); }
+    .news-card[data-category="recognition"] { --card-color: var(--cat-recognition); }
+    .news-card[data-category="workshops"]   { --card-color: var(--cat-workshops); }
+
+    .card-meta-row {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      font-family: var(--font-body);
+      font-size: 0.7rem;
+      letter-spacing: 0.14em;
+      text-transform: uppercase;
+      font-weight: 600;
+    }
+    .card-category {
+      color: var(--card-color, var(--news-ink));
+    }
+    .card-type {
+      color: var(--news-muted);
+      font-weight: 500;
+      letter-spacing: 0.1em;
+      display: inline-flex;
+      align-items: center;
+      gap: 0.35rem;
+    }
+    .card-type svg {
+      width: 12px; height: 12px;
+      stroke: currentColor; fill: none; stroke-width: 1.6;
+    }
+    .card-title {
+      font-family: var(--font-display);
+      font-size: 1.12rem;
+      line-height: 1.3;
+      font-weight: 500;
+      color: var(--news-ink);
+      letter-spacing: -0.005em;
+      margin: 0;
+    }
+    .news-card[href]:hover .card-title { color: var(--card-color); }
+    .card-footer {
+      margin-top: auto;
+      padding-top: 0.6rem;
+      border-top: 1px dashed var(--news-rule);
+      display: flex;
+      justify-content: space-between;
+      align-items: baseline;
+      font-family: var(--font-body);
+      font-size: 0.82rem;
+      color: var(--news-muted);
+    }
+    .card-source { font-style: italic; }
+    .card-year { font-variant-numeric: tabular-nums; font-weight: 500; }
+
+    .news-card.empty {
+      display: none;
+    }
+
+    .no-results {
+      grid-column: 1 / -1;
+      text-align: center;
+      padding: 3rem 1rem;
+      color: var(--news-muted);
+      font-family: var(--font-display);
+      font-style: italic;
+      display: none;
+    }
+    .news-cards.is-empty .no-results { display: block; }
+
+    /* ---------- 4. WORKSHOP TOUR MAP ---------- */
+    .workshop-tour {
+      background: var(--news-ink);
+      color: #f7f5ee;
+      padding: 5rem 0;
+      position: relative;
+      overflow: hidden;
+    }
+    .workshop-tour::before {
+      content: "";
+      position: absolute;
+      inset: 0;
+      background-image:
+        radial-gradient(circle at 20% 20%, rgba(184, 134, 11, 0.08) 0%, transparent 40%),
+        radial-gradient(circle at 80% 80%, rgba(184, 134, 11, 0.06) 0%, transparent 50%);
+      pointer-events: none;
+    }
+    .tour-header {
+      text-align: center;
+      max-width: 720px;
+      margin: 0 auto 3rem;
+      position: relative;
+    }
+    .tour-kicker {
+      font-family: var(--font-body);
+      font-size: 0.75rem;
+      letter-spacing: 0.32em;
+      text-transform: uppercase;
+      color: var(--news-accent);
+      margin-bottom: 1rem;
+    }
+    .tour-header h2 {
+      font-family: var(--font-display);
+      font-weight: 500;
+      font-size: clamp(2rem, 4.5vw, 3rem);
+      letter-spacing: -0.02em;
+      margin: 0 0 1rem;
+      color: #fff;
+    }
+    .tour-header h2 em {
+      font-style: italic;
+      color: var(--news-accent);
+    }
+    .tour-header p {
+      color: rgba(247, 245, 238, 0.75);
+      font-size: 1rem;
+      line-height: 1.6;
+    }
+
+    .tour-layout {
+      display: grid;
+      grid-template-columns: 1.3fr 1fr;
+      gap: 3rem;
+      align-items: start;
+      position: relative;
+    }
+    @media (max-width: 900px) {
+      .tour-layout { grid-template-columns: 1fr; gap: 2rem; }
+    }
+
+    .tour-map-wrap {
+      background: rgba(255, 255, 255, 0.03);
+      border: 1px solid rgba(247, 245, 238, 0.1);
+      padding: 1.5rem;
+      border-radius: 4px;
+    }
+    .tour-map { width: 100%; height: auto; display: block; }
+
+    .map-state {
+      fill: rgba(247, 245, 238, 0.06);
+      stroke: rgba(247, 245, 238, 0.18);
+      stroke-width: 0.6;
+      transition: fill 0.3s;
+    }
+    .map-state.has-pin { fill: rgba(247, 245, 238, 0.14); }
+
+    .tour-route {
+      stroke: var(--news-accent);
+      stroke-width: 1.2;
+      stroke-dasharray: 3 4;
+      fill: none;
+      opacity: 0.5;
+    }
+
+    .tour-pin-group { cursor: pointer; }
+    .tour-pin-halo {
+      fill: var(--news-accent);
+      opacity: 0.18;
+      transition: opacity 0.3s, r 0.3s;
+    }
+    .tour-pin-dot {
+      fill: var(--news-accent);
+      stroke: var(--news-ink);
+      stroke-width: 1.5;
+    }
+    .tour-pin-num {
+      fill: var(--news-ink);
+      font-family: var(--font-body);
+      font-weight: 700;
+      font-size: 9px;
+      text-anchor: middle;
+      dominant-baseline: central;
+      pointer-events: none;
+    }
+    .tour-pin-group:hover .tour-pin-halo,
+    .tour-pin-group.active .tour-pin-halo {
+      opacity: 0.4;
+    }
+    .tour-pin-label {
+      fill: rgba(247, 245, 238, 0.85);
+      font-family: var(--font-body);
+      font-size: 9px;
+      font-weight: 500;
+      text-anchor: middle;
+    }
+
+    .tour-stops { list-style: none; padding: 0; margin: 0; }
+    .tour-stop {
+      display: grid;
+      grid-template-columns: 36px 1fr;
+      gap: 1rem;
+      padding: 1.1rem 0;
+      border-bottom: 1px solid rgba(247, 245, 238, 0.1);
+      cursor: pointer;
+      transition: padding-left 0.25s ease;
+    }
+    .tour-stop:hover, .tour-stop.active {
+      padding-left: 0.5rem;
+    }
+    .tour-stop:hover .stop-num,
+    .tour-stop.active .stop-num {
+      background: var(--news-accent);
+      color: var(--news-ink);
+    }
+    .tour-stop:last-child { border-bottom: none; }
+    .stop-num {
+      width: 30px; height: 30px;
+      border-radius: 50%;
+      border: 1px solid var(--news-accent);
+      color: var(--news-accent);
+      display: flex; align-items: center; justify-content: center;
+      font-family: var(--font-display);
+      font-weight: 600;
+      font-size: 0.95rem;
+      transition: all 0.25s;
+      font-variant-numeric: tabular-nums;
+    }
+    .stop-info { display: flex; flex-direction: column; gap: 0.2rem; }
+    .stop-title {
+      font-family: var(--font-display);
+      font-weight: 500;
+      font-size: 1.05rem;
+      color: #fff;
+      line-height: 1.3;
+    }
+    .stop-venue {
+      font-family: var(--font-body);
+      font-size: 0.85rem;
+      color: rgba(247, 245, 238, 0.7);
+    }
+    .stop-date {
+      font-family: var(--font-body);
+      font-size: 0.75rem;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      color: var(--news-accent);
+      margin-top: 0.2rem;
+    }
+
+    .tour-cta {
+      margin-top: 2.5rem;
+      padding: 1.5rem 1.8rem;
+      border: 1px solid rgba(184, 134, 11, 0.4);
+      border-radius: 4px;
+      background: rgba(184, 134, 11, 0.06);
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      flex-wrap: wrap;
+      gap: 1rem;
+    }
+    .tour-cta-text {
+      font-family: var(--font-display);
+      font-size: 1.05rem;
+      color: #fff;
+      max-width: 480px;
+      line-height: 1.4;
+    }
+    .tour-cta-text em { color: var(--news-accent); font-style: italic; }
+    .tour-cta-btn {
+      font-family: var(--font-body);
+      font-size: 0.82rem;
+      font-weight: 600;
+      letter-spacing: 0.14em;
+      text-transform: uppercase;
+      padding: 0.85rem 1.4rem;
+      border: 1px solid var(--news-accent);
+      color: var(--news-accent);
+      background: transparent;
+      cursor: pointer;
+      text-decoration: none;
+      transition: all 0.2s;
+    }
+    .tour-cta-btn:hover {
+      background: var(--news-accent);
+      color: var(--news-ink);
+    }
+
+  </style>
+</head>
+
+<body class="news-page">
+  <header class="site-header">
+    <div class="shell"><a class="brand" href="index.html"><span class="brand-mark">Welcome to Our Community </span><span
+          class="brand-name">Dr. Sidaard Gunasekaran, Ph.D., University of Dayton</span></a>
+      <nav class="nav"><a href="index.html">Home</a><a href="research.html">Research Projects</a><a
+          href="students.html">Students</a><a href="alumni.html">Alumni</a><a
+          href="publications.html">Publications</a><a href="teaching.html">Teaching</a><a
+          href="facilities.html">Facilities</a>
+        <a class="active" href="news.html">News</a><a href="community.html">Community</a>
+      </nav>
+    </div>
+  </header>
+
+  <!-- ============== BLUE HERO (preserved) ============== -->
+  <div class="page-hero">
+    <div class="shell page-hero-grid">
+      <div>
+        <div class="section-kicker">News and Media</div>
+        <h1>Our Impact</h1>
+        <p>Sharing our story beyond the lab.</p>
+      </div>
+      <aside class="panel">
+        <h3>Coverage Areas</h3>
+        <ul class="plain-list">
+          <li>Precision agriculture and spray drift</li>
+          <li>Drone applications</li>
+          <li>AI in education</li>
+          <li>Teaching and outreach features</li>
+          <li>Professional recognition and fellowships</li>
+          <li>Workshops and keynote activity</li>
+        </ul>
+      </aside>
+    </div>
+  </div>
+
+  <main>
+    <!-- ============== 1. STATS BAR ============== -->
+    <section class="impact-stats">
+      <div class="shell">
+        <div class="stat">
+          <div class="stat-num">24<sup>+</sup></div>
+          <div class="stat-label">Media Features</div>
+        </div>
+        <div class="stat">
+          <div class="stat-num">10</div>
+          <div class="stat-label">Workshops &amp; Keynotes</div>
+        </div>
+        <div class="stat">
+          <div class="stat-num">6</div>
+          <div class="stat-label">Awards &amp; Fellowships</div>
+        </div>
+        <div class="stat">
+          <div class="stat-num">5</div>
+          <div class="stat-label">Universities on Tour</div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ============== 2. AS FEATURED IN ============== -->
+    <section class="featured-in">
+      <div class="shell">
+        <div class="featured-in-label">As Featured In</div>
+        <div class="logo-strip">
+          <span class="logo-item italic">Farm Progress</span>
+          <span class="logo-divider"></span>
+          <span class="logo-item">AgWeb</span>
+          <span class="logo-divider"></span>
+          <span class="logo-item italic">Farm and Dairy</span>
+          <span class="logo-divider"></span>
+          <span class="logo-item caps">WVXU</span>
+          <span class="logo-divider"></span>
+          <span class="logo-item">Dayton Daily News</span>
+          <span class="logo-divider"></span>
+          <span class="logo-item caps">ASEE</span>
+          <span class="logo-divider"></span>
+          <span class="logo-item italic">Aerospace America</span>
+          <span class="logo-divider"></span>
+          <span class="logo-item">Tech Transfer Central</span>
+          <span class="logo-divider"></span>
+          <span class="logo-item">Engineering Unleashed</span>
+          <span class="logo-divider"></span>
+          <span class="logo-item">University of Dayton</span>
+        </div>
+      </div>
+    </section>
+
+    <!-- ============== 3. FILTERABLE CARD GRID ============== -->
+    <section class="news-grid-section">
+      <div class="shell">
+        <div class="grid-header">
+          <h2>Coverage <em>&amp; recognition</em></h2>
+          <div class="filter-tabs" role="tablist">
+            <button class="filter-tab active" data-filter="all">All <span class="tab-count">34</span></button>
+            <button class="filter-tab" data-filter="research">Research <span class="tab-count">8</span></button>
+            <button class="filter-tab" data-filter="teaching">Teaching <span class="tab-count">10</span></button>
+            <button class="filter-tab" data-filter="recognition">Recognition <span class="tab-count">6</span></button>
+            <button class="filter-tab" data-filter="workshops">Workshops <span class="tab-count">10</span></button>
+          </div>
+        </div>
+
+        <div class="news-cards" id="newsCards">
+
+          <!-- ===== RESEARCH ===== -->
+          <a class="news-card" data-category="research" href="https://www.farmprogress.com/crops/spraying-ohio-wind">
+            <div class="card-meta-row">
+              <span class="card-category">Research</span>
+              <span class="card-type"><svg viewBox="0 0 24 24"><path d="M4 6h16M4 12h16M4 18h10"/></svg>Article</span>
+            </div>
+            <h3 class="card-title">Spraying in the Ohio Wind</h3>
+            <div class="card-footer"><span class="card-source">Farm Progress</span><span class="card-year">2019</span></div>
+          </a>
+
+          <div class="news-card" data-category="research">
+            <div class="card-meta-row">
+              <span class="card-category">Research</span>
+              <span class="card-type"><svg viewBox="0 0 24 24"><path d="M4 6h16M4 12h16M4 18h10"/></svg>Article</span>
+            </div>
+            <h3 class="card-title">UD Wind Tunnel Used for Agricultural Chemical &amp; Equipment Testing</h3>
+            <div class="card-footer"><span class="card-source">ASEE First Bell</span><span class="card-year">2019</span></div>
+          </div>
+
+          <a class="news-card" data-category="research" href="https://www.youtube.com/watch?v=zZs8T2pB2Os">
+            <div class="card-meta-row">
+              <span class="card-category">Research</span>
+              <span class="card-type"><svg viewBox="0 0 24 24"><polygon points="6 4 20 12 6 20 6 4" fill="currentColor" stroke="none"/></svg>Video</span>
+            </div>
+            <h3 class="card-title">Using Machine Learning to Minimize Spray Drift</h3>
+            <div class="card-footer"><span class="card-source">UD YouTube</span><span class="card-year">2022</span></div>
+          </a>
+
+          <a class="news-card" data-category="research" href="https://www.farmanddairy.com/news/researchers-study-drone-spray-drift-potential/766280.html">
+            <div class="card-meta-row">
+              <span class="card-category">Research</span>
+              <span class="card-type"><svg viewBox="0 0 24 24"><path d="M4 6h16M4 12h16M4 18h10"/></svg>Article</span>
+            </div>
+            <h3 class="card-title">Researchers Study Drone Spray Drift Potential</h3>
+            <div class="card-footer"><span class="card-source">Farm and Dairy</span><span class="card-year">2023</span></div>
+          </a>
+
+          <a class="news-card" data-category="research" href="https://www.agweb.com/news/crops/crop-production/rise-spray-drone">
+            <div class="card-meta-row">
+              <span class="card-category">Research</span>
+              <span class="card-type"><svg viewBox="0 0 24 24"><path d="M4 6h16M4 12h16M4 18h10"/></svg>Article</span>
+            </div>
+            <h3 class="card-title">Rise of the Spray Drone</h3>
+            <div class="card-footer"><span class="card-source">AgWeb</span><span class="card-year">2023</span></div>
+          </a>
+
+          <a class="news-card" data-category="research" href="https://www.wvxu.org/podcast/focus-on-technology/2023-04-10/agriculture-drones-crops-spray-drift">
+            <div class="card-meta-row">
+              <span class="card-category">Research</span>
+              <span class="card-type"><svg viewBox="0 0 24 24"><circle cx="12" cy="11" r="3"/><path d="M5 11a7 7 0 0 0 14 0M12 18v3"/></svg>Podcast</span>
+            </div>
+            <h3 class="card-title">Agriculture Drones Are Getting More Popular. Are They Accurate Enough?</h3>
+            <div class="card-footer"><span class="card-source">WVXU</span><span class="card-year">2023</span></div>
+          </a>
+
+          <a class="news-card" data-category="research" href="https://techtransfercentral.com/2023/04/11/u-dayton-industry-partnership-looks-to-advance-drone-spraying-in-precision-agriculture/">
+            <div class="card-meta-row">
+              <span class="card-category">Research</span>
+              <span class="card-type"><svg viewBox="0 0 24 24"><path d="M4 6h16M4 12h16M4 18h10"/></svg>Article</span>
+            </div>
+            <h3 class="card-title">U Dayton Partnership Looks to Advance Drone Spraying in Precision Agriculture</h3>
+            <div class="card-footer"><span class="card-source">Tech Transfer Central</span><span class="card-year">2023</span></div>
+          </a>
+
+          <a class="news-card" data-category="research" href="https://udayton.edu/news/articles/2023/04/sid_gunasekaran_spray_analytics_drone_testing.php">
+            <div class="card-meta-row">
+              <span class="card-category">Research</span>
+              <span class="card-type"><svg viewBox="0 0 24 24"><path d="M4 6h16M4 12h16M4 18h10"/></svg>Article</span>
+            </div>
+            <h3 class="card-title">UD Research–Industry Partnership Seeks Answers to Precision Agriculture</h3>
+            <div class="card-footer"><span class="card-source">UD News</span><span class="card-year">2024</span></div>
+          </a>
+
+          <!-- ===== TEACHING ===== -->
+          <a class="news-card" data-category="teaching" href="https://bit.ly/IDAinMEE225">
+            <div class="card-meta-row">
+              <span class="card-category">Teaching</span>
+              <span class="card-type"><svg viewBox="0 0 24 24"><path d="M4 6h16M4 12h16M4 18h10"/></svg>Bulletin</span>
+            </div>
+            <h3 class="card-title">AIAA Bulletin Feature on IDA Pedagogy in MEE 225</h3>
+            <div class="card-footer"><span class="card-source">Aerospace America</span><span class="card-year">2017</span></div>
+          </a>
+
+          <a class="news-card" data-category="teaching" href="https://bit.ly/MeasuringMindset">
+            <div class="card-meta-row">
+              <span class="card-category">Teaching</span>
+              <span class="card-type"><svg viewBox="0 0 24 24"><polygon points="6 4 20 12 6 20 6 4" fill="currentColor" stroke="none"/></svg>Talk</span>
+            </div>
+            <h3 class="card-title">How Do You Measure a Mindset?</h3>
+            <div class="card-footer"><span class="card-source">KEEN Network</span><span class="card-year">2020</span></div>
+          </a>
+
+          <a class="news-card" data-category="teaching" href="https://bit.ly/PassionProjectMEE401">
+            <div class="card-meta-row">
+              <span class="card-category">Teaching</span>
+              <span class="card-type"><svg viewBox="0 0 24 24"><path d="M4 6h16M4 12h16M4 18h10"/></svg>Article</span>
+            </div>
+            <h3 class="card-title">New Classroom Approach Brings Passion to the Forefront of Learning</h3>
+            <div class="card-footer"><span class="card-source">Univ. of Dayton</span><span class="card-year">—</span></div>
+          </a>
+
+          <a class="news-card" data-category="teaching" href="https://bit.ly/WhenPassionTakesFlight">
+            <div class="card-meta-row">
+              <span class="card-category">Teaching</span>
+              <span class="card-type"><svg viewBox="0 0 24 24"><path d="M4 6h16M4 12h16M4 18h10"/></svg>Article</span>
+            </div>
+            <h3 class="card-title">When Passion Takes Flight</h3>
+            <div class="card-footer"><span class="card-source">Univ. of Dayton</span><span class="card-year">—</span></div>
+          </a>
+
+          <a class="news-card" data-category="teaching" href="https://bit.ly/MerlinFlightSimulator">
+            <div class="card-meta-row">
+              <span class="card-category">Teaching</span>
+              <span class="card-type"><svg viewBox="0 0 24 24"><path d="M4 6h16M4 12h16M4 18h10"/></svg>Feature</span>
+            </div>
+            <h3 class="card-title">Merlin Flight Simulator Lab</h3>
+            <div class="card-footer"><span class="card-source">Univ. of Dayton</span><span class="card-year">—</span></div>
+          </a>
+
+          <a class="news-card" data-category="teaching" href="https://bit.ly/TeachinginLTCStudio">
+            <div class="card-meta-row">
+              <span class="card-category">Teaching</span>
+              <span class="card-type"><svg viewBox="0 0 24 24"><path d="M4 6h16M4 12h16M4 18h10"/></svg>Feature</span>
+            </div>
+            <h3 class="card-title">A Look Inside the LTC Studio with Dr. Sidaard Gunasekaran</h3>
+            <div class="card-footer"><span class="card-source">UD LTC</span><span class="card-year">—</span></div>
+          </a>
+
+          <a class="news-card" data-category="teaching" href="https://bit.ly/EMLatUD">
+            <div class="card-meta-row">
+              <span class="card-category">Teaching</span>
+              <span class="card-type"><svg viewBox="0 0 24 24"><path d="M4 6h16M4 12h16M4 18h10"/></svg>Article</span>
+            </div>
+            <h3 class="card-title">Our Competitive Edge — EML at UD</h3>
+            <div class="card-footer"><span class="card-source">Univ. of Dayton</span><span class="card-year">—</span></div>
+          </a>
+
+          <a class="news-card" data-category="teaching" href="https://www.daytondailynews.com/community/dayton/ud-freshmen-required-to-take-two-ai-classes-next-school-year/article_6bf2b9fd-f62f-4166-b9b1-2400663db31e.html">
+            <div class="card-meta-row">
+              <span class="card-category">Teaching</span>
+              <span class="card-type"><svg viewBox="0 0 24 24"><path d="M4 6h16M4 12h16M4 18h10"/></svg>News</span>
+            </div>
+            <h3 class="card-title">UD Freshmen Required to Take Two AI Classes Next School Year</h3>
+            <div class="card-footer"><span class="card-source">Dayton Daily News</span><span class="card-year">2024</span></div>
+          </a>
+
+          <a class="news-card" data-category="teaching" href="https://udayton.edu/blogs/president/2024/03/rock_star.php">
+            <div class="card-meta-row">
+              <span class="card-category">Teaching</span>
+              <span class="card-type"><svg viewBox="0 0 24 24"><path d="M12 2l3 7h7l-5.5 4.5L18 21l-6-4-6 4 1.5-7.5L2 9h7z"/></svg>Profile</span>
+            </div>
+            <h3 class="card-title">Rock Star</h3>
+            <div class="card-footer"><span class="card-source">UD President's Blog</span><span class="card-year">2024</span></div>
+          </a>
+
+          <div class="news-card" data-category="teaching">
+            <div class="card-meta-row">
+              <span class="card-category">Teaching</span>
+              <span class="card-type"><svg viewBox="0 0 24 24"><path d="M6 3h12v18l-6-3-6 3z"/></svg>Report</span>
+            </div>
+            <h3 class="card-title">UD School of Engineering Impact Report</h3>
+            <div class="card-footer"><span class="card-source">School of Engineering</span><span class="card-year">2024</span></div>
+          </div>
+
+          <!-- ===== RECOGNITION ===== -->
+          <a class="news-card" data-category="recognition" href="https://engineeringunleashed.com/fellows">
+            <div class="card-meta-row">
+              <span class="card-category">Recognition</span>
+              <span class="card-type"><svg viewBox="0 0 24 24"><path d="M12 2l3 7h7l-5.5 4.5L18 21l-6-4-6 4 1.5-7.5L2 9h7z"/></svg>Fellowship</span>
+            </div>
+            <h3 class="card-title">2025 EngineeringUnleashed Fellow</h3>
+            <div class="card-footer"><span class="card-source">KEEN Network</span><span class="card-year">2025</span></div>
+          </a>
+
+          <a class="news-card" data-category="recognition" href="https://engineeringunleashed.com/card/10">
+            <div class="card-meta-row">
+              <span class="card-category">Recognition</span>
+              <span class="card-type"><svg viewBox="0 0 24 24"><path d="M12 2l3 7h7l-5.5 4.5L18 21l-6-4-6 4 1.5-7.5L2 9h7z"/></svg>Selection</span>
+            </div>
+            <h3 class="card-title">Member of KEEN's Team Crescendo — One of Four Faculty Nationally</h3>
+            <div class="card-footer"><span class="card-source">KEEN Network</span><span class="card-year">2024</span></div>
+          </a>
+
+          <div class="news-card" data-category="recognition">
+            <div class="card-meta-row">
+              <span class="card-category">Recognition</span>
+              <span class="card-type"><svg viewBox="0 0 24 24"><path d="M12 2l3 7h7l-5.5 4.5L18 21l-6-4-6 4 1.5-7.5L2 9h7z"/></svg>Award</span>
+            </div>
+            <h3 class="card-title">KEEN Top National Rising Star Award</h3>
+            <div class="card-footer"><span class="card-source">KEEN Network</span><span class="card-year">2023</span></div>
+          </div>
+
+          <div class="news-card" data-category="recognition">
+            <div class="card-meta-row">
+              <span class="card-category">Recognition</span>
+              <span class="card-type"><svg viewBox="0 0 24 24"><path d="M4 6h16M4 12h16M4 18h10"/></svg>Story</span>
+            </div>
+            <h3 class="card-title">2023 KEEN Rising Star: Sid G</h3>
+            <div class="card-footer"><span class="card-source">Engineering Unleashed</span><span class="card-year">2023</span></div>
+          </div>
+
+          <div class="news-card" data-category="recognition">
+            <div class="card-meta-row">
+              <span class="card-category">Recognition</span>
+              <span class="card-type"><svg viewBox="0 0 24 24"><path d="M4 6h16M4 12h16M4 18h10"/></svg>News</span>
+            </div>
+            <h3 class="card-title">Associate Professor Receives KEEN Rising Star Award</h3>
+            <div class="card-footer"><span class="card-source">Univ. of Dayton</span><span class="card-year">2023</span></div>
+          </div>
+
+          <a class="news-card" data-category="recognition" href="https://bit.ly/VisionAwardSid">
+            <div class="card-meta-row">
+              <span class="card-category">Recognition</span>
+              <span class="card-type"><svg viewBox="0 0 24 24"><path d="M12 2l3 7h7l-5.5 4.5L18 21l-6-4-6 4 1.5-7.5L2 9h7z"/></svg>Award</span>
+            </div>
+            <h3 class="card-title">Faculty &amp; Staff Recognized with VISION Awards</h3>
+            <div class="card-footer"><span class="card-source">Univ. of Dayton</span><span class="card-year">2018</span></div>
+          </a>
+
+          <!-- ===== WORKSHOPS ===== -->
+          <div class="news-card" data-category="workshops">
+            <div class="card-meta-row">
+              <span class="card-category">Workshop</span>
+              <span class="card-type"><svg viewBox="0 0 24 24"><path d="M3 12h18M7 4l5 8 5-8M7 20l5-8 5 8"/></svg>Online</span>
+            </div>
+            <h3 class="card-title">Crescendo Workshop: The Intentional Joy of Learning</h3>
+            <div class="card-footer"><span class="card-source">Univ. of Idaho</span><span class="card-year">Dec 2025</span></div>
+          </div>
+
+          <div class="news-card" data-category="workshops">
+            <div class="card-meta-row">
+              <span class="card-category">Workshop</span>
+              <span class="card-type"><svg viewBox="0 0 24 24"><circle cx="12" cy="10" r="3"/><path d="M12 21s7-7 7-12a7 7 0 0 0-14 0c0 5 7 12 7 12z"/></svg>On-Site</span>
+            </div>
+            <h3 class="card-title">Crescendo Workshop: The Intentional Joy of Learning</h3>
+            <div class="card-footer"><span class="card-source">New York Inst. of Technology</span><span class="card-year">Nov 2025</span></div>
+          </div>
+
+          <div class="news-card" data-category="workshops">
+            <div class="card-meta-row">
+              <span class="card-category">Workshop</span>
+              <span class="card-type"><svg viewBox="0 0 24 24"><circle cx="12" cy="10" r="3"/><path d="M12 21s7-7 7-12a7 7 0 0 0-14 0c0 5 7 12 7 12z"/></svg>Keynote</span>
+            </div>
+            <h3 class="card-title">Mastering Modern Academia</h3>
+            <div class="card-footer"><span class="card-source">KEEN Leader Mtg., Milwaukee</span><span class="card-year">Sep 2025</span></div>
+          </div>
+
+          <div class="news-card" data-category="workshops">
+            <div class="card-meta-row">
+              <span class="card-category">Workshop</span>
+              <span class="card-type"><svg viewBox="0 0 24 24"><circle cx="12" cy="10" r="3"/><path d="M12 21s7-7 7-12a7 7 0 0 0-14 0c0 5 7 12 7 12z"/></svg>On-Site</span>
+            </div>
+            <h3 class="card-title">Crescendo Workshop: Mastering Modern Academia</h3>
+            <div class="card-footer"><span class="card-source">Trine University</span><span class="card-year">Aug 2025</span></div>
+          </div>
+
+          <div class="news-card" data-category="workshops">
+            <div class="card-meta-row">
+              <span class="card-category">Workshop</span>
+              <span class="card-type"><svg viewBox="0 0 24 24"><circle cx="12" cy="10" r="3"/><path d="M12 21s7-7 7-12a7 7 0 0 0-14 0c0 5 7 12 7 12z"/></svg>On-Site</span>
+            </div>
+            <h3 class="card-title">Crescendo Workshop: Mastering Modern Academia</h3>
+            <div class="card-footer"><span class="card-source">University of Toledo</span><span class="card-year">Jun 2025</span></div>
+          </div>
+
+          <a class="news-card" data-category="workshops" href="https://kernfamilyfdn.eventsair.com/2025-keen-national-conference/agenda">
+            <div class="card-meta-row">
+              <span class="card-category">Workshop</span>
+              <span class="card-type"><svg viewBox="0 0 24 24"><circle cx="12" cy="10" r="3"/><path d="M12 21s7-7 7-12a7 7 0 0 0-14 0c0 5 7 12 7 12z"/></svg>Conference</span>
+            </div>
+            <h3 class="card-title">Transform Your Teaching with Case Studies</h3>
+            <div class="card-footer"><span class="card-source">2025 KEEN, Austin</span><span class="card-year">2025</span></div>
+          </a>
+
+          <a class="news-card" data-category="workshops" href="https://nemo.asee.org/public/conferences/344/registration/view_session?session_id=19447">
+            <div class="card-meta-row">
+              <span class="card-category">Workshop</span>
+              <span class="card-type"><svg viewBox="0 0 24 24"><circle cx="12" cy="10" r="3"/><path d="M12 21s7-7 7-12a7 7 0 0 0-14 0c0 5 7 12 7 12z"/></svg>Conference</span>
+            </div>
+            <h3 class="card-title">Transform Your Teaching with Case Studies</h3>
+            <div class="card-footer"><span class="card-source">2024 ASEE, Portland</span><span class="card-year">2024</span></div>
+          </a>
+
+          <a class="news-card" data-category="workshops" href="https://kernfamilyfdn.eventsair.com/2024-keen-national-conference/agenda">
+            <div class="card-meta-row">
+              <span class="card-category">Workshop</span>
+              <span class="card-type"><svg viewBox="0 0 24 24"><circle cx="12" cy="10" r="3"/><path d="M12 21s7-7 7-12a7 7 0 0 0-14 0c0 5 7 12 7 12z"/></svg>Conference</span>
+            </div>
+            <h3 class="card-title">Creating Value &amp; Connections with Writing-To-Learn in STEM</h3>
+            <div class="card-footer"><span class="card-source">2024 KEEN, Austin</span><span class="card-year">2024</span></div>
+          </a>
+
+          <a class="news-card" data-category="workshops" href="https://www.youtube.com/watch?v=xQYK3G58xOk&t=1193s">
+            <div class="card-meta-row">
+              <span class="card-category">Workshop</span>
+              <span class="card-type"><svg viewBox="0 0 24 24"><polygon points="6 4 20 12 6 20 6 4" fill="currentColor" stroke="none"/></svg>Keynote</span>
+            </div>
+            <h3 class="card-title">iFLY Skydiving Wind Tunnel Case Studies — Keynote &amp; Panel</h3>
+            <div class="card-footer"><span class="card-source">2024 KEEN, Austin</span><span class="card-year">2024</span></div>
+          </a>
+
+          <a class="news-card" data-category="workshops" href="https://kernfamilyfdn.eventsair.com/2024-keen-national-conference/agenda">
+            <div class="card-meta-row">
+              <span class="card-category">Workshop</span>
+              <span class="card-type"><svg viewBox="0 0 24 24"><circle cx="12" cy="10" r="3"/><path d="M12 21s7-7 7-12a7 7 0 0 0-14 0c0 5 7 12 7 12z"/></svg>Conference</span>
+            </div>
+            <h3 class="card-title">EM Essentials: Introduction to Entrepreneurial Mindset</h3>
+            <div class="card-footer"><span class="card-source">2024 KEEN, Austin</span><span class="card-year">2024</span></div>
+          </a>
+
+          <div class="no-results">No items match this filter.</div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ============== 4. WORKSHOP TOUR MAP ============== -->
+    <section class="workshop-tour">
+      <div class="shell">
+        <div class="tour-header">
+          <div class="tour-kicker">2025 Crescendo Workshop Tour</div>
+          <h2>Five campuses. <em>One conversation</em> about modern academia.</h2>
+          <p>Throughout 2025, the Crescendo workshop traveled to five universities, building a community of educators rethinking how we teach, learn, and find joy in the work.</p>
+        </div>
+
+        <div class="tour-layout">
+          <!-- Map -->
+          <div class="tour-map-wrap">
+            <svg class="tour-map" viewBox="0 0 800 460" xmlns="http://www.w3.org/2000/svg" aria-label="2025 Workshop Tour Map">
+
+              <!-- Simplified continental US silhouette -->
+              <path class="map-state" d="
+                M 90 90
+                L 130 70 L 200 60 L 280 55 L 360 50 L 440 48 L 540 55 L 600 70 L 660 90 L 700 115 L 720 145
+                L 730 180 L 720 215 L 700 240 L 695 260 L 705 275 L 720 285 L 730 310 L 720 335 L 700 350
+                L 660 365 L 615 365 L 580 360 L 540 360 L 500 360 L 460 360 L 420 365 L 390 380 L 360 395
+                L 330 400 L 300 395 L 270 385 L 240 375 L 210 360 L 180 345 L 155 325 L 130 305 L 110 285
+                L 95 260 L 85 230 L 80 200 L 80 165 L 82 130 Z" />
+
+              <!-- Florida nudge -->
+              <path class="map-state" d="M 590 360 L 620 360 L 640 380 L 645 405 L 635 415 L 625 405 L 615 385 L 600 372 Z" />
+
+              <!-- Tour route (in tour order: Toledo → Trine → Milwaukee → NYIT → Idaho-online represented at Idaho) -->
+              <!-- Order chronologically: Jun Toledo → Aug Trine → Sep Milwaukee → Nov NYIT → Dec Idaho -->
+              <polyline class="tour-route"
+                        points="571,170 543,178 487,135 712,165 130,90" />
+
+              <!-- Pin: 1 — University of Toledo, OH -->
+              <g class="tour-pin-group" data-stop="1">
+                <circle class="tour-pin-halo" cx="571" cy="170" r="22" />
+                <circle class="tour-pin-dot" cx="571" cy="170" r="11" />
+                <text class="tour-pin-num" x="571" y="170">1</text>
+                <text class="tour-pin-label" x="571" y="200">Toledo, OH</text>
+              </g>
+
+              <!-- Pin: 2 — Trine University, Angola IN -->
+              <g class="tour-pin-group" data-stop="2">
+                <circle class="tour-pin-halo" cx="543" cy="178" r="22" />
+                <circle class="tour-pin-dot" cx="543" cy="178" r="11" />
+                <text class="tour-pin-num" x="543" y="178">2</text>
+                <text class="tour-pin-label" x="525" y="208">Angola, IN</text>
+              </g>
+
+              <!-- Pin: 3 — Milwaukee, WI -->
+              <g class="tour-pin-group" data-stop="3">
+                <circle class="tour-pin-halo" cx="487" cy="135" r="22" />
+                <circle class="tour-pin-dot" cx="487" cy="135" r="11" />
+                <text class="tour-pin-num" x="487" y="135">3</text>
+                <text class="tour-pin-label" x="487" y="115">Milwaukee, WI</text>
+              </g>
+
+              <!-- Pin: 4 — NYIT, Old Westbury NY -->
+              <g class="tour-pin-group" data-stop="4">
+                <circle class="tour-pin-halo" cx="712" cy="165" r="22" />
+                <circle class="tour-pin-dot" cx="712" cy="165" r="11" />
+                <text class="tour-pin-num" x="712" y="165">4</text>
+                <text class="tour-pin-label" x="712" y="145">Old Westbury, NY</text>
+              </g>
+
+              <!-- Pin: 5 — University of Idaho, Moscow ID -->
+              <g class="tour-pin-group" data-stop="5">
+                <circle class="tour-pin-halo" cx="130" cy="90" r="22" />
+                <circle class="tour-pin-dot" cx="130" cy="90" r="11" />
+                <text class="tour-pin-num" x="130" y="90">5</text>
+                <text class="tour-pin-label" x="130" y="70">Moscow, ID</text>
+              </g>
+
+            </svg>
+          </div>
+
+          <!-- Stop list -->
+          <ol class="tour-stops">
+            <li class="tour-stop" data-stop="1">
+              <div class="stop-num">1</div>
+              <div class="stop-info">
+                <div class="stop-title">Mastering Modern Academia</div>
+                <div class="stop-venue">University of Toledo</div>
+                <div class="stop-date">June 15, 2025</div>
+              </div>
+            </li>
+            <li class="tour-stop" data-stop="2">
+              <div class="stop-num">2</div>
+              <div class="stop-info">
+                <div class="stop-title">Mastering Modern Academia</div>
+                <div class="stop-venue">Trine University</div>
+                <div class="stop-date">August 13, 2025</div>
+              </div>
+            </li>
+            <li class="tour-stop" data-stop="3">
+              <div class="stop-num">3</div>
+              <div class="stop-info">
+                <div class="stop-title">Mastering Modern Academia</div>
+                <div class="stop-venue">KEEN Leader Meeting · Milwaukee</div>
+                <div class="stop-date">September 25, 2025</div>
+              </div>
+            </li>
+            <li class="tour-stop" data-stop="4">
+              <div class="stop-num">4</div>
+              <div class="stop-info">
+                <div class="stop-title">The Intentional Joy of Learning</div>
+                <div class="stop-venue">New York Institute of Technology</div>
+                <div class="stop-date">November 5, 2025</div>
+              </div>
+            </li>
+            <li class="tour-stop" data-stop="5">
+              <div class="stop-num">5</div>
+              <div class="stop-info">
+                <div class="stop-title">The Intentional Joy of Learning <em style="color:var(--news-accent);font-style:italic;font-family:var(--font-display);">(online)</em></div>
+                <div class="stop-venue">University of Idaho</div>
+                <div class="stop-date">December 4, 2025</div>
+              </div>
+            </li>
+          </ol>
+        </div>
+
+        <div class="tour-cta">
+          <div class="tour-cta-text">Bring the Crescendo workshop to <em>your campus</em>.</div>
+          <a class="tour-cta-btn" href="community.html">Get in touch →</a>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <footer class="footer">
+    <div class="shell">
+      <div>Students first. Research with purpose.</div>
+      <div class="footer-links"><a href="index.html">Home</a><a href="awards.html">Awards</a></div>
+    </div>
+  </footer>
+
+  <script>
+    // ============ Filter tabs ============
+    (function () {
+      const tabs = document.querySelectorAll('.filter-tab');
+      const cards = document.querySelectorAll('#newsCards .news-card');
+      const grid = document.getElementById('newsCards');
+
+      tabs.forEach(tab => {
+        tab.addEventListener('click', () => {
+          const filter = tab.dataset.filter;
+          tabs.forEach(t => t.classList.remove('active'));
+          tab.classList.add('active');
+
+          let visibleCount = 0;
+          cards.forEach(card => {
+            const matches = filter === 'all' || card.dataset.category === filter;
+            card.style.display = matches ? '' : 'none';
+            if (matches) visibleCount++;
+          });
+          grid.classList.toggle('is-empty', visibleCount === 0);
+        });
+      });
+    })();
+
+    // ============ Map <-> Stop list sync ============
+    (function () {
+      const pins = document.querySelectorAll('.tour-pin-group');
+      const stops = document.querySelectorAll('.tour-stop');
+
+      function highlight(stopId) {
+        pins.forEach(p => p.classList.toggle('active', p.dataset.stop === stopId));
+        stops.forEach(s => s.classList.toggle('active', s.dataset.stop === stopId));
+      }
+      function clear() {
+        pins.forEach(p => p.classList.remove('active'));
+        stops.forEach(s => s.classList.remove('active'));
+      }
+
+      pins.forEach(p => {
+        p.addEventListener('mouseenter', () => highlight(p.dataset.stop));
+        p.addEventListener('mouseleave', clear);
+      });
+      stops.forEach(s => {
+        s.addEventListener('mouseenter', () => highlight(s.dataset.stop));
+        s.addEventListener('mouseleave', clear);
+      });
+    })();
+  </script>
+</body>
+
+</html>

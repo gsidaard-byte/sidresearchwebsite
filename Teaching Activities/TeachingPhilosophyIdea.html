@@ -1,0 +1,1350 @@
+<!doctype html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Teaching | Sidaard Gunasekaran Research Group</title>
+  <link rel="stylesheet" href="styles.css" />
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,400;0,9..144,500;0,9..144,600;0,9..144,700;1,9..144,500;1,9..144,600&family=DM+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
+
+  <style>
+    /* =========================================================
+       TEACHING PAGE: drop these rules into styles.css.
+       Uses --teach-* variables to avoid clashing with
+       existing styles. Matches the news page palette.
+       ========================================================= */
+
+    :root {
+      --teach-ink: #0c2340;
+      --teach-ink-soft: #1c3553;
+      --teach-paper: #fafaf7;
+      --teach-paper-warm: #f4f0e6;
+      --teach-rule: #e6e3da;
+      --teach-muted: #5b6478;
+      --teach-accent: #b8860b;
+      --teach-accent-soft: #d4a534;
+      --teach-teal: #2a6e6b;
+      --teach-teal-soft: #4a8e8b;
+      --teach-rust: #b54e2a;
+      --font-display: "Fraunces", Georgia, serif;
+      --font-body: "DM Sans", system-ui, sans-serif;
+    }
+
+    .teaching-page main { background: var(--teach-paper); }
+
+    /* =====================================================
+       1. GOAL STATEMENT: first reveal after the hero
+       ===================================================== */
+    .goal-statement {
+      padding: 5.5rem 0 5rem;
+      background: var(--teach-paper-warm);
+      border-bottom: 1px solid var(--teach-rule);
+      position: relative;
+      overflow: hidden;
+    }
+    .goal-statement::before {
+      content: "";
+      position: absolute;
+      top: -50px; right: -50px;
+      width: 320px; height: 320px;
+      border-radius: 50%;
+      background: radial-gradient(circle, rgba(184, 134, 11, 0.07) 0%, transparent 70%);
+      pointer-events: none;
+    }
+    .goal-inner {
+      max-width: 920px;
+      margin: 0 auto;
+      padding: 0 2rem;
+      text-align: center;
+      position: relative;
+    }
+    .goal-mark {
+      width: 56px; height: 56px;
+      margin: 0 auto 2rem;
+      display: block;
+    }
+    .goal-mark .compass-ring { fill: none; stroke: var(--teach-accent); stroke-width: 1.2; }
+    .goal-mark .compass-star { fill: var(--teach-accent); }
+    .goal-mark .compass-pip { fill: var(--teach-accent); }
+    .goal-statement blockquote {
+      font-family: var(--font-display);
+      font-weight: 400;
+      font-style: italic;
+      font-size: clamp(1.4rem, 3vw, 2rem);
+      line-height: 1.45;
+      letter-spacing: -0.01em;
+      color: var(--teach-ink);
+      margin: 0 0 1.5rem;
+    }
+    .goal-statement blockquote em {
+      font-style: italic;
+      color: var(--teach-accent);
+      background: linear-gradient(180deg, transparent 70%, rgba(184, 134, 11, 0.18) 70%);
+      padding: 0 0.05em;
+    }
+    .goal-statement cite {
+      display: inline-block;
+      font-family: var(--font-body);
+      font-size: 0.78rem;
+      letter-spacing: 0.32em;
+      text-transform: uppercase;
+      color: var(--teach-muted);
+      font-style: normal;
+      padding-top: 1.4rem;
+      border-top: 1px solid var(--teach-rule);
+      min-width: 180px;
+    }
+
+    /* =====================================================
+       2. SCROLLY SPINE: flight rail + waypoint sections
+       ===================================================== */
+    .scrolly-spine {
+      position: relative;
+      padding: 4rem 0 6rem;
+    }
+    .scrolly-spine .shell {
+      display: grid;
+      grid-template-columns: 110px 1fr;
+      gap: 3rem;
+      align-items: start;
+    }
+
+    /* ---- Flight rail (sticky) ---- */
+    .flight-rail {
+      position: sticky;
+      top: 6rem;
+      height: 70vh;
+      max-height: 720px;
+      min-height: 540px;
+    }
+    .flight-rail svg {
+      width: 100%; height: 100%;
+      overflow: visible;
+    }
+    .rail-path {
+      stroke: var(--teach-rule);
+      stroke-width: 1.5;
+      stroke-dasharray: 4 5;
+      fill: none;
+    }
+    .rail-progress {
+      stroke: var(--teach-accent);
+      stroke-width: 1.8;
+      stroke-dasharray: 4 5;
+      fill: none;
+      stroke-dashoffset: 1000;
+      stroke-dasharray: 1000;
+      transition: stroke-dashoffset 1.2s cubic-bezier(0.4, 0, 0.2, 1);
+    }
+
+    .rail-waypoint { transition: all 0.5s ease; }
+    .rail-waypoint .wp-ring {
+      fill: var(--teach-paper);
+      stroke: var(--teach-rule);
+      stroke-width: 1.5;
+      transition: all 0.5s ease;
+    }
+    .rail-waypoint .wp-num {
+      fill: var(--teach-muted);
+      font-family: var(--font-display);
+      font-size: 13px;
+      font-weight: 600;
+      text-anchor: middle;
+      dominant-baseline: central;
+      transition: fill 0.5s ease;
+    }
+    .rail-waypoint.passed .wp-ring {
+      fill: var(--teach-accent);
+      stroke: var(--teach-accent);
+    }
+    .rail-waypoint.passed .wp-num { fill: var(--teach-paper); }
+    .rail-waypoint.active .wp-ring {
+      fill: var(--teach-ink);
+      stroke: var(--teach-accent);
+      stroke-width: 2.5;
+      r: 18;
+    }
+    .rail-waypoint.active .wp-num { fill: var(--teach-paper); }
+
+    .rail-plane {
+      transition: transform 0.9s cubic-bezier(0.4, 0, 0.2, 1);
+    }
+    .rail-plane path { fill: var(--teach-ink); }
+    .rail-plane circle { fill: var(--teach-accent); }
+
+    /* Mobile: hide the rail */
+    @media (max-width: 860px) {
+      .scrolly-spine .shell { grid-template-columns: 1fr; gap: 0; }
+      .flight-rail { display: none; }
+    }
+
+    /* ---- Waypoint sections (right column) ---- */
+    .scrolly-content > section {
+      padding: 4rem 0 5rem;
+      opacity: 0;
+      transform: translateY(30px);
+      transition: opacity 0.9s ease, transform 0.9s ease;
+    }
+    .scrolly-content > section.in-view {
+      opacity: 1;
+      transform: translateY(0);
+    }
+    .scrolly-content > section:first-child { padding-top: 1rem; }
+    .scrolly-content > section:last-child { padding-bottom: 1rem; }
+
+    .wp-eyebrow {
+      font-family: var(--font-body);
+      font-size: 0.72rem;
+      letter-spacing: 0.32em;
+      text-transform: uppercase;
+      color: var(--teach-muted);
+      margin-bottom: 0.8rem;
+      display: flex;
+      align-items: center;
+      gap: 0.8rem;
+    }
+    .wp-eyebrow::before {
+      content: "";
+      display: inline-block;
+      width: 24px;
+      height: 1px;
+      background: var(--teach-accent);
+    }
+    .wp-title {
+      font-family: var(--font-display);
+      font-weight: 500;
+      font-size: clamp(2rem, 4vw, 2.8rem);
+      line-height: 1.1;
+      letter-spacing: -0.02em;
+      color: var(--teach-ink);
+      margin: 0 0 1.2rem;
+    }
+    .wp-title em {
+      font-style: italic;
+      color: var(--teach-accent);
+    }
+    .wp-lede {
+      font-family: var(--font-display);
+      font-weight: 400;
+      font-size: 1.15rem;
+      line-height: 1.55;
+      color: var(--teach-muted);
+      max-width: 680px;
+      margin: 0 0 2.5rem;
+    }
+
+    /* =====================================================
+       WP1: FOUNDATION (3 numbered principle cards)
+       ===================================================== */
+    .foundation-cards {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 1.2rem;
+    }
+    @media (max-width: 720px) { .foundation-cards { grid-template-columns: 1fr; } }
+    .principle-card {
+      background: #fff;
+      border: 1px solid var(--teach-rule);
+      padding: 1.8rem 1.6rem;
+      position: relative;
+      transition: transform 0.3s ease, box-shadow 0.3s ease;
+    }
+    .principle-card:hover {
+      transform: translateY(-4px);
+      box-shadow: 0 14px 28px -16px rgba(15, 23, 41, 0.18);
+    }
+    .principle-num {
+      font-family: var(--font-display);
+      font-weight: 600;
+      font-size: 3rem;
+      line-height: 1;
+      color: var(--teach-accent);
+      margin-bottom: 0.8rem;
+      font-variant-numeric: lining-nums;
+      letter-spacing: -0.04em;
+    }
+    .principle-card p {
+      font-family: var(--font-display);
+      font-size: 1.05rem;
+      line-height: 1.45;
+      color: var(--teach-ink);
+      margin: 0;
+    }
+    .principle-card p strong {
+      font-weight: 600;
+      color: var(--teach-ink);
+    }
+
+    /* =====================================================
+       WP2: HOW LEARNING HAPPENS (5 pillar cards)
+       ===================================================== */
+    .pillar-grid {
+      display: grid;
+      grid-template-columns: repeat(5, 1fr);
+      gap: 1rem;
+    }
+    @media (max-width: 1100px) {
+      .pillar-grid { grid-template-columns: repeat(2, 1fr); }
+    }
+    @media (max-width: 540px) {
+      .pillar-grid { grid-template-columns: 1fr; }
+    }
+    .pillar {
+      background: #fff;
+      border: 1px solid var(--teach-rule);
+      padding: 1.4rem 1.2rem 1.3rem;
+      transition: border-color 0.25s, transform 0.25s;
+      position: relative;
+    }
+    .pillar:hover {
+      border-color: var(--pillar-color, var(--teach-ink));
+      transform: translateY(-3px);
+    }
+    .pillar-icon {
+      width: 44px; height: 44px;
+      border-radius: 50%;
+      background: var(--pillar-color, var(--teach-ink));
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      margin-bottom: 1rem;
+    }
+    .pillar-icon svg {
+      width: 22px; height: 22px;
+      stroke: #fff;
+      fill: none;
+      stroke-width: 1.6;
+      stroke-linecap: round;
+      stroke-linejoin: round;
+    }
+    .pillar-name {
+      font-family: var(--font-display);
+      font-weight: 600;
+      font-size: 1.02rem;
+      line-height: 1.25;
+      color: var(--teach-ink);
+      margin: 0 0 0.6rem;
+      letter-spacing: -0.005em;
+    }
+    .pillar-desc {
+      font-family: var(--font-body);
+      font-size: 0.84rem;
+      line-height: 1.5;
+      color: var(--teach-muted);
+      margin: 0;
+    }
+    .pillar[data-color="navy"]   { --pillar-color: var(--teach-ink); }
+    .pillar[data-color="teal"]   { --pillar-color: var(--teach-teal); }
+    .pillar[data-color="blue"]   { --pillar-color: #2860a8; }
+    .pillar[data-color="rust"]   { --pillar-color: var(--teach-rust); }
+    .pillar[data-color="gold"]   { --pillar-color: var(--teach-accent); }
+
+    /* =====================================================
+       WP3: KEEN 3C'S (animated triangle)
+       ===================================================== */
+    .keen-stage {
+      background: #fff;
+      border: 1px solid var(--teach-rule);
+      padding: 3.5rem 2rem;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+    }
+    .keen-svg {
+      width: 100%;
+      max-width: 540px;
+      height: auto;
+    }
+    .keen-tri-line {
+      stroke: var(--teach-accent);
+      stroke-width: 1.5;
+      stroke-dasharray: 6 6;
+      fill: none;
+      stroke-dashoffset: 600;
+      transition: stroke-dashoffset 1.8s ease;
+    }
+    .scrolly-content > section.in-view .keen-tri-line {
+      stroke-dashoffset: 0;
+    }
+    .keen-node-bg {
+      fill: #fff;
+      stroke-width: 2;
+      transition: all 0.4s;
+    }
+    .keen-node[data-c="curiosity"] .keen-node-bg     { stroke: var(--teach-ink); }
+    .keen-node[data-c="connections"] .keen-node-bg   { stroke: var(--teach-teal); }
+    .keen-node[data-c="value"] .keen-node-bg         { stroke: var(--teach-accent); }
+    .keen-node-label {
+      font-family: var(--font-display);
+      font-weight: 600;
+      font-size: 14px;
+      text-anchor: middle;
+      dominant-baseline: central;
+    }
+    .keen-node[data-c="curiosity"] .keen-node-label    { fill: var(--teach-ink); }
+    .keen-node[data-c="connections"] .keen-node-label  { fill: var(--teach-teal); }
+    .keen-node[data-c="value"] .keen-node-label        { fill: var(--teach-accent); }
+    .keen-node-icon {
+      stroke-width: 1.8;
+      fill: none;
+      stroke-linecap: round;
+      stroke-linejoin: round;
+    }
+    .keen-center-text {
+      font-family: var(--font-display);
+      font-weight: 600;
+      font-size: 18px;
+      fill: var(--teach-ink);
+      text-anchor: middle;
+      letter-spacing: 0.02em;
+    }
+    .keen-center-sub {
+      font-family: var(--font-body);
+      font-size: 9px;
+      letter-spacing: 0.3em;
+      text-transform: uppercase;
+      fill: var(--teach-muted);
+      text-anchor: middle;
+    }
+
+    .keen-defs {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 1.5rem;
+      margin-top: 2.5rem;
+      width: 100%;
+      max-width: 720px;
+    }
+    @media (max-width: 720px) { .keen-defs { grid-template-columns: 1fr; } }
+    .keen-def {
+      padding-top: 1rem;
+      border-top: 2px solid var(--def-color, var(--teach-ink));
+    }
+    .keen-def[data-c="curiosity"]    { --def-color: var(--teach-ink); }
+    .keen-def[data-c="connections"]  { --def-color: var(--teach-teal); }
+    .keen-def[data-c="value"]        { --def-color: var(--teach-accent); }
+    .keen-def-name {
+      font-family: var(--font-display);
+      font-weight: 600;
+      font-size: 1.05rem;
+      color: var(--def-color);
+      margin: 0 0 0.4rem;
+    }
+    .keen-def-text {
+      font-family: var(--font-body);
+      font-size: 0.88rem;
+      line-height: 1.55;
+      color: var(--teach-muted);
+      margin: 0;
+    }
+    .keen-tagline {
+      margin-top: 2rem;
+      font-family: var(--font-display);
+      font-style: italic;
+      font-size: 0.95rem;
+      color: var(--teach-muted);
+    }
+
+    /* =====================================================
+       WP4: IN CLASS (animated takeoff sequence): CENTERPIECE
+       ===================================================== */
+    .takeoff-stage {
+      background: linear-gradient(180deg, #fff 0%, var(--teach-paper-warm) 100%);
+      border: 1px solid var(--teach-rule);
+      padding: 2.5rem 1.5rem 2rem;
+      position: relative;
+      overflow: hidden;
+    }
+    .takeoff-stage::before {
+      content: "";
+      position: absolute;
+      top: 0; left: 0; right: 0;
+      height: 110px;
+      background-image:
+        repeating-linear-gradient(0deg, rgba(12, 35, 64, 0.04) 0 1px, transparent 1px 30px),
+        repeating-linear-gradient(90deg, rgba(12, 35, 64, 0.04) 0 1px, transparent 1px 30px);
+      pointer-events: none;
+    }
+    .takeoff-svg {
+      width: 100%;
+      height: auto;
+      display: block;
+      position: relative;
+    }
+    .runway-line {
+      stroke: var(--teach-ink);
+      stroke-width: 1;
+      opacity: 0.3;
+    }
+    .takeoff-path {
+      fill: none;
+      stroke: var(--teach-accent);
+      stroke-width: 1.5;
+      stroke-dasharray: 5 6;
+      opacity: 0.45;
+    }
+    .takeoff-path-trail {
+      fill: none;
+      stroke: var(--teach-accent);
+      stroke-width: 2;
+      stroke-dasharray: 5 6;
+      stroke-dashoffset: 1200;
+      stroke-dasharray: 1200;
+    }
+    .takeoff-stage.playing .takeoff-path-trail {
+      animation: drawTrail 6s linear forwards;
+    }
+    @keyframes drawTrail {
+      from { stroke-dashoffset: 1200; }
+      to { stroke-dashoffset: 0; }
+    }
+
+    .takeoff-plane {
+      offset-path: path('M 60,200 L 230,200 Q 320,200 380,160 L 540,90 L 740,80');
+      offset-rotate: auto 180deg;
+      offset-distance: 0%;
+    }
+    .takeoff-stage.playing .takeoff-plane {
+      animation: takeoffMove 6s cubic-bezier(0.5, 0.0, 0.5, 1) forwards;
+    }
+    @keyframes takeoffMove {
+      from { offset-distance: 0%; }
+      to { offset-distance: 100%; }
+    }
+    .takeoff-plane-shape {
+      fill: var(--teach-ink);
+      transform: translate(-14px, -7px) scale(1.2);
+    }
+
+    .takeoff-stations {
+      display: grid;
+      grid-template-columns: repeat(5, 1fr);
+      gap: 0.8rem;
+      margin-top: 1.5rem;
+    }
+    @media (max-width: 760px) {
+      .takeoff-stations { grid-template-columns: repeat(5, 1fr); gap: 0.4rem; }
+    }
+    .station {
+      text-align: center;
+      padding: 1rem 0.5rem;
+      position: relative;
+      border-top: 2px dashed var(--teach-rule);
+      transition: all 0.4s ease;
+    }
+    .station-icon {
+      width: 44px; height: 44px;
+      border-radius: 50%;
+      background: var(--teach-paper);
+      border: 1.5px solid var(--teach-rule);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      margin: -1.4rem auto 0.8rem;
+      transition: all 0.4s ease;
+    }
+    .station-icon svg {
+      width: 20px; height: 20px;
+      stroke: var(--teach-muted);
+      fill: none; stroke-width: 1.6;
+      transition: stroke 0.4s;
+    }
+    .station-name {
+      font-family: var(--font-display);
+      font-weight: 500;
+      font-size: 0.9rem;
+      color: var(--teach-muted);
+      line-height: 1.25;
+      margin: 0;
+      transition: color 0.4s;
+    }
+    @media (max-width: 540px) {
+      .station-name { font-size: 0.72rem; }
+    }
+    .station.active {
+      border-top-color: var(--teach-accent);
+    }
+    .station.active .station-icon {
+      border-color: var(--teach-accent);
+      background: var(--teach-accent);
+      transform: scale(1.1);
+    }
+    .station.active .station-icon svg { stroke: var(--teach-ink); }
+    .station.active .station-name {
+      color: var(--teach-ink);
+      font-weight: 600;
+    }
+
+    .takeoff-controls {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-top: 2rem;
+      padding-top: 1.5rem;
+      border-top: 1px solid var(--teach-rule);
+      flex-wrap: wrap;
+      gap: 1rem;
+    }
+    .takeoff-courses {
+      font-family: var(--font-body);
+      font-size: 0.88rem;
+      color: var(--teach-muted);
+      line-height: 1.5;
+    }
+    .takeoff-courses strong {
+      font-family: var(--font-display);
+      font-style: italic;
+      font-weight: 500;
+      color: var(--teach-ink);
+    }
+    .replay-btn {
+      font-family: var(--font-body);
+      font-size: 0.78rem;
+      font-weight: 600;
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+      padding: 0.7rem 1.3rem;
+      background: transparent;
+      border: 1px solid var(--teach-ink);
+      color: var(--teach-ink);
+      cursor: pointer;
+      transition: all 0.2s;
+      display: inline-flex;
+      align-items: center;
+      gap: 0.6rem;
+    }
+    .replay-btn:hover {
+      background: var(--teach-ink);
+      color: var(--teach-paper);
+    }
+    .replay-btn svg {
+      width: 12px; height: 12px;
+      fill: none;
+      stroke: currentColor;
+      stroke-width: 2;
+    }
+
+    /* =====================================================
+       WP5: WHAT STUDENTS GAIN (6 outcome chips)
+       ===================================================== */
+    .outcomes-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 1rem;
+    }
+    @media (max-width: 720px) { .outcomes-grid { grid-template-columns: repeat(2, 1fr); } }
+    @media (max-width: 460px) { .outcomes-grid { grid-template-columns: 1fr; } }
+    .outcome {
+      background: #fff;
+      border: 1px solid var(--teach-rule);
+      padding: 1.5rem 1.4rem;
+      display: flex;
+      align-items: center;
+      gap: 1rem;
+      transition: border-color 0.25s, transform 0.25s;
+    }
+    .outcome:hover {
+      border-color: var(--teach-accent);
+      transform: translateX(4px);
+    }
+    .outcome-icon {
+      flex-shrink: 0;
+      width: 36px; height: 36px;
+      border-radius: 50%;
+      background: var(--teach-paper-warm);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+    .outcome-icon svg {
+      width: 18px; height: 18px;
+      stroke: var(--teach-accent);
+      fill: none; stroke-width: 1.6;
+      stroke-linecap: round; stroke-linejoin: round;
+    }
+    .outcome-name {
+      font-family: var(--font-display);
+      font-weight: 500;
+      font-size: 1rem;
+      color: var(--teach-ink);
+      line-height: 1.3;
+    }
+
+    /* =====================================================
+       PULL QUOTE: value creators
+       ===================================================== */
+    .pull-quote-section {
+      background: var(--teach-paper-warm);
+      padding: 5rem 0;
+      border-top: 1px solid var(--teach-rule);
+      border-bottom: 1px solid var(--teach-rule);
+    }
+    .pull-quote-inner {
+      max-width: 920px;
+      margin: 0 auto;
+      padding: 0 2rem;
+      display: grid;
+      grid-template-columns: 80px 1fr;
+      gap: 2rem;
+      align-items: start;
+    }
+    @media (max-width: 600px) {
+      .pull-quote-inner { grid-template-columns: 1fr; gap: 0; }
+    }
+    .pull-mark {
+      font-family: var(--font-display);
+      font-weight: 600;
+      font-size: 7rem;
+      line-height: 0.7;
+      color: var(--teach-accent);
+      opacity: 0.9;
+    }
+    @media (max-width: 600px) { .pull-mark { font-size: 4rem; } }
+    .pull-quote-section blockquote {
+      font-family: var(--font-display);
+      font-style: italic;
+      font-weight: 400;
+      font-size: clamp(1.5rem, 3.2vw, 2.2rem);
+      line-height: 1.35;
+      letter-spacing: -0.01em;
+      color: var(--teach-ink);
+      margin: 0;
+    }
+    .pull-quote-section blockquote em {
+      color: var(--teach-accent);
+      font-style: italic;
+    }
+
+    /* =====================================================
+       STUDENT VOICES
+       ===================================================== */
+    .student-voices {
+      padding: 5rem 0 4rem;
+    }
+    .voices-header {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 1.2rem;
+      margin-bottom: 3rem;
+    }
+    .voices-header::before, .voices-header::after {
+      content: "";
+      width: 36px; height: 1px;
+      background: var(--teach-accent);
+    }
+    .voices-header h2 {
+      font-family: var(--font-body);
+      font-size: 0.78rem;
+      letter-spacing: 0.32em;
+      text-transform: uppercase;
+      color: var(--teach-muted);
+      font-weight: 600;
+      margin: 0;
+    }
+    .voices-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 1.5rem;
+    }
+    @media (max-width: 900px) { .voices-grid { grid-template-columns: 1fr; } }
+    .voice-card {
+      background: #fff;
+      border: 1px solid var(--teach-rule);
+      padding: 2rem 1.8rem;
+      position: relative;
+    }
+    .voice-card::before {
+      content: '"';
+      position: absolute;
+      top: 0.4rem; left: 1.2rem;
+      font-family: var(--font-display);
+      font-size: 4rem;
+      line-height: 1;
+      color: var(--teach-accent);
+      opacity: 0.4;
+    }
+    .voice-text {
+      font-family: var(--font-display);
+      font-style: italic;
+      font-size: 1.02rem;
+      line-height: 1.5;
+      color: var(--teach-ink);
+      margin: 1.5rem 0 0;
+      position: relative;
+      z-index: 1;
+    }
+
+    /* =====================================================
+       PHILOSOPHY IN ONE LINE: dark band
+       ===================================================== */
+    .philosophy-line {
+      background: var(--teach-ink);
+      color: #fff;
+      padding: 4.5rem 0;
+      position: relative;
+      overflow: hidden;
+    }
+    .philosophy-line::before {
+      content: "";
+      position: absolute;
+      inset: 0;
+      background-image:
+        radial-gradient(circle at 15% 20%, rgba(184, 134, 11, 0.1) 0%, transparent 40%),
+        radial-gradient(circle at 85% 80%, rgba(184, 134, 11, 0.07) 0%, transparent 50%);
+      pointer-events: none;
+    }
+    .phil-inner {
+      max-width: 1080px;
+      margin: 0 auto;
+      padding: 0 2rem;
+      text-align: center;
+      position: relative;
+    }
+    .phil-eyebrow {
+      font-family: var(--font-body);
+      font-size: 0.72rem;
+      letter-spacing: 0.36em;
+      text-transform: uppercase;
+      color: var(--teach-accent);
+      margin-bottom: 1.5rem;
+    }
+    .phil-line {
+      font-family: var(--font-display);
+      font-weight: 500;
+      font-size: clamp(1.4rem, 3.2vw, 2.2rem);
+      line-height: 1.4;
+      letter-spacing: -0.005em;
+      color: #fff;
+      margin: 0;
+    }
+    .phil-line span {
+      display: inline-block;
+      padding: 0 0.3rem;
+    }
+    .phil-line span em {
+      font-style: italic;
+      color: var(--teach-accent);
+      font-weight: 500;
+    }
+    .phil-line .phil-sep {
+      color: var(--teach-accent);
+      opacity: 0.5;
+      padding: 0 0.4rem;
+    }
+  </style>
+</head>
+
+<body class="teaching-page">
+  <header class="site-header">
+    <div class="shell"><a class="brand" href="index.html"><span class="brand-mark">Welcome to Our Community </span><span
+          class="brand-name">Dr. Sidaard Gunasekaran, Ph.D., University of Dayton</span></a>
+      <nav class="nav"><a href="index.html">Home</a><a href="research.html">Research Projects</a><a
+          href="students.html">Students</a><a href="alumni.html">Alumni</a><a
+          href="publications.html">Publications</a><a class="active" href="teaching.html">Teaching</a><a
+          href="facilities.html">Facilities</a>
+        <a href="news.html">News</a><a href="community.html">Community</a>
+      </nav>
+    </div>
+  </header>
+
+  <!-- ============== BLUE HERO (matches news page format) ============== -->
+  <div class="page-hero">
+    <div class="shell page-hero-grid">
+      <div>
+        <div class="section-kicker">Teaching Philosophy</div>
+        <h1>A student-centered approach to learning.</h1>
+        <p>This teaching philosophy centers curiosity, agency, hands-on exploration, and meaningful connections between engineering ideas and the people they serve.</p>
+      </div>
+      <aside class="panel">
+        <h3>Courses Taught</h3>
+        <ul class="plain-list">
+          <li>Intro to Flight</li>
+          <li>Aerodynamics</li>
+          <li>Compressible Flow</li>
+          <li>Aircraft Design</li>
+          <li>MEE 225: Statics</li>
+          <li>MEE 401: Capstone</li>
+        </ul>
+      </aside>
+    </div>
+  </div>
+
+  <main>
+    <!-- ============== GOAL STATEMENT ============== -->
+    <section class="goal-statement">
+      <div class="goal-inner">
+        <svg class="goal-mark" viewBox="0 0 56 56">
+          <circle class="compass-ring" cx="28" cy="28" r="24" />
+          <circle class="compass-ring" cx="28" cy="28" r="18" />
+          <polygon class="compass-star" points="28,8 31,28 28,48 25,28" />
+          <polygon class="compass-star" points="8,28 28,25 48,28 28,31" opacity="0.5" />
+          <circle class="compass-pip" cx="28" cy="28" r="2.5" />
+        </svg>
+        <blockquote>
+          My goal is to make a tangible impact on students by helping them <em>find their passion</em>, <em>build confidence</em>, and <em>speak intelligently</em> about a subject without hesitation.
+        </blockquote>
+        <cite>Sid Gunasekaran</cite>
+      </div>
+    </section>
+
+    <!-- ============== SCROLLY SPINE ============== -->
+    <div class="scrolly-spine">
+      <div class="shell">
+
+        <!-- Sticky flight rail -->
+        <aside class="flight-rail" aria-hidden="true">
+          <svg viewBox="0 0 100 700" preserveAspectRatio="xMidYMid meet">
+            <!-- Background dashed path -->
+            <path class="rail-path" d="M 50 30 Q 30 110 50 180 Q 70 260 50 340 Q 30 420 50 500 Q 70 580 50 660" />
+
+            <!-- Waypoint dots -->
+            <g class="rail-waypoint" data-wp="1">
+              <circle class="wp-ring" cx="50" cy="50" r="14" />
+              <text class="wp-num" x="50" y="50">1</text>
+            </g>
+            <g class="rail-waypoint" data-wp="2">
+              <circle class="wp-ring" cx="50" cy="180" r="14" />
+              <text class="wp-num" x="50" y="180">2</text>
+            </g>
+            <g class="rail-waypoint" data-wp="3">
+              <circle class="wp-ring" cx="50" cy="340" r="14" />
+              <text class="wp-num" x="50" y="340">3</text>
+            </g>
+            <g class="rail-waypoint" data-wp="4">
+              <circle class="wp-ring" cx="50" cy="500" r="14" />
+              <text class="wp-num" x="50" y="500">4</text>
+            </g>
+            <g class="rail-waypoint" data-wp="5">
+              <circle class="wp-ring" cx="50" cy="640" r="14" />
+              <text class="wp-num" x="50" y="640">5</text>
+            </g>
+
+            <!-- Plane (positioned by JS via transform) -->
+            <g class="rail-plane" id="railPlane" transform="translate(50, 50)">
+              <g transform="translate(-12, -12) rotate(180, 12, 12)">
+                <path d="M 12 2 L 14 11 L 22 14 L 22 16 L 14 15 L 13 21 L 16 23 L 16 24 L 12 23 L 8 24 L 8 23 L 11 21 L 10 15 L 2 16 L 2 14 L 10 11 Z" />
+              </g>
+              <circle cx="0" cy="0" r="3" />
+            </g>
+          </svg>
+        </aside>
+
+        <!-- Right column content -->
+        <div class="scrolly-content">
+
+          <!-- ===== WP1: FOUNDATION ===== -->
+          <section class="waypoint" data-wp="1">
+            <div class="wp-eyebrow">Section 01 · Foundation</div>
+            <h2 class="wp-title">Three principles <em>that ground the work.</em></h2>
+            <p class="wp-lede">Every course decision, from the first day to the last portfolio, traces back to these three commitments.</p>
+
+            <div class="foundation-cards">
+              <div class="principle-card">
+                <div class="principle-num">01</div>
+                <p><strong>Experiential learning</strong> empowers students to use their unique talents.</p>
+              </div>
+              <div class="principle-card">
+                <div class="principle-num">02</div>
+                <p>Learning should move beyond grades toward <strong>curiosity, reflection, and ownership.</strong></p>
+              </div>
+              <div class="principle-card">
+                <div class="principle-num">03</div>
+                <p>Students should leave able to <strong>explain ideas clearly</strong>, not just repeat equations.</p>
+              </div>
+            </div>
+          </section>
+
+          <!-- ===== WP2: HOW LEARNING HAPPENS ===== -->
+          <section class="waypoint" data-wp="2">
+            <div class="wp-eyebrow">Section 02 · How Learning Happens</div>
+            <h2 class="wp-title">Five pillars <em>that build the room.</em></h2>
+            <p class="wp-lede">Pedagogy isn't a single method. It's a small set of practices that reinforce each other across the semester.</p>
+
+            <div class="pillar-grid">
+              <article class="pillar" data-color="navy">
+                <div class="pillar-icon">
+                  <svg viewBox="0 0 24 24"><path d="M4 5h12a3 3 0 0 1 3 3v12H7a3 3 0 0 1-3-3z"/><path d="M4 5l3 3"/><path d="M19 8H7"/></svg>
+                </div>
+                <h3 class="pillar-name">Portfolio-based assessment</h3>
+                <p class="pillar-desc">Students write in their own words, reflect deeply, and build a lasting record of learning.</p>
+              </article>
+
+              <article class="pillar" data-color="teal">
+                <div class="pillar-icon">
+                  <svg viewBox="0 0 24 24"><path d="M3 4h7a4 4 0 0 1 4 4v12"/><path d="M21 4h-7a4 4 0 0 0-4 4v12"/></svg>
+                </div>
+                <h3 class="pillar-name">Story-driven teaching</h3>
+                <p class="pillar-desc">Concepts organized into a cohesive narrative so each idea builds on the previous one.</p>
+              </article>
+
+              <article class="pillar" data-color="blue">
+                <div class="pillar-icon">
+                  <svg viewBox="0 0 24 24"><circle cx="9" cy="8" r="3"/><circle cx="17" cy="9" r="2.5"/><path d="M3 20c0-3.3 2.7-6 6-6s6 2.7 6 6"/><path d="M14 20c.3-2.4 2-4 4-4s3.7 1.6 4 4"/></svg>
+                </div>
+                <h3 class="pillar-name">Active &amp; interactive learning</h3>
+                <p class="pillar-desc">Group work, guided notes, discussion, role play, and thought exercises keep students engaged.</p>
+              </article>
+
+              <article class="pillar" data-color="rust">
+                <div class="pillar-icon">
+                  <svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/><path d="M12 3v18"/><path d="M3 12h18"/><circle cx="12" cy="12" r="3"/></svg>
+                </div>
+                <h3 class="pillar-name">Real-world context</h3>
+                <p class="pillar-desc">Courses connect theory to real aircraft, engineering practice, and authentic design problems.</p>
+              </article>
+
+              <article class="pillar" data-color="teal">
+                <div class="pillar-icon">
+                  <svg viewBox="0 0 24 24"><circle cx="11" cy="11" r="6"/><path d="M21 21l-5-5"/></svg>
+                </div>
+                <h3 class="pillar-name">Inquiry-based learning</h3>
+                <p class="pillar-desc">Students search, question, connect concepts, and support their narratives with evidence.</p>
+              </article>
+            </div>
+          </section>
+
+          <!-- ===== WP3: KEEN 3C'S ===== -->
+          <section class="waypoint" data-wp="3">
+            <div class="wp-eyebrow">Section 03 · Entrepreneurially Minded Learning</div>
+            <h2 class="wp-title">The KEEN <em>3 C's.</em></h2>
+            <p class="wp-lede">Curiosity, Connections, and Creating Value: the entrepreneurial mindset isn't a separate course, it's the connective tissue.</p>
+
+            <div class="keen-stage">
+              <svg class="keen-svg" viewBox="0 0 540 380">
+                <!-- Triangle outline -->
+                <polygon class="keen-tri-line"
+                         points="270,50 80,330 460,330" />
+
+                <!-- Center text -->
+                <text class="keen-center-text" x="270" y="200">THE KEEN</text>
+                <text class="keen-center-text" x="270" y="225">3 C's</text>
+                <text class="keen-center-sub" x="270" y="248">Profiles make them visible</text>
+
+                <!-- Curiosity (top) -->
+                <g class="keen-node" data-c="curiosity">
+                  <circle class="keen-node-bg" cx="270" cy="50" r="44" />
+                  <circle class="keen-node-icon" cx="270" cy="42" r="6" stroke="var(--teach-ink)" />
+                  <path class="keen-node-icon" d="M267 50 v8" stroke="var(--teach-ink)" />
+                  <text class="keen-node-label" x="270" y="68">Curiosity</text>
+                </g>
+
+                <!-- Connections (bottom-left) -->
+                <g class="keen-node" data-c="connections">
+                  <circle class="keen-node-bg" cx="80" cy="330" r="44" />
+                  <path class="keen-node-icon" d="M68 322 a8 8 0 0 1 12 0 l4 4 a8 8 0 0 1 0 12" stroke="var(--teach-teal)" />
+                  <path class="keen-node-icon" d="M92 338 a8 8 0 0 1 -12 0 l-4 -4 a8 8 0 0 1 0 -12" stroke="var(--teach-teal)" />
+                  <text class="keen-node-label" x="80" y="348">Connections</text>
+                </g>
+
+                <!-- Creating Value (bottom-right) -->
+                <g class="keen-node" data-c="value">
+                  <circle class="keen-node-bg" cx="460" cy="330" r="44" />
+                  <path class="keen-node-icon" d="M448 338 L455 328 L463 333 L472 320" stroke="var(--teach-accent)" />
+                  <path class="keen-node-icon" d="M468 320 L472 320 L472 324" stroke="var(--teach-accent)" />
+                  <text class="keen-node-label" x="460" y="350">Creating Value</text>
+                </g>
+              </svg>
+
+              <div class="keen-defs">
+                <div class="keen-def" data-c="curiosity">
+                  <h4 class="keen-def-name">Curiosity</h4>
+                  <p class="keen-def-text">A zest for questions and the pursuit of what is required to answer them well.</p>
+                </div>
+                <div class="keen-def" data-c="connections">
+                  <h4 class="keen-def-name">Connections</h4>
+                  <p class="keen-def-text">Link equations, concepts, experiences, and personal understanding into a coherent whole.</p>
+                </div>
+                <div class="keen-def" data-c="value">
+                  <h4 class="keen-def-name">Creating Value</h4>
+                  <p class="keen-def-text">Use knowledge in meaningful ways: for the work that matters now, future work, and ongoing learning.</p>
+                </div>
+              </div>
+            </div>
+          </section>
+
+          <!-- ===== WP4: IN CLASS: ANIMATED TAKEOFF ===== -->
+          <section class="waypoint" data-wp="4">
+            <div class="wp-eyebrow">Section 04 · What This Looks Like in Class</div>
+            <h2 class="wp-title">Five stages, <em>one takeoff.</em></h2>
+            <p class="wp-lede">A typical class session moves through a deliberate sequence, from quiet preparation to confident mastery. Watch it run.</p>
+
+            <div class="takeoff-stage" id="takeoffStage">
+              <svg class="takeoff-svg" viewBox="0 0 800 240" preserveAspectRatio="xMidYMid meet">
+                <!-- Ground / runway -->
+                <line class="runway-line" x1="40" y1="200" x2="240" y2="200" />
+
+                <!-- Background flight path (faded) -->
+                <path class="takeoff-path"
+                      d="M 60,200 L 230,200 Q 320,200 380,160 L 540,90 L 740,80" />
+
+                <!-- Drawn-as-it-goes trail -->
+                <path class="takeoff-path-trail"
+                      d="M 60,200 L 230,200 Q 320,200 380,160 L 540,90 L 740,80" />
+
+                <!-- The plane -->
+                <g class="takeoff-plane" id="takeoffPlane">
+                  <path class="takeoff-plane-shape"
+                        d="M 0 7 L 9 5 L 16 0 L 18 0 L 14 5 L 22 5 L 25 3 L 26 3 L 24 6 L 25 7 L 24 8 L 26 11 L 25 11 L 22 9 L 14 9 L 18 14 L 16 14 L 9 9 L 0 7 Z" />
+                </g>
+              </svg>
+
+              <ol class="takeoff-stations" id="takeoffStations">
+                <li class="station" data-stage="1">
+                  <div class="station-icon">
+                    <svg viewBox="0 0 24 24"><rect x="5" y="3" width="14" height="18" rx="1"/><path d="M9 8h6M9 12h6M9 16h4"/></svg>
+                  </div>
+                  <p class="station-name">Guided<br>notes</p>
+                </li>
+                <li class="station" data-stage="2">
+                  <div class="station-icon">
+                    <svg viewBox="0 0 24 24"><path d="M4 6h12a4 4 0 0 1 0 8H8l-4 3z"/></svg>
+                  </div>
+                  <p class="station-name">Discussion-<br>based</p>
+                </li>
+                <li class="station" data-stage="3">
+                  <div class="station-icon">
+                    <svg viewBox="0 0 24 24"><circle cx="9" cy="7" r="2.5"/><circle cx="16" cy="8" r="2"/><path d="M5 18c0-2.5 2-4.5 4.5-4.5S14 15.5 14 18"/><path d="M13 18c.2-2 1.5-3.5 3.5-3.5S20 16 20 18"/></svg>
+                  </div>
+                  <p class="station-name">Hands-on /<br>role-play</p>
+                </li>
+                <li class="station" data-stage="4">
+                  <div class="station-icon">
+                    <svg viewBox="0 0 24 24"><path d="M5 4h11a3 3 0 0 1 3 3v13H8a3 3 0 0 1-3-3z"/><path d="M9 9h7M9 13h7"/></svg>
+                  </div>
+                  <p class="station-name">Reflection<br>in portfolios</p>
+                </li>
+                <li class="station" data-stage="5">
+                  <div class="station-icon">
+                    <svg viewBox="0 0 24 24"><path d="M8 4h8v6a4 4 0 0 1-8 0z"/><path d="M5 6h3M16 6h3"/><path d="M10 14h4v4h-4z"/><path d="M7 20h10"/></svg>
+                  </div>
+                  <p class="station-name">Confidence<br>&amp; mastery</p>
+                </li>
+              </ol>
+
+              <div class="takeoff-controls">
+                <p class="takeoff-courses">
+                  Examples include <strong>Intro to Flight, Aerodynamics, Compressible Flow,</strong> and <strong>Aircraft Design.</strong>
+                </p>
+                <button class="replay-btn" id="replayBtn" type="button">
+                  <svg viewBox="0 0 24 24"><path d="M3 12a9 9 0 1 0 3-6.7"/><path d="M3 4v5h5"/></svg>
+                  Replay
+                </button>
+              </div>
+            </div>
+          </section>
+
+          <!-- ===== WP5: WHAT STUDENTS GAIN ===== -->
+          <section class="waypoint" data-wp="5">
+            <div class="wp-eyebrow">Section 05 · What Students Gain</div>
+            <h2 class="wp-title">Six things <em>that stay with them.</em></h2>
+            <p class="wp-lede">After the final portfolio is submitted, here's what students take into the rest of their careers.</p>
+
+            <div class="outcomes-grid">
+              <div class="outcome">
+                <div class="outcome-icon">
+                  <svg viewBox="0 0 24 24"><path d="M12 2l8 4v6c0 5-3.5 8.5-8 10-4.5-1.5-8-5-8-10V6z"/></svg>
+                </div>
+                <div class="outcome-name">Confidence</div>
+              </div>
+              <div class="outcome">
+                <div class="outcome-icon">
+                  <svg viewBox="0 0 24 24"><path d="M12 3a4 4 0 0 0-4 4c0 1.5.8 2.8 2 3.5V14a2 2 0 1 0 4 0v-3.5c1.2-.7 2-2 2-3.5a4 4 0 0 0-4-4z"/><path d="M10 21h4"/></svg>
+                </div>
+                <div class="outcome-name">Deep understanding</div>
+              </div>
+              <div class="outcome">
+                <div class="outcome-icon">
+                  <svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 2"/></svg>
+                </div>
+                <div class="outcome-name">Long-term retention</div>
+              </div>
+              <div class="outcome">
+                <div class="outcome-icon">
+                  <svg viewBox="0 0 24 24"><path d="M5 5h14v10H9l-4 4z"/><path d="M9 10h6"/></svg>
+                </div>
+                <div class="outcome-name">Ability to explain ideas clearly</div>
+              </div>
+              <div class="outcome">
+                <div class="outcome-icon">
+                  <svg viewBox="0 0 24 24"><circle cx="12" cy="8" r="4"/><path d="M5 21c0-3.5 3-6 7-6s7 2.5 7 6"/><path d="M19 5l1.5 1.5L23 4"/></svg>
+                </div>
+                <div class="outcome-name">Ownership of learning</div>
+              </div>
+              <div class="outcome">
+                <div class="outcome-icon">
+                  <svg viewBox="0 0 24 24"><path d="M6 3h10l4 4v14H6z"/><path d="M16 3v4h4"/><path d="M9 13h7M9 17h5"/></svg>
+                </div>
+                <div class="outcome-name">A meaningful record of growth</div>
+              </div>
+            </div>
+          </section>
+
+        </div>
+      </div>
+    </div>
+
+    <!-- ============== PULL QUOTE ============== -->
+    <section class="pull-quote-section">
+      <div class="pull-quote-inner">
+        <div class="pull-mark">&ldquo;</div>
+        <blockquote>
+          My ultimate goal is to transform engineering students' mindset: that they are <em>value creators</em>, not just problem solvers.
+        </blockquote>
+      </div>
+    </section>
+
+    <!-- ============== STUDENT VOICES ============== -->
+    <section class="student-voices">
+      <div class="shell">
+        <div class="voices-header">
+          <h2>Student Voices</h2>
+        </div>
+        <div class="voices-grid">
+          <div class="voice-card">
+            <p class="voice-text">The class being discussion based and the portfolios make sure I actually understand the material.</p>
+          </div>
+          <div class="voice-card">
+            <p class="voice-text">The portfolio style is more work than a traditional class, but has its rewards in mastery of the topic taught.</p>
+          </div>
+          <div class="voice-card">
+            <p class="voice-text">I wish every single class in college was structured this way.</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ============== PHILOSOPHY IN ONE LINE ============== -->
+    <section class="philosophy-line">
+      <div class="phil-inner">
+        <div class="phil-eyebrow">Philosophy in One Line</div>
+        <p class="phil-line">
+          <span>Teach for <em>confidence</em>.</span><span class="phil-sep">·</span>
+          <span>Design for <em>curiosity</em>.</span><span class="phil-sep">·</span>
+          <span>Assess for <em>reflection</em>.</span><span class="phil-sep">·</span>
+          <span>Create learning <em>that lasts</em>.</span>
+        </p>
+      </div>
+    </section>
+
+  </main>
+
+  <footer class="footer">
+    <div class="shell">
+      <div>Students first. Research with purpose.</div>
+      <div class="footer-links"><a href="index.html">Home</a><a href="awards.html">Awards</a></div>
+    </div>
+  </footer>
+
+  <script>
+    // ============================================================
+    // 1. WAYPOINT TRACKER: moves the plane down the rail
+    //    and reveals each section as it enters the viewport
+    // ============================================================
+    (function () {
+      const sections = document.querySelectorAll('.waypoint');
+      const waypoints = document.querySelectorAll('.rail-waypoint');
+      const plane = document.getElementById('railPlane');
+
+      // y-coordinates in the SVG that match each waypoint dot
+      const planePositions = {
+        '1': 50,
+        '2': 180,
+        '3': 340,
+        '4': 500,
+        '5': 640
+      };
+
+      function setActive(wp) {
+        waypoints.forEach(w => {
+          const n = w.dataset.wp;
+          w.classList.remove('active', 'passed');
+          if (n < wp) w.classList.add('passed');
+          if (n === wp) w.classList.add('active');
+        });
+        if (plane) {
+          plane.setAttribute('transform', `translate(50, ${planePositions[wp]})`);
+        }
+      }
+
+      const observer = new IntersectionObserver((entries) => {
+        // Find the entry closest to the top of the viewport that's intersecting
+        let topMost = null;
+        entries.forEach(entry => {
+          if (entry.isIntersecting) {
+            entry.target.classList.add('in-view');
+            if (!topMost || entry.boundingClientRect.top < topMost.boundingClientRect.top) {
+              topMost = entry;
+            }
+          }
+        });
+        if (topMost) {
+          setActive(topMost.target.dataset.wp);
+        }
+      }, {
+        threshold: 0.25,
+        rootMargin: '-15% 0px -25% 0px'
+      });
+
+      sections.forEach(s => observer.observe(s));
+
+      // Initial state: first waypoint active
+      setActive('1');
+    })();
+
+    // ============================================================
+    // 2. TAKEOFF ANIMATION: auto-plays when in view, manual replay
+    // ============================================================
+    (function () {
+      const stage = document.getElementById('takeoffStage');
+      const stations = document.querySelectorAll('#takeoffStations .station');
+      const replayBtn = document.getElementById('replayBtn');
+      if (!stage) return;
+
+      // Stage activation timings (seconds, matched to 6s animation)
+      const stageTimings = [0.2, 1.4, 2.6, 3.8, 5.2];
+      let timeouts = [];
+
+      function clearTimeouts() {
+        timeouts.forEach(t => clearTimeout(t));
+        timeouts = [];
+      }
+
+      function play() {
+        clearTimeouts();
+        stations.forEach(s => s.classList.remove('active'));
+        // Restart CSS animations by toggling class
+        stage.classList.remove('playing');
+        // Force reflow
+        void stage.offsetWidth;
+        stage.classList.add('playing');
+
+        stageTimings.forEach((t, i) => {
+          timeouts.push(setTimeout(() => {
+            stations[i].classList.add('active');
+          }, t * 1000));
+        });
+      }
+
+      replayBtn.addEventListener('click', play);
+
+      // Auto-play once when scrolled into view
+      let hasPlayed = false;
+      const obs = new IntersectionObserver((entries) => {
+        entries.forEach(entry => {
+          if (entry.isIntersecting && !hasPlayed) {
+            hasPlayed = true;
+            // small delay so the section fade-in completes first
+            setTimeout(play, 600);
+          }
+        });
+      }, { threshold: 0.4 });
+      obs.observe(stage);
+    })();
+  </script>
+</body>
+
+</html>
