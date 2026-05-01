@@ -18,7 +18,7 @@ Source: extracted from `Sid_Most Recent_CV (Jan 2026).pdf`
    `Flight Test Validation of Tandem Propeller Performance with Vertical Offset`
 7. Megan Bender
    `Characterization of Agricultural Nozzle Spray Geometry in Propeller Wake`
-8. Tyler Worthington
+8. Tyler Wethington
    `Evaluation of Wing-Embedded Propulsor Systems in Maritime Ground Effect`
 9. Hai Long Le
    `Characterization of Agricultural Nozzle Spray Geometry in Propeller Wake`
