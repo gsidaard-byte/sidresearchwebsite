@@ -4,149 +4,514 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Teaching | Sidaard Gunasekaran Research Group</title>
+  <title>Resources | Sidaard Gunasekaran Research Group</title>
   <link rel="stylesheet" href="styles.css" />
+
+  <style>
+    /* =========================================================
+       RESOURCES PAGE: AI tools and KEEN cards
+       ========================================================= */
+
+    :root {
+      --res-ink: #0c2340;
+      --res-ink-soft: #1c3553;
+      --res-paper: #fafaf7;
+      --res-paper-warm: #f4f0e6;
+      --res-rule: #e6e3da;
+      --res-muted: #5b6478;
+      --res-accent: #2a6e6b;
+      --res-accent-soft: #4a8e8b;
+      --res-rust: #b54e2a;
+      --res-blue: #2860a8;
+      --font-display: Georgia, "Times New Roman", serif;
+      --font-body: Arial, Helvetica, sans-serif;
+    }
+
+    .resources-page main { background: var(--res-paper); }
+
+    /* =====================================================
+       AI TOOLS SECTION (lifted from teaching page)
+       ===================================================== */
+    .ai-tools {
+      padding: 5rem 0 5rem;
+      background: var(--res-paper);
+    }
+    .section-header {
+      text-align: center;
+      max-width: 720px;
+      margin: 0 auto 2.5rem;
+      padding: 0 1rem;
+    }
+    .section-eyebrow {
+      font-family: var(--font-body);
+      font-size: 0.72rem;
+      letter-spacing: 0.32em;
+      text-transform: uppercase;
+      color: var(--res-muted);
+      margin-bottom: 1rem;
+    }
+    .section-title {
+      font-family: var(--font-display);
+      font-size: clamp(1.8rem, 3.5vw, 2.6rem);
+      letter-spacing: -0.02em;
+      color: var(--res-ink);
+      margin: 0 0 1rem;
+      line-height: 1.15;
+    }
+    .section-title em {
+      font-style: italic;
+      color: var(--res-accent);
+    }
+    .section-lede {
+      font-family: var(--font-display);
+      font-style: italic;
+      font-size: 1.05rem;
+      line-height: 1.55;
+      color: var(--res-muted);
+      margin: 0;
+    }
+
+    .tools-tabs {
+      display: flex;
+      justify-content: center;
+      gap: 0;
+      margin-bottom: 2.5rem;
+      border-bottom: 1px solid var(--res-rule);
+    }
+    .tools-tab {
+      font-family: var(--font-body);
+      font-size: 0.82rem;
+      font-weight: 700;
+      letter-spacing: 0.18em;
+      text-transform: uppercase;
+      padding: 1rem 1.6rem;
+      background: transparent;
+      border: none;
+      color: var(--res-muted);
+      cursor: pointer;
+      border-bottom: 2px solid transparent;
+      margin-bottom: -1px;
+      transition: all 0.2s;
+    }
+    .tools-tab:hover { color: var(--res-ink); }
+    .tools-tab.active {
+      color: var(--res-ink);
+      border-bottom-color: var(--res-accent);
+    }
+
+    .tools-panel { display: none; }
+    .tools-panel.active {
+      display: block;
+      animation: panelFade 0.4s ease;
+    }
+    @keyframes panelFade {
+      from { opacity: 0; transform: translateY(8px); }
+      to   { opacity: 1; transform: translateY(0); }
+    }
+
+    .tools-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 1.2rem;
+    }
+    .tools-grid.cols-2 { grid-template-columns: repeat(2, 1fr); }
+    @media (max-width: 900px) {
+      .tools-grid, .tools-grid.cols-2 { grid-template-columns: repeat(2, 1fr); }
+    }
+    @media (max-width: 540px) {
+      .tools-grid, .tools-grid.cols-2 { grid-template-columns: 1fr; }
+    }
+
+    .tool-card {
+      background: #fff;
+      border: 1px solid var(--res-rule);
+      padding: 1.6rem 1.5rem 1.4rem;
+      display: flex;
+      flex-direction: column;
+      gap: 0.9rem;
+      text-decoration: none;
+      color: inherit;
+      transition: transform 0.25s, box-shadow 0.25s, border-color 0.25s;
+      position: relative;
+    }
+    .tool-card:hover {
+      transform: translateY(-3px);
+      box-shadow: 0 12px 28px -16px rgba(15, 23, 41, 0.22);
+      border-color: var(--res-accent);
+    }
+    .tool-icon {
+      width: 46px; height: 46px;
+      border-radius: 50%;
+      background: var(--res-paper-warm);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex-shrink: 0;
+    }
+    .tool-icon svg {
+      width: 22px; height: 22px;
+      stroke: var(--res-accent);
+      fill: none;
+      stroke-width: 1.6;
+      stroke-linecap: round;
+      stroke-linejoin: round;
+    }
+    .tool-name {
+      font-family: var(--font-display);
+      font-weight: 700;
+      font-size: 1.1rem;
+      line-height: 1.25;
+      color: var(--res-ink);
+      margin: 0;
+    }
+    .tool-desc {
+      font-family: var(--font-body);
+      font-size: 0.88rem;
+      line-height: 1.55;
+      color: var(--res-muted);
+      margin: 0;
+      flex-grow: 1;
+    }
+    .tool-launch {
+      font-family: var(--font-body);
+      font-size: 0.74rem;
+      font-weight: 700;
+      letter-spacing: 0.18em;
+      text-transform: uppercase;
+      color: var(--res-accent);
+      margin-top: 0.4rem;
+      display: inline-flex;
+      align-items: center;
+      gap: 0.5rem;
+      transition: gap 0.25s;
+    }
+    .tool-card:hover .tool-launch { gap: 0.85rem; }
+    .tool-launch svg {
+      width: 12px; height: 12px;
+      stroke: currentColor;
+      fill: none;
+      stroke-width: 2.2;
+      stroke-linecap: round;
+      stroke-linejoin: round;
+    }
+
+    .micro-group {
+      margin-top: 2rem;
+      padding: 2.2rem 1.8rem 1.9rem;
+      background: var(--res-paper-warm);
+      border: 1px solid var(--res-rule);
+      position: relative;
+    }
+    .micro-group::before {
+      content: "";
+      position: absolute;
+      top: -1px; left: 50%;
+      transform: translateX(-50%);
+      width: 80px;
+      height: 2px;
+      background: var(--res-accent);
+    }
+    .micro-header {
+      text-align: center;
+      margin-bottom: 1.8rem;
+      max-width: 560px;
+      margin-left: auto;
+      margin-right: auto;
+    }
+    .micro-kicker {
+      font-family: var(--font-body);
+      font-size: 0.7rem;
+      letter-spacing: 0.32em;
+      text-transform: uppercase;
+      color: var(--res-accent);
+      margin-bottom: 0.6rem;
+    }
+    .micro-title {
+      font-family: var(--font-display);
+      font-weight: 700;
+      font-size: 1.4rem;
+      letter-spacing: -0.01em;
+      color: var(--res-ink);
+      margin: 0 0 0.6rem;
+    }
+    .micro-desc {
+      font-family: var(--font-body);
+      font-size: 0.92rem;
+      line-height: 1.55;
+      color: var(--res-muted);
+      margin: 0;
+    }
+    .micro-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 1rem;
+    }
+    @media (max-width: 700px) { .micro-grid { grid-template-columns: 1fr; } }
+    .micro-card {
+      background: #fff;
+      border: 1px solid var(--res-rule);
+      border-top: 3px solid var(--res-accent);
+      padding: 1.4rem 1.3rem 1.3rem;
+      display: flex;
+      flex-direction: column;
+      gap: 0.7rem;
+      text-decoration: none;
+      color: inherit;
+      transition: transform 0.25s, box-shadow 0.25s;
+    }
+    .micro-card:hover {
+      transform: translateY(-3px);
+      box-shadow: 0 12px 24px -16px rgba(15, 23, 41, 0.2);
+    }
+    .micro-card-name {
+      font-family: var(--font-display);
+      font-weight: 700;
+      font-size: 1rem;
+      color: var(--res-ink);
+      margin: 0;
+      line-height: 1.3;
+    }
+    .micro-card-desc {
+      font-family: var(--font-body);
+      font-size: 0.85rem;
+      line-height: 1.5;
+      color: var(--res-muted);
+      margin: 0;
+      flex-grow: 1;
+    }
+    .micro-card .tool-launch { margin-top: 0.3rem; }
+
+    /* =====================================================
+       KEEN CARDS SECTION
+       ===================================================== */
+    .keen-section {
+      padding: 5rem 0 6rem;
+      background: var(--res-paper-warm);
+      border-top: 1px solid var(--res-rule);
+    }
+
+    .keen-filters {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: center;
+      gap: 0.5rem;
+      margin-bottom: 2.5rem;
+    }
+    .keen-filter {
+      font-family: var(--font-body);
+      font-size: 0.78rem;
+      font-weight: 700;
+      letter-spacing: 0.08em;
+      padding: 0.55rem 1rem;
+      border: 1px solid var(--res-rule);
+      background: #fff;
+      color: var(--res-ink);
+      border-radius: 999px;
+      cursor: pointer;
+      transition: all 0.2s;
+      display: inline-flex;
+      align-items: center;
+      gap: 0.5rem;
+    }
+    .keen-filter:hover { border-color: var(--res-ink); }
+    .keen-filter.active {
+      background: var(--res-ink);
+      color: #fff;
+      border-color: var(--res-ink);
+    }
+    .keen-filter .filter-count {
+      font-size: 0.72rem;
+      font-variant-numeric: tabular-nums;
+      opacity: 0.65;
+      font-weight: 400;
+    }
+
+    .keen-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 1rem;
+    }
+    @media (max-width: 900px) { .keen-grid { grid-template-columns: repeat(2, 1fr); } }
+    @media (max-width: 560px) { .keen-grid { grid-template-columns: 1fr; } }
+
+    .keen-card {
+      background: #fff;
+      border: 1px solid var(--res-rule);
+      padding: 1.2rem 1.3rem 1.1rem;
+      display: flex;
+      flex-direction: column;
+      gap: 0.7rem;
+      text-decoration: none;
+      color: inherit;
+      transition: transform 0.25s, box-shadow 0.25s, border-color 0.25s;
+      position: relative;
+      overflow: hidden;
+    }
+    .keen-card::before {
+      content: "";
+      position: absolute;
+      left: 0; top: 0; bottom: 0;
+      width: 3px;
+      background: var(--course-color, var(--res-ink));
+      transform-origin: top;
+      transform: scaleY(0.4);
+      transition: transform 0.3s ease;
+    }
+    .keen-card:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 10px 24px -16px rgba(15, 23, 41, 0.22);
+      border-color: var(--course-color, var(--res-accent));
+    }
+    .keen-card:hover::before { transform: scaleY(1); }
+
+    .keen-card[data-course="aero"]    { --course-color: var(--res-ink); }
+    .keen-card[data-course="comp"]    { --course-color: var(--res-accent); }
+    .keen-card[data-course="design"]  { --course-color: var(--res-rust); }
+    .keen-card[data-course="ifly"]    { --course-color: var(--res-blue); }
+    .keen-card[data-course="intro"]   { --course-color: var(--res-ink); }
+    .keen-card[data-course="exp"]     { --course-color: var(--res-accent); }
+    .keen-card[data-course="eml"]     { --course-color: var(--res-rust); }
+
+    .keen-meta {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 0.5rem;
+    }
+    .keen-course-label {
+      font-family: var(--font-body);
+      font-size: 0.66rem;
+      font-weight: 700;
+      letter-spacing: 0.16em;
+      text-transform: uppercase;
+      color: var(--course-color, var(--res-ink));
+    }
+    .keen-pedagogy {
+      font-family: var(--font-body);
+      font-size: 0.62rem;
+      font-weight: 600;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      color: var(--res-muted);
+      padding: 0.2rem 0.5rem;
+      border: 1px solid var(--res-rule);
+      border-radius: 3px;
+      background: var(--res-paper);
+      white-space: nowrap;
+    }
+
+    .keen-title {
+      font-family: var(--font-display);
+      font-weight: 700;
+      font-size: 0.98rem;
+      line-height: 1.35;
+      color: var(--res-ink);
+      margin: 0;
+      letter-spacing: -0.005em;
+    }
+
+    .keen-card-foot {
+      margin-top: auto;
+      padding-top: 0.6rem;
+      border-top: 1px dashed var(--res-rule);
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      font-family: var(--font-body);
+      font-size: 0.74rem;
+      color: var(--res-muted);
+    }
+    .keen-card-id {
+      font-variant-numeric: tabular-nums;
+      letter-spacing: 0.04em;
+    }
+    .keen-launch-arrow {
+      color: var(--course-color, var(--res-accent));
+      font-weight: 700;
+      transition: transform 0.25s;
+    }
+    .keen-card:hover .keen-launch-arrow { transform: translateX(3px); }
+
+    .keen-empty {
+      grid-column: 1 / -1;
+      text-align: center;
+      padding: 3rem 1rem;
+      color: var(--res-muted);
+      font-family: var(--font-display);
+      font-style: italic;
+      display: none;
+    }
+    .keen-grid.is-empty .keen-empty { display: block; }
+
+    /* =====================================================
+       INTRO BLOCK FOR KEEN CARDS
+       ===================================================== */
+    .keen-intro {
+      max-width: 760px;
+      margin: 0 auto 2.5rem;
+      padding: 1.8rem 2rem;
+      background: #fff;
+      border: 1px solid var(--res-rule);
+      border-left: 3px solid var(--res-accent);
+    }
+    .keen-intro p {
+      font-family: var(--font-body);
+      font-size: 0.95rem;
+      line-height: 1.6;
+      color: var(--res-ink-soft);
+      margin: 0;
+    }
+    .keen-intro p + p { margin-top: 0.7rem; }
+    .keen-intro a {
+      color: var(--res-accent);
+      text-decoration: none;
+      font-weight: 600;
+    }
+    .keen-intro a:hover { text-decoration: underline; }
+  </style>
 </head>
 
-<body class="teaching-page">
+<body class="resources-page">
   <header class="site-header">
     <div class="shell"><a class="brand" href="index.html"><span class="brand-mark">Welcome to Our Community </span><span
           class="brand-name">Dr. Sidaard Gunasekaran, Ph.D., University of Dayton</span></a>
       <nav class="nav"><a href="index.html">Home</a><a href="research.html">Research Projects</a><a
           href="students.html">Students</a><a href="alumni.html">Alumni</a><a
-          href="publications.html">Publications</a><a class="active" href="teaching.html">Teaching</a><a
+          href="publications.html">Publications</a><a href="teaching.html">Teaching</a><a
+          class="active" href="resources.html">Resources</a><a
           href="facilities.html">Facilities</a>
         <a href="news.html">News</a><a href="community.html">Community</a>
       </nav>
     </div>
   </header>
+
+  <!-- ============== HERO ============== -->
   <div class="page-hero">
     <div class="shell page-hero-grid">
       <div>
-        <div class="section-kicker">Teaching</div>
-        <h1>Learning by doing. Teaching that builds engineers.</h1>
-        <p>Teaching is built around hands-on work, curiosity, and the belief that students learn engineering most deeply when they design, test, question, and reflect. Across courses, workshops, and mentoring, the goal is to help students grow into confident engineers who can think clearly, create value, and keep learning.</p>
+        <div class="section-kicker">Classroom Resources</div>
+        <h1>Tools and modules for the classroom.</h1>
+        <p>AI tools, KEEN cards, and case studies built for students and shared with the wider teaching community.</p>
       </div>
       <aside class="panel">
-        <h3>A Look Inside</h3>
+        <h3>On This Page</h3>
         <ul class="plain-list">
-          <li>Explore Entrepreneurial Minded Learning (EML) CourseDecks</li>
-          <li>Courses and Classroom Approaches</li>
-          <li>AI-integrated learning activities</li>
+          <li><a href="#ai-tools">AI Tools</a></li>
+          <li><a href="#keen-cards">KEEN Cards &amp; Modules</a></li>
+          <li><a href="#keen-cards" data-quick-filter="ifly">iFLY Case Studies</a></li>
         </ul>
-        <div class="cta-row">
-          <a class="button secondary" href="crescendo-workshops.html">Invite Sid for a Crescendo Workshop on Your Campus</a>
-        </div>
       </aside>
     </div>
   </div>
+
   <main>
-    <section>
-      <div class="shell">
-        <div class="section-header">
-          <div>
-            <div class="section-kicker">Teaching Philosophy</div>
-            <h2>A student-centered approach to learning.</h2>
-          </div>
-          <p class="section-copy">This teaching philosophy centers curiosity, agency, hands-on exploration, and meaningful connections between engineering ideas and the people they serve.</p>
-        </div>
-        <div class="philosophy-journey" data-philosophy-journey>
-          <div class="philosophy-goal-card">
-            <div class="section-kicker">Goal</div>
-            <blockquote>My goal is to make a tangible impact on students by helping them find their passion, build confidence, and speak intelligently about a subject without hesitation.</blockquote>
-          </div>
 
-          <div class="philosophy-scrolly">
-            <aside class="philosophy-rail" aria-label="Teaching philosophy progress">
-              <div class="philosophy-plane" data-journey-plane aria-hidden="true">
-                <svg viewBox="0 0 24 24">
-                  <path d="M12 2l2 8 7 3v2l-7-1-1 6 3 2v1l-4-1-4 1v-1l3-2-1-6-7 1v-2l7-3 2-8z" />
-                </svg>
-              </div>
-              <button class="rail-node is-active" type="button" data-journey-target="foundation"><span>1</span>Foundation</button>
-              <button class="rail-node" type="button" data-journey-target="learning"><span>2</span>Learning</button>
-              <button class="rail-node" type="button" data-journey-target="mindset"><span>3</span>Mindset</button>
-              <button class="rail-node" type="button" data-journey-target="classroom"><span>4</span>Classroom</button>
-              <button class="rail-node" type="button" data-journey-target="outcomes"><span>5</span>Outcomes</button>
-            </aside>
-
-            <div class="philosophy-waypoints">
-              <article class="philosophy-waypoint is-active" id="foundation" data-journey-section="foundation">
-                <div class="wp-eyebrow">Section 01 · Foundation</div>
-                <h3>Three principles that ground the work.</h3>
-                <div class="philosophy-mini-grid">
-                  <div><strong>Experiential learning</strong><p>Students use their unique talents through doing, testing, writing, and reflecting.</p></div>
-                  <div><strong>Ownership over grades</strong><p>Learning moves toward curiosity, agency, and a personal record of growth.</p></div>
-                  <div><strong>Clear explanation</strong><p>Students should leave able to explain ideas clearly, not just repeat equations.</p></div>
-                </div>
-              </article>
-
-              <article class="philosophy-waypoint" id="learning" data-journey-section="learning">
-                <div class="wp-eyebrow">Section 02 · How Learning Happens</div>
-                <h3>Five pillars that build the room.</h3>
-                <div class="philosophy-chip-grid">
-                  <span>Portfolio-based assessment</span>
-                  <span>Story-driven teaching</span>
-                  <span>Active and interactive learning</span>
-                  <span>Real-world context</span>
-                  <span>Inquiry-based learning</span>
-                </div>
-              </article>
-
-              <article class="philosophy-waypoint" id="mindset" data-journey-section="mindset">
-                <div class="wp-eyebrow">Section 03 · Entrepreneurially Minded Learning</div>
-                <h3>The KEEN 3 C's.</h3>
-                <div class="keen-three-grid">
-                  <div><span>Curiosity</span><p>A habit of asking better questions and pursuing what is needed to answer them well.</p></div>
-                  <div><span>Connections</span><p>Link equations, concepts, experience, and personal understanding into a coherent whole.</p></div>
-                  <div><span>Creating Value</span><p>Use knowledge in meaningful ways for current work, future work, and ongoing learning.</p></div>
-                </div>
-              </article>
-
-              <article class="philosophy-waypoint" id="classroom" data-journey-section="classroom">
-                <div class="wp-eyebrow">Section 04 · What This Looks Like in Class</div>
-                <h3>Five stages, one takeoff.</h3>
-                <div class="class-flow" data-class-flow>
-                  <ol class="class-flow-steps">
-                    <li class="is-active">Guided notes</li>
-                    <li>Discussion-based learning</li>
-                    <li>Hands-on or role-play</li>
-                    <li>Reflection in portfolios</li>
-                    <li>Confidence and mastery</li>
-                  </ol>
-                  <button class="button secondary philosophy-replay" type="button" data-class-flow-replay>Replay Class Flow</button>
-                </div>
-              </article>
-
-              <article class="philosophy-waypoint" id="outcomes" data-journey-section="outcomes">
-                <div class="wp-eyebrow">Section 05 · What Students Gain</div>
-                <h3>Six things that stay with them.</h3>
-                <div class="philosophy-chip-grid">
-                  <span>Confidence</span>
-                  <span>Deep understanding</span>
-                  <span>Long-term retention</span>
-                  <span>Ability to explain ideas clearly</span>
-                  <span>Ownership of learning</span>
-                  <span>A meaningful record of growth</span>
-                </div>
-              </article>
-            </div>
-          </div>
-
-          <div class="philosophy-line-card">
-            <div class="section-kicker">Philosophy in One Line</div>
-            <p>Teach for <strong>confidence</strong>. Design for <strong>curiosity</strong>. Assess for <strong>reflection</strong>. Create learning <strong>that lasts</strong>.</p>
-          </div>
-        </div>
-      </div>
-    </section>
-    <div class="teaching-resources">
     <!-- ============== AI TOOLS ============== -->
     <section class="ai-tools" id="ai-tools">
       <div class="shell">
         <div class="section-header">
           <div class="section-eyebrow">Built from the philosophy</div>
-          <h2 class="section-title">Building AI Tools for Students and Faculty</h2>
+          <h2 class="section-title">AI tools <em>I've built.</em></h2>
           <p class="section-lede">Two audiences, one belief: thoughtful tools should make the work clearer, not flashier.</p>
         </div>
 
@@ -305,11 +670,11 @@
         </div>
 
         <div class="keen-filters" role="tablist">
-          <button class="keen-filter" data-filter="all" type="button">All <span class="filter-count">38</span></button>
+          <button class="keen-filter active" data-filter="all" type="button">All <span class="filter-count">38</span></button>
           <button class="keen-filter" data-filter="aero" type="button">Aerodynamics <span class="filter-count">11</span></button>
           <button class="keen-filter" data-filter="comp" type="button">Compressible Flow <span class="filter-count">11</span></button>
           <button class="keen-filter" data-filter="design" type="button">Aircraft Design <span class="filter-count">7</span></button>
-          <button class="keen-filter active" data-filter="ifly" type="button">iFLY Case Studies <span class="filter-count">6</span></button>
+          <button class="keen-filter" data-filter="ifly" type="button">iFLY Case Studies <span class="filter-count">6</span></button>
           <button class="keen-filter" data-filter="intro" type="button">Intro to Flight <span class="filter-count">1</span></button>
           <button class="keen-filter" data-filter="exp" type="button">Experimental Aero <span class="filter-count">1</span></button>
           <button class="keen-filter" data-filter="eml" type="button">EML Foundations <span class="filter-count">1</span></button>
@@ -784,299 +1149,17 @@
         </div>
       </div>
     </section>
-    </div>
-    <section>
-      <div class="shell">
-        <div class="section-header">
-          <div>
-            <div class="section-kicker">Classroom Photos</div>
-            <h2>Learning that Sticks</h2>
-          </div>
-          <p class="section-copy">A rotating gallery of classroom teaching, discussion, and hands-on learning moments.
-          </p>
-        </div>
-        <div class="teaching-carousel" data-carousel>
-          <div class="teaching-carousel-stage">
-            <div class="teaching-carousel-slides">
-              <figure class="teaching-slide is-active"><img src="../Teaching Photos/IMG_0371.png"
-                  alt="Classroom teaching photo 1" loading="lazy" />
-                <figcaption>Classroom teaching and discussion.</figcaption>
-              </figure>
-              <figure class="teaching-slide"><img src="../Teaching Photos/IMG_5170.png" alt="Classroom teaching photo 2"
-                  loading="lazy" />
-                <figcaption>Classroom teaching and discussion.</figcaption>
-              </figure>
-              <figure class="teaching-slide"><img src="../Teaching Photos/IMG_5294.png" alt="Classroom teaching photo 3"
-                  loading="lazy" />
-                <figcaption>Classroom teaching and discussion.</figcaption>
-              </figure>
-              <figure class="teaching-slide"><img src="../Teaching Photos/IMG_5634.png" alt="Classroom teaching photo 4"
-                  loading="lazy" />
-                <figcaption>Classroom teaching and discussion.</figcaption>
-              </figure>
-              <figure class="teaching-slide"><img src="../Teaching Photos/IMG_5815.png" alt="Classroom teaching photo 5"
-                  loading="lazy" />
-                <figcaption>Classroom teaching and discussion.</figcaption>
-              </figure>
-              <figure class="teaching-slide"><img src="../Teaching Photos/IMG_6334.png" alt="Classroom teaching photo 6"
-                  loading="lazy" />
-                <figcaption>Classroom teaching and discussion.</figcaption>
-              </figure>
-              <figure class="teaching-slide"><img src="../Teaching Photos/IMG_6345.png" alt="Classroom teaching photo 7"
-                  loading="lazy" />
-                <figcaption>Classroom teaching and discussion.</figcaption>
-              </figure>
-              <figure class="teaching-slide"><img src="../Teaching Photos/IMG_6959.png" alt="Classroom teaching photo 8"
-                  loading="lazy" />
-                <figcaption>Classroom teaching and discussion.</figcaption>
-              </figure>
-              <figure class="teaching-slide"><img src="../Teaching Photos/IMG_8592.png" alt="Classroom teaching photo 9"
-                  loading="lazy" />
-                <figcaption>Classroom teaching and discussion.</figcaption>
-              </figure>
-              <figure class="teaching-slide"><img src="../Teaching Photos/IMG_8626.png"
-                  alt="Classroom teaching photo 10" loading="lazy" />
-                <figcaption>Classroom teaching and discussion.</figcaption>
-              </figure>
-              <figure class="teaching-slide"><img src="../Teaching Photos/IMG_8743.png"
-                  alt="Classroom teaching photo 11" loading="lazy" />
-                <figcaption>Classroom teaching and discussion.</figcaption>
-              </figure>
-              <figure class="teaching-slide"><img src="../Teaching Photos/IMG_9522.png"
-                  alt="Classroom teaching photo 12" loading="lazy" />
-                <figcaption>Classroom teaching and discussion.</figcaption>
-              </figure>
-            </div><button class="carousel-control prev" type="button" data-carousel-prev
-              aria-label="Previous classroom photo">&#8592;</button><button class="carousel-control next" type="button"
-              data-carousel-next aria-label="Next classroom photo">&#8594;</button>
-          </div>
-          <div class="teaching-carousel-footer">
-            <div class="teaching-carousel-status"><span data-carousel-current>1</span> / <span
-                data-carousel-total>12</span></div>
-            <div class="teaching-carousel-dots" data-carousel-dots></div>
-          </div>
-        </div>
-      </div>
-    </section>
-    <section>
-      <div class="shell">
-        <div class="section-header">
-          <div>
-            <div class="section-kicker">Student Projects</div>
-            <h2>Student projects in motion.</h2>
-          </div>
-          <p class="section-copy">A video snapshot of student-built work connected to teaching, experimentation, and
-            project-based learning.</p>
-        </div>
-        <div class="teaching-video-card"><a class="video-frame video-link-card"
-            href="https://www.youtube.com/watch?v=qcAkG5fuyE8" target="_blank" rel="noopener noreferrer"
-            aria-label="Open the student projects video on YouTube"><img
-              src="https://img.youtube.com/vi/qcAkG5fuyE8/maxresdefault.jpg"
-              alt="Preview image for the student projects video" loading="lazy" /><span class="video-play-badge">Play
-              Video</span></a>
-          <div class="teaching-video-copy">
-            <h3>Student Project Showcase</h3>
-            <p>This video highlights student projects connected to the teaching mission of the lab.</p>
-            <div class="student-links"><a href="https://www.youtube.com/watch?v=qcAkG5fuyE8" target="_blank"
-                rel="noopener noreferrer">Watch on YouTube</a></div>
-          </div>
-        </div>
-      </div>
-    </section>
-    <section class="workshop-tour">
-      <div class="shell">
-        <div class="tour-header">
-          <div class="section-kicker">Crescendo Workshop Tour</div>
-          <h2>Empowering Faculty Across the Country with Entrepreneurial Mindset and AI Tools for Modern Academia</h2>
-          <p>Rethinking how we teach, learn, and find joy of learning in the age of AI in Higher Education.</p>
-        </div>
 
-        <div class="tour-layout">
-          <div class="tour-map-wrap">
-            <svg class="tour-map" viewBox="0 0 800 460" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Crescendo workshop tour map">
-              <image class="tour-us-map-image" href="assets/news/blank-us-map-states.png" x="70" y="42" width="660" height="408" preserveAspectRatio="xMidYMid meet" />
-              <polyline class="tour-route" points="566,184 561,184 500,155 655,172 195,126 515,209" />
-              <g class="tour-pin-group" data-stop="1">
-                <circle class="tour-pin-halo" cx="566" cy="184" r="22" /><circle class="tour-pin-dot" cx="566" cy="184" r="11" /><text class="tour-pin-num" x="566" y="184">1</text><text class="tour-pin-label" x="578" y="214">Toledo, OH</text>
-              </g>
-              <g class="tour-pin-group" data-stop="2">
-                <circle class="tour-pin-halo" cx="561" cy="184" r="22" /><circle class="tour-pin-dot" cx="561" cy="184" r="11" /><text class="tour-pin-num" x="561" y="184">2</text><text class="tour-pin-label" x="540" y="214">Angola, IN</text>
-              </g>
-              <g class="tour-pin-group" data-stop="3">
-                <circle class="tour-pin-halo" cx="500" cy="155" r="22" /><circle class="tour-pin-dot" cx="500" cy="155" r="11" /><text class="tour-pin-num" x="500" y="155">3</text><text class="tour-pin-label" x="500" y="134">Milwaukee, WI</text>
-              </g>
-              <g class="tour-pin-group" data-stop="4">
-                <circle class="tour-pin-halo" cx="655" cy="172" r="22" /><circle class="tour-pin-dot" cx="655" cy="172" r="11" /><text class="tour-pin-num" x="655" y="172">4</text><text class="tour-pin-label" x="655" y="151">Old Westbury, NY</text>
-              </g>
-              <g class="tour-pin-group" data-stop="5">
-                <circle class="tour-pin-halo" cx="195" cy="126" r="22" /><circle class="tour-pin-dot" cx="195" cy="126" r="11" /><text class="tour-pin-num" x="195" y="126">5</text><text class="tour-pin-label" x="195" y="105">Moscow, ID</text>
-              </g>
-              <g class="tour-pin-group" data-stop="6">
-                <circle class="tour-pin-halo" cx="515" cy="209" r="22" /><circle class="tour-pin-dot" cx="515" cy="209" r="11" /><text class="tour-pin-num" x="515" y="209">6</text><text class="tour-pin-label" x="515" y="239">Bradley, IL</text>
-              </g>
-            </svg>
-          </div>
-
-          <ol class="tour-stops">
-            <li class="tour-stop" data-stop="1"><div class="stop-num">1</div><div class="stop-info"><div class="stop-title">Mastering Modern Academia</div><div class="stop-venue">University of Toledo</div><div class="stop-date">June 15, 2025</div></div></li>
-            <li class="tour-stop" data-stop="2"><div class="stop-num">2</div><div class="stop-info"><div class="stop-title">Mastering Modern Academia</div><div class="stop-venue">Trine University</div><div class="stop-date">August 13, 2025</div></div></li>
-            <li class="tour-stop" data-stop="3"><div class="stop-num">3</div><div class="stop-info"><div class="stop-title">Mastering Modern Academia</div><div class="stop-venue">KEEN Leader Meeting, Milwaukee</div><div class="stop-date">September 25, 2025</div></div></li>
-            <li class="tour-stop" data-stop="4"><div class="stop-num">4</div><div class="stop-info"><div class="stop-title">The Intentional Joy of Learning</div><div class="stop-venue">New York Institute of Technology</div><div class="stop-date">November 5, 2025</div></div></li>
-            <li class="tour-stop" data-stop="5"><div class="stop-num">5</div><div class="stop-info"><div class="stop-title">The Intentional Joy of Learning (online)</div><div class="stop-venue">University of Idaho</div><div class="stop-date">December 4, 2025</div></div></li>
-            <li class="tour-stop" data-stop="6"><div class="stop-num">6</div><div class="stop-info"><div class="stop-title">Crescendo Workshop</div><div class="stop-venue">Bradley, Illinois</div><div class="stop-date">January 2026</div></div></li>
-          </ol>
-        </div>
-
-        <div class="tour-cta">
-          <div class="tour-cta-text">Bring the Crescendo workshop to your campus.</div>
-          <a class="button secondary" href="crescendo-workshops.html">Get in touch</a>
-        </div>
-      </div>
-    </section>
   </main>
+
   <footer class="footer">
     <div class="shell">
       <div>Students first. Research with purpose.</div>
-      <div class="footer-links"><a href="students.html">Students</a></div>
+      <div class="footer-links"><a href="index.html">Home</a><a href="awards.html">Awards</a></div>
     </div>
   </footer>
+
   <script>
-    document.querySelectorAll("[data-philosophy-journey]").forEach((root) => {
-      const nodes = Array.from(root.querySelectorAll("[data-journey-target]"));
-      const sections = Array.from(root.querySelectorAll("[data-journey-section]"));
-      const plane = root.querySelector("[data-journey-plane]");
-
-      function setActive(id) {
-        nodes.forEach((node) => node.classList.toggle("is-active", node.dataset.journeyTarget === id));
-        sections.forEach((section) => section.classList.toggle("is-active", section.dataset.journeySection === id));
-        if (plane) {
-          const index = nodes.findIndex((node) => node.dataset.journeyTarget === id);
-          if (index >= 0) plane.style.setProperty("--plane-y", index * 60 + "px");
-        }
-      }
-
-      nodes.forEach((node) => {
-        node.addEventListener("click", () => {
-          const target = root.querySelector("#" + node.dataset.journeyTarget);
-          if (target) target.scrollIntoView({ behavior: "smooth", block: "center" });
-          setActive(node.dataset.journeyTarget);
-        });
-      });
-
-      if ("IntersectionObserver" in window) {
-        const observer = new IntersectionObserver((entries) => {
-          entries.forEach((entry) => {
-            if (entry.isIntersecting) setActive(entry.target.dataset.journeySection);
-          });
-        }, { threshold: 0.45, rootMargin: "-15% 0px -30% 0px" });
-        sections.forEach((section) => observer.observe(section));
-      }
-    });
-
-    document.querySelectorAll("[data-class-flow]").forEach((flow) => {
-      const steps = Array.from(flow.querySelectorAll(".class-flow-steps li"));
-      const replay = flow.querySelector("[data-class-flow-replay]");
-      let timeouts = [];
-
-      function clearFlow() {
-        timeouts.forEach((timeout) => window.clearTimeout(timeout));
-        timeouts = [];
-      }
-
-      function playFlow() {
-        clearFlow();
-        steps.forEach((step) => step.classList.remove("is-active"));
-        steps.forEach((step, index) => {
-          timeouts.push(window.setTimeout(() => {
-            steps.forEach((item) => item.classList.remove("is-active"));
-            step.classList.add("is-active");
-          }, index * 520));
-        });
-      }
-
-      replay.addEventListener("click", playFlow);
-      playFlow();
-    });
-
-    document.querySelectorAll("[data-carousel]").forEach((carousel) => {
-      const slides = Array.from(carousel.querySelectorAll(".teaching-slide"));
-      const prevButton = carousel.querySelector("[data-carousel-prev]");
-      const nextButton = carousel.querySelector("[data-carousel-next]");
-      const dotsRoot = carousel.querySelector("[data-carousel-dots]");
-      const currentLabel = carousel.querySelector("[data-carousel-current]");
-      const totalLabel = carousel.querySelector("[data-carousel-total]");
-      let activeIndex = 0;
-      let autoplayId;
-
-      totalLabel.textContent = String(slides.length);
-
-      const dots = slides.map((_, index) => {
-        const button = document.createElement("button");
-        button.type = "button";
-        button.className = "carousel-dot";
-        button.setAttribute("aria-label", "Go to classroom photo " + (index + 1));
-        button.addEventListener("click", () => setActive(index));
-        dotsRoot.appendChild(button);
-        return button;
-      });
-
-      function setActive(index) {
-        activeIndex = (index + slides.length) % slides.length;
-        slides.forEach((slide, slideIndex) => {
-          slide.classList.toggle("is-active", slideIndex === activeIndex);
-        });
-        dots.forEach((dot, dotIndex) => {
-          const isActive = dotIndex === activeIndex;
-          dot.classList.toggle("is-active", isActive);
-          dot.setAttribute("aria-pressed", isActive ? "true" : "false");
-        });
-        currentLabel.textContent = String(activeIndex + 1);
-      }
-
-      function restartAutoplay() {
-        window.clearInterval(autoplayId);
-        autoplayId = window.setInterval(() => setActive(activeIndex + 1), 2000);
-      }
-
-      prevButton.addEventListener("click", () => {
-        setActive(activeIndex - 1);
-        restartAutoplay();
-      });
-      nextButton.addEventListener("click", () => {
-        setActive(activeIndex + 1);
-        restartAutoplay();
-      });
-      carousel.addEventListener("mouseenter", () => window.clearInterval(autoplayId));
-      carousel.addEventListener("mouseleave", restartAutoplay);
-      carousel.addEventListener("focusin", () => window.clearInterval(autoplayId));
-      carousel.addEventListener("focusout", restartAutoplay);
-      setActive(0);
-      restartAutoplay();
-    });
-    (function () {
-      const pins = Array.from(document.querySelectorAll(".tour-pin-group"));
-      const stops = Array.from(document.querySelectorAll(".tour-stop"));
-
-      function setActive(stopId) {
-        pins.forEach((pin) => pin.classList.toggle("is-active", pin.dataset.stop === stopId));
-        stops.forEach((stop) => stop.classList.toggle("is-active", stop.dataset.stop === stopId));
-      }
-
-      function clearActive() {
-        pins.forEach((pin) => pin.classList.remove("is-active"));
-        stops.forEach((stop) => stop.classList.remove("is-active"));
-      }
-
-      pins.forEach((pin) => {
-        pin.addEventListener("mouseenter", () => setActive(pin.dataset.stop));
-        pin.addEventListener("mouseleave", clearActive);
-      });
-      stops.forEach((stop) => {
-        stop.addEventListener("mouseenter", () => setActive(stop.dataset.stop));
-        stop.addEventListener("mouseleave", clearActive);
-      });
-    })();
-
     // ============================================================
     // 1. AI TOOLS TABS
     // ============================================================
@@ -1114,8 +1197,6 @@
       filters.forEach(filter => {
         filter.addEventListener('click', () => applyFilter(filter.dataset.filter));
       });
-
-      applyFilter('ifly');
 
       // ============================================================
       // 3. QUICK FILTER FROM HERO PANEL ANCHOR LINKS
