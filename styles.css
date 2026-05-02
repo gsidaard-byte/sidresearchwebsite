@@ -2454,6 +2454,10 @@ a.news-card:focus-visible .card-title {
   align-items: start;
 }
 
+.facility-detail-grid-single {
+  grid-template-columns: 1fr;
+}
+
 .facility-detail-main,
 .facility-model-card {
   background: white;
