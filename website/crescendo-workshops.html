@@ -112,6 +112,56 @@
           </div>
         </div>
       </section>
+      <section class="workshop-tour">
+        <div class="shell">
+          <div class="tour-header">
+            <div class="section-kicker">Crescendo Workshop Tour</div>
+            <h2>Empowering Faculty Across the Country with Entrepreneurial Mindset and AI Tools for Modern Academia</h2>
+            <p>Rethinking how we teach, learn, and find joy of learning in the age of AI in Higher Education.</p>
+          </div>
+
+          <div class="tour-layout">
+            <div class="tour-map-wrap">
+              <svg class="tour-map" viewBox="0 0 800 460" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="2025 Crescendo workshop tour map">
+                <image class="tour-us-map-image" href="assets/news/blank-us-map-states.png" x="70" y="42" width="660" height="408" preserveAspectRatio="xMidYMid meet" />
+                <polyline class="tour-route" points="566,184 561,184 500,155 655,172 195,126 515,209" />
+                <g class="tour-pin-group" data-stop="1">
+                  <circle class="tour-pin-halo" cx="566" cy="184" r="22" /><circle class="tour-pin-dot" cx="566" cy="184" r="11" /><text class="tour-pin-num" x="566" y="184">1</text><text class="tour-pin-label" x="578" y="214">Toledo, OH</text>
+                </g>
+                <g class="tour-pin-group" data-stop="2">
+                  <circle class="tour-pin-halo" cx="561" cy="184" r="22" /><circle class="tour-pin-dot" cx="561" cy="184" r="11" /><text class="tour-pin-num" x="561" y="184">2</text><text class="tour-pin-label" x="540" y="214">Angola, IN</text>
+                </g>
+                <g class="tour-pin-group" data-stop="3">
+                  <circle class="tour-pin-halo" cx="500" cy="155" r="22" /><circle class="tour-pin-dot" cx="500" cy="155" r="11" /><text class="tour-pin-num" x="500" y="155">3</text><text class="tour-pin-label" x="500" y="134">Milwaukee, WI</text>
+                </g>
+                <g class="tour-pin-group" data-stop="4">
+                  <circle class="tour-pin-halo" cx="655" cy="172" r="22" /><circle class="tour-pin-dot" cx="655" cy="172" r="11" /><text class="tour-pin-num" x="655" y="172">4</text><text class="tour-pin-label" x="655" y="151">Old Westbury, NY</text>
+                </g>
+                <g class="tour-pin-group" data-stop="5">
+                  <circle class="tour-pin-halo" cx="195" cy="126" r="22" /><circle class="tour-pin-dot" cx="195" cy="126" r="11" /><text class="tour-pin-num" x="195" y="126">5</text><text class="tour-pin-label" x="195" y="105">Moscow, ID</text>
+                </g>
+                <g class="tour-pin-group" data-stop="6">
+                  <circle class="tour-pin-halo" cx="515" cy="209" r="22" /><circle class="tour-pin-dot" cx="515" cy="209" r="11" /><text class="tour-pin-num" x="515" y="209">6</text><text class="tour-pin-label" x="515" y="239">Bradley, IL</text>
+                </g>
+              </svg>
+            </div>
+
+            <ol class="tour-stops">
+              <li class="tour-stop" data-stop="1"><div class="stop-num">1</div><div class="stop-info"><div class="stop-title">Mastering Modern Academia</div><div class="stop-venue">University of Toledo</div><div class="stop-date">June 15, 2025</div></div></li>
+              <li class="tour-stop" data-stop="2"><div class="stop-num">2</div><div class="stop-info"><div class="stop-title">Mastering Modern Academia</div><div class="stop-venue">Trine University</div><div class="stop-date">August 13, 2025</div></div></li>
+              <li class="tour-stop" data-stop="3"><div class="stop-num">3</div><div class="stop-info"><div class="stop-title">Mastering Modern Academia</div><div class="stop-venue">KEEN Leader Meeting, Milwaukee</div><div class="stop-date">September 25, 2025</div></div></li>
+              <li class="tour-stop" data-stop="4"><div class="stop-num">4</div><div class="stop-info"><div class="stop-title">The Intentional Joy of Learning</div><div class="stop-venue">New York Institute of Technology</div><div class="stop-date">November 5, 2025</div></div></li>
+              <li class="tour-stop" data-stop="5"><div class="stop-num">5</div><div class="stop-info"><div class="stop-title">The Intentional Joy of Learning (online)</div><div class="stop-venue">University of Idaho</div><div class="stop-date">December 4, 2025</div></div></li>
+              <li class="tour-stop" data-stop="6"><div class="stop-num">6</div><div class="stop-info"><div class="stop-title">Crescendo Workshop</div><div class="stop-venue">Bradley, Illinois</div><div class="stop-date">January 2026</div></div></li>
+            </ol>
+          </div>
+
+          <div class="tour-cta">
+            <div class="tour-cta-text">Bring the Crescendo workshop to your campus.</div>
+            <a class="button secondary" href="crescendo-workshops.html">Get in touch</a>
+          </div>
+        </div>
+      </section>
     </main>
     <footer class="footer"><div class="shell"><div>Students first. Research with purpose.</div><div class="footer-links"><a href="teaching.html">Teaching</a><a href="news.html">News</a></div></div></footer>
     <script>
@@ -169,6 +219,29 @@
         carousel.addEventListener("focusout", restartAutoplay);
         setActive(0);
         restartAutoplay();
+      });
+
+      const pins = Array.from(document.querySelectorAll(".tour-pin-group"));
+      const stops = Array.from(document.querySelectorAll(".tour-stop"));
+
+      function setActiveStop(stopId) {
+        pins.forEach((pin) => pin.classList.toggle("is-active", pin.dataset.stop === stopId));
+        stops.forEach((stop) => stop.classList.toggle("is-active", stop.dataset.stop === stopId));
+      }
+
+      function clearActiveStop() {
+        pins.forEach((pin) => pin.classList.remove("is-active"));
+        stops.forEach((stop) => stop.classList.remove("is-active"));
+      }
+
+      pins.forEach((pin) => {
+        pin.addEventListener("mouseenter", () => setActiveStop(pin.dataset.stop));
+        pin.addEventListener("mouseleave", clearActiveStop);
+      });
+
+      stops.forEach((stop) => {
+        stop.addEventListener("mouseenter", () => setActiveStop(stop.dataset.stop));
+        stop.addEventListener("mouseleave", clearActiveStop);
       });
     </script>
   </body>
