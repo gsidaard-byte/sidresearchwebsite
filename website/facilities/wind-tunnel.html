@@ -153,7 +153,7 @@
 
     if (viewer && canvas) {
       const scene = new THREE.Scene();
-      scene.background = new THREE.Color(0xf7f6f1);
+      scene.background = new THREE.Color(0xdce9ea);
 
       const renderer = new THREE.WebGLRenderer({
         canvas,
@@ -203,13 +203,14 @@
         const distance = maxSize / (2 * Math.tan(THREE.MathUtils.degToRad(camera.fov) / 2));
 
         model.position.sub(center);
-        camera.position.set(distance * 0.95, distance * 0.55, distance * 1.15);
+        model.position.y += maxSize * 0.08;
+        camera.position.set(distance * 0.48, distance * 0.32, distance * 0.58);
         camera.near = Math.max(distance / 1000, 0.01);
         camera.far = distance * 10;
         camera.updateProjectionMatrix();
         controls.minDistance = Math.max(distance * 0.08, 0.1);
         controls.maxDistance = distance * 5;
-        controls.target.set(0, 0, 0);
+        controls.target.set(0, -maxSize * 0.04, 0);
         controls.update();
       };
 
@@ -238,6 +239,21 @@
         viewer.dataset.modelSrc,
         (gltf) => {
           const model = gltf.scene;
+          model.traverse((node) => {
+            if (!node.isMesh) {
+              return;
+            }
+
+            node.castShadow = true;
+            node.receiveShadow = true;
+
+            const edges = new THREE.EdgesGeometry(node.geometry, 24);
+            const line = new THREE.LineSegments(
+              edges,
+              new THREE.LineBasicMaterial({ color: 0x1a2332, transparent: true, opacity: 0.34 })
+            );
+            node.add(line);
+          });
           scene.add(model);
           frameModel(model);
           viewer.classList.add("is-loaded");
