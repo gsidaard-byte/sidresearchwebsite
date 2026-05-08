@@ -2505,14 +2505,14 @@ a.news-card:focus-visible .card-title {
 
 .facility-cad-viewer {
   position: relative;
-  min-height: 540px;
-  height: clamp(420px, 62vh, 720px);
+  min-height: 360px;
+  height: clamp(360px, 46vh, 520px);
   overflow: hidden;
   border: 1px solid rgba(26, 35, 50, 0.12);
   background:
-    linear-gradient(rgba(26, 35, 50, 0.045) 1px, transparent 1px),
-    linear-gradient(90deg, rgba(26, 35, 50, 0.045) 1px, transparent 1px),
-    #f7f6f1;
+    linear-gradient(rgba(26, 35, 50, 0.08) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(26, 35, 50, 0.08) 1px, transparent 1px),
+    linear-gradient(180deg, #dce9ea 0%, #f1f6f5 58%, #d8e6e7 100%);
   background-size: 28px 28px;
   box-shadow: var(--shadow);
 }
@@ -2753,8 +2753,8 @@ a.news-card:focus-visible .card-title {
   }
 
   .facility-cad-viewer {
-    min-height: 420px;
-    height: 52vh;
+    min-height: 360px;
+    height: 48vh;
   }
 
   .pub-summary-grid {
@@ -2914,8 +2914,8 @@ a.news-card:focus-visible .card-title {
   }
 
   .facility-cad-viewer {
-    min-height: 340px;
-    height: 58vh;
+    min-height: 320px;
+    height: 44vh;
   }
 
   .facility-cad-fallback {
