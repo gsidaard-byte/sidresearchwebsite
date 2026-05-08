@@ -42,10 +42,28 @@
           <li>Propeller and wake measurements</li>
           <li>Prototype and student project testing</li>
         </ul>
+        <div class="cta-row"><a class="button primary" href="#wind-tunnel-cad-viewer">View CAD Model</a></div>
       </aside>
     </div>
   </div>
   <main>
+    <section>
+      <div class="shell">
+        <div class="section-header">
+          <div>
+            <div class="section-kicker">CAD Model</div>
+            <h2>Wind tunnel CAD viewer.</h2>
+          </div>
+          <p class="section-copy">A browser-based 3D view of the low-speed wind tunnel geometry.</p>
+        </div>
+        <div class="facility-cad-viewer" id="wind-tunnel-cad-viewer"
+          data-model-src="../facilities/Wind%20Tunnel/WindTunnelCAD.glb">
+          <div class="facility-cad-loading" data-cad-loading>Loading CAD model</div>
+          <canvas aria-label="Interactive 3D CAD model of the wind tunnel" data-cad-canvas></canvas>
+          <a class="facility-cad-fallback" href="../facilities/Wind%20Tunnel/WindTunnelCAD.glb">Open CAD file</a>
+        </div>
+      </div>
+    </section>
     <section>
       <div class="shell facility-detail-grid facility-detail-grid-single">
         <div class="facility-detail-main">
@@ -63,23 +81,6 @@
               <p>Supports repeatable test campaigns for propeller performance, wake interaction, and flow diagnostics.</p>
             </article>
           </div>
-        </div>
-      </div>
-    </section>
-    <section>
-      <div class="shell">
-        <div class="section-header">
-          <div>
-            <div class="section-kicker">CAD Model</div>
-            <h2>Wind tunnel CAD viewer.</h2>
-          </div>
-          <p class="section-copy">A browser-based 3D view of the low-speed wind tunnel geometry.</p>
-        </div>
-        <div class="facility-cad-viewer" id="wind-tunnel-cad-viewer"
-          data-model-src="../facilities/Wind%20Tunnel/WindTunnelCAD.glb">
-          <div class="facility-cad-loading" data-cad-loading>Loading CAD model</div>
-          <canvas aria-label="Interactive 3D CAD model of the wind tunnel" data-cad-canvas></canvas>
-          <a class="facility-cad-fallback" href="../facilities/Wind%20Tunnel/WindTunnelCAD.glb">Open CAD file</a>
         </div>
       </div>
     </section>
