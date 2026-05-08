@@ -2522,7 +2522,7 @@ a.news-card:focus-visible .card-title {
   width: 100%;
   height: 100%;
   cursor: grab;
-  touch-action: none;
+  touch-action: pan-y;
 }
 
 .facility-cad-viewer canvas:active {
@@ -2549,6 +2549,36 @@ a.news-card:focus-visible .card-title {
 .facility-cad-viewer.has-error {
   min-height: 260px;
   height: 260px;
+}
+
+.facility-cad-controls {
+  position: absolute;
+  left: 18px;
+  bottom: 18px;
+  z-index: 2;
+  display: flex;
+  gap: 8px;
+}
+
+.facility-cad-controls button {
+  display: inline-grid;
+  place-items: center;
+  width: 42px;
+  height: 42px;
+  border: 0;
+  background: var(--navy-800);
+  color: var(--cream-50);
+  cursor: pointer;
+  font-size: 1.35rem;
+  font-weight: 800;
+  line-height: 1;
+  box-shadow: 0 12px 30px rgba(26, 35, 50, 0.22);
+}
+
+.facility-cad-controls button:hover,
+.facility-cad-controls button:focus-visible {
+  background: var(--teal-500);
+  color: white;
 }
 
 .facility-cad-fallback {
@@ -2892,6 +2922,11 @@ a.news-card:focus-visible .card-title {
     right: 12px;
     bottom: 12px;
     max-width: calc(100% - 24px);
+  }
+
+  .facility-cad-controls {
+    left: 12px;
+    bottom: 12px;
   }
 
   .philosophy-rail,
