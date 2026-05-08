@@ -60,6 +60,10 @@
           data-model-src="../facilities/Wind%20Tunnel/WindTunnelCAD.glb">
           <div class="facility-cad-loading" data-cad-loading>Loading CAD model</div>
           <canvas aria-label="Interactive 3D CAD model of the wind tunnel" data-cad-canvas></canvas>
+          <div class="facility-cad-controls" aria-label="CAD zoom controls">
+            <button type="button" data-cad-zoom="in" aria-label="Zoom in">+</button>
+            <button type="button" data-cad-zoom="out" aria-label="Zoom out">-</button>
+          </div>
           <a class="facility-cad-fallback" href="../facilities/Wind%20Tunnel/WindTunnelCAD.glb">Open CAD file</a>
         </div>
       </div>
@@ -166,6 +170,8 @@
       const controls = new OrbitControls(camera, renderer.domElement);
       controls.enableDamping = true;
       controls.dampingFactor = 0.06;
+      controls.enableZoom = false;
+      controls.enablePan = false;
       controls.minDistance = 0.5;
       controls.maxDistance = 80;
       controls.target.set(0, 0, 0);
@@ -206,6 +212,26 @@
         controls.target.set(0, 0, 0);
         controls.update();
       };
+
+      const zoomCamera = (direction) => {
+        const offset = camera.position.clone().sub(controls.target);
+        const currentDistance = offset.length();
+        const nextDistance = THREE.MathUtils.clamp(
+          currentDistance * direction,
+          controls.minDistance,
+          controls.maxDistance
+        );
+
+        offset.setLength(nextDistance);
+        camera.position.copy(controls.target).add(offset);
+        controls.update();
+      };
+
+      viewer.querySelectorAll("[data-cad-zoom]").forEach((button) => {
+        button.addEventListener("click", () => {
+          zoomCamera(button.dataset.cadZoom === "in" ? 0.82 : 1.22);
+        });
+      });
 
       const loader = new GLTFLoader();
       loader.load(
