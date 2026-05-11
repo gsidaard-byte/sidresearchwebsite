@@ -1,0 +1,506 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>AI in Education — Weekly Briefing for Faculty &amp; Staff</title>
+<meta name="description" content="A weekly briefing on AI in education for university faculty and staff. Curated by Dr. Sidaard Gunasekaran. Read the latest issue, subscribe by email, or browse the archive.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700;900&family=DM+Sans:wght@300;400;500;600&family=DM+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --ink:         #132032;   /* Site navy header */
+    --ink-deep:    #101925;
+    --ink-mid:     #1a2332;
+    --paper:       #fbfaf6;
+    --paper-warm:  #f1ede2;
+    --accent:      #CE1126;   /* UD Red accent */
+    --accent-soft: #fdeae0;
+    --teal:        #2d8b8b;   /* Site teal */
+    --teal-soft:   #7bb8b6;
+    --gold:        #c9a84c;
+    --mid:         #5b6068;
+    --rule:        #d4cfc5;
+    --card-bg:     #ffffff;
+    --shadow-sm:   0 4px 18px rgba(13, 21, 31, 0.08);
+    --shadow-md:   0 10px 32px rgba(13, 21, 31, 0.12);
+    --shadow-lg:   0 20px 50px rgba(13, 21, 31, 0.14);
+  }
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+  html { scroll-behavior: smooth; }
+  body { font-family: 'DM Sans', sans-serif; background: var(--paper); color: var(--ink); min-height: 100vh; overflow-x: hidden; line-height: 1.6; }
+  a { color: inherit; }
+  img { max-width: 100%; display: block; }
+
+  /* ---------- Top utility bar ---------- */
+  .util-bar { background: var(--ink-deep); color: rgba(247,246,241,0.7); font-family: 'DM Mono', monospace; font-size: 0.7rem; letter-spacing: 0.12em; text-transform: uppercase; }
+  .util-bar-inner { max-width: 1180px; margin: 0 auto; padding: 8px 40px; display: flex; justify-content: space-between; align-items: center; gap: 12px; flex-wrap: wrap; }
+  .util-bar a { color: var(--teal-soft); border-bottom: 1px solid transparent; transition: border-color 0.2s ease; text-decoration: none; }
+  .util-bar a:hover { border-bottom-color: var(--teal-soft); }
+
+  /* ---------- Masthead / hero ---------- */
+  .masthead { background: var(--ink); color: var(--paper); position: relative; overflow: hidden; }
+  .masthead::before {
+    content: ''; position: absolute; inset: 0;
+    background: repeating-linear-gradient(90deg, transparent, transparent 79px, rgba(255,255,255,0.04) 79px, rgba(255,255,255,0.04) 80px);
+    pointer-events: none;
+  }
+  .masthead-inner { max-width: 1180px; margin: 0 auto; padding: 40px 40px 0; position: relative; z-index: 1; }
+  .masthead-eyebrow { font-family: 'DM Mono', monospace; font-size: 0.78rem; color: var(--teal-soft); letter-spacing: 0.22em; text-transform: uppercase; margin-bottom: 22px; display: flex; align-items: center; gap: 14px; }
+  .masthead-eyebrow::after { content: ''; flex: 1; height: 1px; background: rgba(123,184,182,0.32); }
+  h1.masthead-headline { font-family: 'Playfair Display', serif; font-size: clamp(3.2rem, 8vw, 6.4rem); font-weight: 900; line-height: 0.95; color: var(--paper); letter-spacing: -0.02em; margin-bottom: 18px; }
+  h1.masthead-headline em { font-style: italic; color: var(--accent); }
+  .masthead-deck { font-size: 1.15rem; color: rgba(247,246,241,0.78); font-weight: 300; max-width: 760px; line-height: 1.65; border-left: 2px solid var(--accent); padding-left: 18px; margin-bottom: 60px; }
+
+  /* Three-up CTA cards */
+  .cta-row { display: grid; grid-template-columns: repeat(3, 1fr); gap: 0; margin: 0 -40px; padding-top: 32px; border-top: 1px solid rgba(247,246,241,0.12); }
+  .cta-card { padding: 36px 36px 40px; border-right: 1px solid rgba(247,246,241,0.12); position: relative; display: flex; flex-direction: column; gap: 12px; min-height: 320px; }
+  .cta-card:last-child { border-right: none; }
+  .cta-num { font-family: 'DM Mono', monospace; font-size: 0.7rem; color: var(--teal-soft); letter-spacing: 0.2em; text-transform: uppercase; }
+  .cta-title { font-family: 'Playfair Display', serif; font-size: 1.85rem; font-weight: 700; color: var(--paper); line-height: 1.15; letter-spacing: -0.01em; }
+  .cta-body { font-size: 0.95rem; color: rgba(247,246,241,0.74); line-height: 1.6; }
+  .cta-action { margin-top: auto; }
+
+  .btn { display: inline-flex; align-items: center; gap: 10px; font-family: 'DM Mono', monospace; font-size: 0.78rem; font-weight: 500; text-transform: uppercase; letter-spacing: 0.12em; padding: 13px 22px; border: 1px solid var(--accent); background: var(--accent); color: white; text-decoration: none; transition: all 0.2s ease; cursor: pointer; }
+  .btn:hover { background: transparent; color: var(--accent); }
+  .btn.ghost { background: transparent; color: var(--paper); border-color: rgba(247,246,241,0.5); }
+  .btn.ghost:hover { background: var(--paper); color: var(--ink); border-color: var(--paper); }
+  .btn.teal { background: var(--teal); border-color: var(--teal); }
+  .btn.teal:hover { background: transparent; color: var(--teal-soft); border-color: var(--teal-soft); }
+
+  /* Signup card */
+  .signup-card { background: var(--paper); border-radius: 4px; box-shadow: var(--shadow-md); padding: 20px 20px 22px; margin-top: 6px; }
+  .signup-form { display: grid; gap: 10px; }
+  .signup-form label.lead { font-family: 'Playfair Display', serif; font-size: 1.05rem; color: var(--ink); margin-bottom: 2px; font-weight: 700; }
+  .signup-form input[type="email"] {
+    width: 100%; padding: 12px 14px; border: 1px solid var(--rule); border-radius: 2px;
+    font-family: 'DM Sans', sans-serif; font-size: 0.96rem; color: var(--ink); background: white;
+    transition: border-color 0.18s ease, box-shadow 0.18s ease;
+  }
+  .signup-form input[type="email"]:focus { outline: none; border-color: var(--accent); box-shadow: 0 0 0 3px var(--accent-soft); }
+  .signup-form button {
+    padding: 13px; font-family: 'DM Mono', monospace; font-size: 0.78rem; font-weight: 500;
+    text-transform: uppercase; letter-spacing: 0.12em; border: 0; background: var(--accent);
+    color: white; cursor: pointer; border-radius: 2px; transition: opacity 0.18s ease, transform 0.1s ease;
+  }
+  .signup-form button:hover { opacity: 0.92; }
+  .signup-form button:active { transform: translateY(1px); }
+  .signup-form button[disabled] { opacity: 0.6; cursor: wait; }
+  .signup-thanks { padding: 6px 2px; color: var(--ink); font-size: 0.95rem; line-height: 1.55; }
+  .signup-thanks strong { display: block; font-family: 'Playfair Display', serif; font-size: 1.15rem; margin-bottom: 6px; color: var(--ink); }
+  .signup-error { display: none; padding: 8px 2px 0; color: var(--accent); font-size: 0.85rem; line-height: 1.5; }
+  .signup-error.show { display: block; }
+  .visually-hidden { position: absolute !important; height: 1px; width: 1px; overflow: hidden; clip: rect(1px,1px,1px,1px); white-space: nowrap; }
+  .embed-note { font-family: 'DM Mono', monospace; font-size: 0.62rem; color: var(--mid); letter-spacing: 0.08em; text-transform: uppercase; margin-top: 10px; }
+
+  /* ---------- Section shell ---------- */
+  section { padding: 80px 0; }
+  .shell { max-width: 1180px; margin: 0 auto; padding: 0 40px; }
+  .section-label { font-family: 'DM Mono', monospace; font-size: 0.72rem; color: var(--accent); text-transform: uppercase; letter-spacing: 0.22em; display: flex; align-items: center; gap: 14px; margin-bottom: 24px; }
+  .section-label::after { content: ''; flex: 1; height: 1px; background: var(--rule); }
+  .section-heading { font-family: 'Playfair Display', serif; font-size: clamp(1.95rem, 3.6vw, 2.6rem); font-weight: 700; color: var(--ink); line-height: 1.12; letter-spacing: -0.02em; margin-bottom: 12px; max-width: 760px; }
+  .section-sub { font-size: 1.03rem; color: var(--mid); font-weight: 300; max-width: 760px; line-height: 1.65; }
+
+  /* ---------- About section ---------- */
+  .about-grid { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 28px; margin-top: 48px; }
+  .about-card { background: var(--card-bg); border: 1px solid var(--rule); border-radius: 4px; padding: 28px 28px 30px; transition: transform 0.2s ease, box-shadow 0.2s ease; position: relative; }
+  .about-card:hover { transform: translateY(-3px); box-shadow: var(--shadow-md); }
+  .about-card::before { content: ''; position: absolute; top: 0; left: 0; right: 0; height: 3px; background: var(--accent); transform: scaleX(0); transform-origin: left; transition: transform 0.3s ease; }
+  .about-card:hover::before { transform: scaleX(1); }
+  .about-icon { font-family: 'Playfair Display', serif; font-size: 2.2rem; color: var(--accent); line-height: 1; margin-bottom: 14px; font-weight: 900; }
+  .about-card h3 { font-family: 'Playfair Display', serif; font-size: 1.2rem; font-weight: 700; color: var(--ink); margin-bottom: 10px; line-height: 1.25; }
+  .about-card p { font-size: 0.95rem; color: var(--mid); line-height: 1.65; }
+
+  /* ---------- Archive section ---------- */
+  .archive-section { background: var(--paper-warm); }
+  .archive-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 24px; margin-top: 40px; }
+  .issue-card { background: var(--card-bg); border: 1px solid var(--rule); border-radius: 4px; overflow: hidden; transition: transform 0.2s ease, box-shadow 0.2s ease; display: flex; flex-direction: column; text-decoration: none; color: var(--ink); }
+  .issue-card:hover { transform: translateY(-4px); box-shadow: var(--shadow-lg); }
+  .issue-card.featured { grid-column: span 2; display: grid; grid-template-columns: 280px 1fr; }
+  .issue-cover { background: linear-gradient(135deg, var(--ink) 0%, var(--ink-mid) 60%, var(--accent) 200%); color: var(--paper); padding: 32px 28px; display: flex; flex-direction: column; justify-content: space-between; min-height: 220px; position: relative; overflow: hidden; }
+  .issue-cover::before { content: ''; position: absolute; inset: 0; background: repeating-linear-gradient(90deg, transparent, transparent 39px, rgba(255,255,255,0.04) 39px, rgba(255,255,255,0.04) 40px); pointer-events: none; }
+  .issue-card.featured .issue-cover { min-height: auto; padding: 36px 32px; }
+  .issue-cover-eyebrow { font-family: 'DM Mono', monospace; font-size: 0.68rem; color: var(--teal-soft); letter-spacing: 0.18em; text-transform: uppercase; position: relative; z-index: 1; }
+  .issue-cover-num { font-family: 'Playfair Display', serif; font-size: 3.8rem; font-weight: 900; color: var(--paper); line-height: 1; letter-spacing: -0.03em; position: relative; z-index: 1; }
+  .issue-cover-num em { color: var(--accent); font-style: italic; }
+  .issue-cover-date { font-family: 'DM Mono', monospace; font-size: 0.74rem; color: rgba(247,246,241,0.75); letter-spacing: 0.1em; text-transform: uppercase; position: relative; z-index: 1; }
+  .issue-body { padding: 28px 30px 30px; display: flex; flex-direction: column; gap: 12px; }
+  .issue-card.featured .issue-body { padding: 36px 36px 36px 0; justify-content: center; }
+  .issue-tag { font-family: 'DM Mono', monospace; font-size: 0.68rem; color: var(--accent); letter-spacing: 0.16em; text-transform: uppercase; }
+  .issue-headline { font-family: 'Playfair Display', serif; font-size: 1.32rem; font-weight: 700; color: var(--ink); line-height: 1.25; letter-spacing: -0.01em; }
+  .issue-card.featured .issue-headline { font-size: 1.7rem; }
+  .issue-summary { font-size: 0.95rem; color: var(--mid); line-height: 1.6; }
+  .issue-link { font-family: 'DM Mono', monospace; font-size: 0.72rem; color: var(--accent); text-transform: uppercase; letter-spacing: 0.12em; border-bottom: 1px solid var(--accent); padding-bottom: 2px; align-self: flex-start; margin-top: auto; }
+  .issue-card:hover .issue-link { color: var(--ink); border-bottom-color: var(--ink); }
+
+  /* placeholder card for upcoming issues */
+  .issue-card.placeholder { background: transparent; border: 2px dashed var(--rule); cursor: default; }
+  .issue-card.placeholder:hover { transform: none; box-shadow: none; }
+  .issue-card.placeholder .issue-cover { background: var(--paper-warm); color: var(--mid); border-right: 2px dashed var(--rule); }
+  .issue-card.placeholder .issue-cover::before { display: none; }
+  .issue-card.placeholder .issue-cover-eyebrow { color: var(--mid); }
+  .issue-card.placeholder .issue-cover-num { color: var(--mid); }
+  .issue-card.placeholder .issue-cover-num em { color: var(--mid); }
+  .issue-card.placeholder .issue-cover-date { color: var(--mid); }
+  .issue-card.placeholder .issue-body { padding: 28px 30px; justify-content: center; align-items: center; text-align: center; }
+  .issue-card.placeholder .issue-headline { color: var(--mid); font-size: 1.05rem; }
+  .issue-card.placeholder .issue-summary { color: var(--mid); }
+
+  /* ---------- Editor / about Sid ---------- */
+  .editor-section { background: var(--ink); color: var(--paper); }
+  .editor-grid { display: grid; grid-template-columns: 1fr 1.5fr; gap: 60px; align-items: center; }
+  .editor-photo {
+    width: 100%; aspect-ratio: 4/5; background: linear-gradient(135deg, var(--ink-mid) 0%, var(--teal) 200%);
+    border-radius: 4px; display: flex; align-items: center; justify-content: center;
+    font-family: 'Playfair Display', serif; font-size: 5rem; color: rgba(247,246,241,0.4); font-weight: 900; letter-spacing: -0.02em;
+    position: relative; overflow: hidden;
+  }
+  .editor-photo::before { content: ''; position: absolute; inset: 0; background: repeating-linear-gradient(90deg, transparent, transparent 39px, rgba(255,255,255,0.04) 39px, rgba(255,255,255,0.04) 40px); }
+  .editor-photo span { position: relative; z-index: 1; }
+  .editor-section .section-label { color: var(--teal-soft); }
+  .editor-section .section-label::after { background: rgba(123,184,182,0.3); }
+  .editor-section .section-heading { color: var(--paper); }
+  .editor-section .section-sub { color: rgba(247,246,241,0.78); margin-bottom: 24px; max-width: none; }
+  .editor-meta { font-family: 'DM Mono', monospace; font-size: 0.78rem; color: var(--teal-soft); letter-spacing: 0.16em; text-transform: uppercase; margin-bottom: 12px; }
+  .editor-links { display: flex; flex-wrap: wrap; gap: 16px; margin-top: 28px; }
+
+  /* ---------- Quote band ---------- */
+  .quote-band { background: var(--accent); color: white; padding: 56px 0; }
+  .quote-band blockquote { font-family: 'Playfair Display', serif; font-size: clamp(1.45rem, 2.4vw, 1.95rem); font-weight: 700; line-height: 1.35; max-width: 920px; margin: 0 auto; text-align: center; padding: 0 40px; letter-spacing: -0.005em; }
+  .quote-band cite { display: block; margin-top: 18px; font-family: 'DM Mono', monospace; font-size: 0.78rem; font-style: normal; letter-spacing: 0.18em; text-transform: uppercase; color: rgba(255,255,255,0.85); }
+
+  /* ---------- Footer ---------- */
+  footer { background: var(--ink-deep); color: rgba(247,246,241,0.55); padding: 56px 0 32px; }
+  .footer-grid { display: grid; grid-template-columns: 1.4fr 1fr 1fr; gap: 48px; padding-bottom: 36px; border-bottom: 1px solid rgba(247,246,241,0.1); margin-bottom: 28px; }
+  .footer-grid h4 { font-family: 'Playfair Display', serif; font-size: 1.15rem; color: var(--paper); margin-bottom: 14px; font-weight: 700; }
+  .footer-grid p { font-size: 0.92rem; line-height: 1.65; }
+  .footer-grid ul { list-style: none; padding: 0; }
+  .footer-grid li { margin-bottom: 8px; }
+  .footer-grid a { color: var(--teal-soft); text-decoration: none; font-size: 0.92rem; border-bottom: 1px solid transparent; transition: border-color 0.2s; }
+  .footer-grid a:hover { border-bottom-color: var(--teal-soft); }
+  .footer-bottom { display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 16px; font-family: 'DM Mono', monospace; font-size: 0.7rem; letter-spacing: 0.1em; text-transform: uppercase; color: rgba(247,246,241,0.4); }
+
+  /* ---------- Mobile ---------- */
+  @media (max-width: 900px) {
+    .masthead-inner { padding: 28px 20px 0; }
+    .util-bar-inner { padding: 8px 20px; }
+    .shell { padding: 0 20px; }
+    .cta-row { grid-template-columns: 1fr; margin: 0 -20px; }
+    .cta-card { border-right: none; border-bottom: 1px solid rgba(247,246,241,0.12); min-height: auto; }
+    .cta-card:last-child { border-bottom: none; }
+    .about-grid { grid-template-columns: 1fr; gap: 18px; margin-top: 32px; }
+    .archive-grid { grid-template-columns: 1fr; gap: 18px; }
+    .issue-card.featured { grid-column: span 1; grid-template-columns: 1fr; }
+    .issue-card.featured .issue-body { padding: 28px 28px 30px; }
+    .editor-grid { grid-template-columns: 1fr; gap: 32px; }
+    .editor-photo { max-width: 280px; aspect-ratio: 4/5; }
+    .footer-grid { grid-template-columns: 1fr; gap: 32px; }
+    section { padding: 56px 0; }
+  }
+</style>
+</head>
+<body>
+
+<!-- ============ UTILITY BAR ============ -->
+<div class="util-bar">
+  <div class="util-bar-inner">
+    <span>A weekly briefing</span>
+  </div>
+</div>
+
+<!-- ============ MASTHEAD ============ -->
+<header class="masthead">
+  <div class="masthead-inner">
+
+    <div class="masthead-eyebrow">Intelligence Briefing — For Faculty &amp; Staff</div>
+
+    <h1 class="masthead-headline">AI in<br><em>Education</em></h1>
+
+    <p class="masthead-deck">A weekly briefing on what's actually happening in AI and higher education — research worth reading, policy that affects your campus, and classroom approaches that are working. Built for the busy professor with ten minutes to spare.</p>
+
+    <!-- 3-up CTA row -->
+    <div class="cta-row">
+
+      <!-- CTA 1: latest issue -->
+      <div class="cta-card">
+        <span class="cta-num">01 · This week</span>
+        <h2 class="cta-title">Read the<br>latest issue</h2>
+        <p class="cta-body">Issue 1 — May 9, 2026. SUNY adopts a 64-campus AI policy, USC takes a $200M AI gift, and a new study shows AI-assisted admissions essays are flattening voice in ways that hurt the students AI was supposed to help.</p>
+        <div class="cta-action">
+          <a class="btn" href="current/AI_Education_Weekly_2026-05-09.html">Read Issue 1 →</a>
+        </div>
+      </div>
+
+      <!-- CTA 2: subscribe (email-capture form -> link sent manually each week) -->
+      <div class="cta-card">
+        <span class="cta-num">02 · Subscribe</span>
+        <h2 class="cta-title">Get it in<br>your inbox</h2>
+        <p class="cta-body">Free. Once a week. We email you a link to each new issue — that's it. No spam, no tracking pixels, no AI-generated filler. Unsubscribe any time by replying.</p>
+        <div class="cta-action">
+          <div class="signup-card" id="signup-card">
+            <!--
+              FORMSPREE ENDPOINT — sign up at https://formspree.io, create a form,
+              and replace the URL below with your endpoint (looks like
+              https://formspree.io/f/abcdwxyz). Submissions arrive in your inbox
+              and accumulate in your Formspree dashboard. Free tier covers 50/mo.
+              If you prefer Tally, Web3Forms, or Google Forms, just swap the
+              action URL — the form fields below already match their conventions.
+            -->
+            <form id="signup-form" class="signup-form"
+                  action="https://formspree.io/f/mpqbkned"
+                  method="POST" novalidate>
+              <label for="signup-email" class="visually-hidden">Email address</label>
+              <input id="signup-email" type="email" name="email"
+                     placeholder="you@university.edu" required autocomplete="email">
+              <!-- honeypot for spam bots; humans never see it -->
+              <input type="text" name="_gotcha" tabindex="-1" autocomplete="off"
+                     class="visually-hidden" aria-hidden="true">
+              <!-- helpful subject line for the notification email -->
+              <input type="hidden" name="_subject" value="New AI in Education Weekly subscriber">
+              <button type="submit" id="signup-submit">Subscribe — Free</button>
+              <div class="signup-error" id="signup-error">Something went wrong. Please email <a href="mailto:gunasekarans1@udayton.edu" style="color:inherit;">gunasekarans1@udayton.edu</a> and we'll add you manually.</div>
+            </form>
+            <div class="signup-thanks" id="signup-thanks" hidden>
+              <strong>You're on the list.</strong>
+              We'll email a link to the next issue at the address you provided. Reply to any issue to unsubscribe.
+            </div>
+          </div>
+          <div class="embed-note">Email collection by Formspree · No tracking</div>
+        </div>
+      </div>
+
+      <!-- CTA 3: archive -->
+      <div class="cta-card">
+        <span class="cta-num">03 · Archive</span>
+        <h2 class="cta-title">Browse<br>past issues</h2>
+        <p class="cta-body">Every issue stays online — no paywall, no required login. Skim the headlines, jump to a story, or share a single issue with a colleague who'd find it useful.</p>
+        <div class="cta-action">
+          <a class="btn ghost" href="#archive">Open the archive →</a>
+        </div>
+      </div>
+
+    </div>
+
+  </div>
+</header>
+
+<!-- ============ ABOUT / WHAT YOU'LL GET ============ -->
+<section id="about">
+  <div class="shell">
+    <div class="section-label">What you'll get</div>
+    <h2 class="section-heading">Ten minutes of signal,<br>built for the busy faculty.</h2>
+    <p class="section-sub">Each issue is researched fresh from the past seven days. We rank stories on impact, novelty, actionability, evidence quality, and urgency. If a story doesn't earn its place, it doesn't make the issue.</p>
+
+    <div class="about-grid">
+
+      <div class="about-card">
+        <div class="about-icon">3-5</div>
+        <h3>Main stories with takeaway</h3>
+        <p>The week's biggest items in higher ed AI, each with a one-sentence "what this means for your campus" line. Conflicts and contested findings get flagged.</p>
+      </div>
+
+      <div class="about-card">
+        <div class="about-icon">📊</div>
+        <h3>Research distilled</h3>
+        <p>The papers and reports that matter, rewritten for a working professor. Not the abstract. The takeaway and what you could do with it.</p>
+      </div>
+
+      <div class="about-card">
+        <div class="about-icon">🛠</div>
+        <h3>Try this week</h3>
+        <p>Two or three specific things you could try in your course before your next class. Each is under thirty minutes of work, and tied to a story in this issue.</p>
+      </div>
+
+      <div class="about-card">
+        <div class="about-icon">⚡</div>
+        <h3>Quick hits</h3>
+        <p>Five to eight one-line summaries of the rest of the week's news. Scan in under a minute. Share with a colleague who'd care.</p>
+      </div>
+
+      <div class="about-card">
+        <div class="about-icon">💬</div>
+        <h3>Talk about it</h3>
+        <p>Practical questions to raise at your next department meeting, tied directly to that week's stories. Frames the discussion you were already going to have.</p>
+      </div>
+
+      <div class="about-card">
+        <div class="about-icon">🛰</div>
+        <h3>On my radar</h3>
+        <p>Reports about to drop, policy hearings, RFP deadlines, conferences — dates and links so nothing surprises you.</p>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<!-- ============ QUOTE BAND ============ -->
+<div class="quote-band">
+  <blockquote>
+    AI is not an asteroid coming for higher education. It is a catalyst that can finally empower us to solve our oldest, most intractable problem: the inability to scale deep, engaged, and truly personalized learning.
+    <cite>— Robert Placido, <a href="https://er.educause.edu/articles/2025/10/a-more-human-university-the-role-of-ai-in-learning" target="_blank" rel="noopener" style="color:inherit; border-bottom:1px solid rgba(255,255,255,0.5);">A More Human University: The Role of AI in Learning</a>, EDUCAUSE Review, October 2025</cite>
+  </blockquote>
+</div>
+
+<!-- ============ ARCHIVE ============ -->
+<section id="archive" class="archive-section">
+  <div class="shell">
+    <div class="section-label">Archive</div>
+    <h2 class="section-heading">Every issue,<br>archived in full.</h2>
+    <p class="section-sub">Each issue is a single self-contained HTML page. No login, no paywall. Bookmark the issue you want, or share the link with a colleague.</p>
+
+    <div class="archive-grid">
+
+      <!-- Featured: latest -->
+      <a class="issue-card featured" href="current/AI_Education_Weekly_2026-05-09.html">
+        <div class="issue-cover">
+          <div class="issue-cover-eyebrow">Issue 1 · Latest</div>
+          <div class="issue-cover-num">01</div>
+          <div class="issue-cover-date">Week of May 3 – 9, 2026</div>
+        </div>
+        <div class="issue-body">
+          <span class="issue-tag">⚖️ Policy · 🎓 Higher Ed · 📊 Research</span>
+          <h3 class="issue-headline">SUNY's 64-campus AI policy, USC's $200M gift, and the admissions essays that converged after 2022.</h3>
+          <p class="issue-summary">Five main stories, two practitioner case studies, a new arXiv meta-analysis on whether GenAI helps with the assignment or with the learning, and a Chronicle warning that flagging students for AI use without due process is now a legal risk.</p>
+          <span class="issue-link">Read Issue 1 →</span>
+        </div>
+      </a>
+
+      <!-- Placeholder: next issue -->
+      <div class="issue-card placeholder">
+        <div class="issue-cover">
+          <div class="issue-cover-eyebrow">Issue 2 · Coming</div>
+          <div class="issue-cover-num">02</div>
+          <div class="issue-cover-date">May 16, 2026</div>
+        </div>
+        <div class="issue-body">
+          <h3 class="issue-headline">Issue 2 lands next week.</h3>
+          <p class="issue-summary">Subscribe above and you'll be the first to read it.</p>
+        </div>
+      </div>
+
+      <!-- Placeholder: future issue -->
+      <div class="issue-card placeholder">
+        <div class="issue-cover">
+          <div class="issue-cover-eyebrow">Issue 3 · Coming</div>
+          <div class="issue-cover-num">03</div>
+          <div class="issue-cover-date">May 23, 2026</div>
+        </div>
+        <div class="issue-body">
+          <h3 class="issue-headline">Issue 3 lands the week after.</h3>
+          <p class="issue-summary">Each issue stays here permanently once published.</p>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<!-- ============ EDITOR / ABOUT SID ============ -->
+<section class="editor-section">
+  <div class="shell">
+    <div class="editor-grid">
+
+      <div class="editor-photo">
+        <span>SG</span>
+      </div>
+
+      <div>
+        <div class="section-label">From the editor</div>
+        <h2 class="section-heading">Built for all Faculty and Staff.</h2>
+        <div class="editor-meta">Dr. Sidaard Gunasekaran · University of Dayton</div>
+        <p class="section-sub">As a faculty member myself, I struggle to keep up with current trends in AI in education. This briefing is one way I am trying to stay informed, and to share what I find with colleagues working through the same questions. The goal is to help us adapt to an ever-changing landscape so we can better serve our students and continue to grow as teachers, scholars, and members of society.</p>
+        <p class="section-sub">Each issue is researched fresh, ranked against five criteria (impact, novelty, actionability, evidence quality, and urgency), and built around one question — would a busy professor act on this, or at least be glad they know it, walking into their department this week?</p>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<!-- ============ FOOTER ============ -->
+<footer>
+  <div class="shell">
+
+    <div class="footer-grid">
+
+      <div>
+        <h4>AI in Education Weekly</h4>
+        <p>A weekly briefing on AI in higher education for university faculty and staff. Curated and edited by Dr. Sidaard Gunasekaran, Ph.D., University of Dayton.</p>
+      </div>
+
+      <div>
+        <h4>Read</h4>
+        <ul>
+          <li><a href="current/AI_Education_Weekly_2026-05-09.html">Issue 1 — May 9, 2026</a></li>
+          <li><a href="#archive">Browse the archive</a></li>
+          <li><a href="#about">What's in each issue</a></li>
+        </ul>
+      </div>
+
+      <div>
+        <h4>Connect</h4>
+        <ul>
+          <li><a href="https://sidsresearchcommunity.com" target="_blank" rel="noopener">Sidaard Gunasekaran Research Group</a></li>
+          <li><a href="mailto:gunasekarans1@udayton.edu">gunasekarans1@udayton.edu</a></li>
+          <li><a href="#signup-card">Subscribe to the briefing</a></li>
+        </ul>
+      </div>
+
+    </div>
+
+    <div class="footer-bottom">
+      <span>© 2026 Sidaard Gunasekaran. All issues remain free to read and share.</span>
+    </div>
+
+  </div>
+</footer>
+
+<script>
+  // Subscribe form — submits via fetch so the visitor stays on the page,
+  // then swaps in a thank-you message. Falls back to a normal POST if fetch fails.
+  document.addEventListener('DOMContentLoaded', function () {
+    var form = document.getElementById('signup-form');
+    var thanks = document.getElementById('signup-thanks');
+    var errBox = document.getElementById('signup-error');
+    var submitBtn = document.getElementById('signup-submit');
+    if (!form || !thanks) return;
+
+    form.addEventListener('submit', function (e) {
+      // If the action URL is still the placeholder, prevent submission and surface a friendly error.
+      if ((form.action || '').indexOf('YOUR_FORM_ID') !== -1) {
+        e.preventDefault();
+        errBox.innerHTML = 'Signup is not wired up yet. Please email <a href="mailto:gunasekarans1@udayton.edu" style="color:inherit;">gunasekarans1@udayton.edu</a> and we\'ll add you manually.';
+        errBox.classList.add('show');
+        return;
+      }
+
+      e.preventDefault();
+      errBox.classList.remove('show');
+      submitBtn.disabled = true;
+      submitBtn.textContent = 'Subscribing…';
+
+      var data = new FormData(form);
+
+      fetch(form.action, {
+        method: 'POST',
+        body: data,
+        headers: { 'Accept': 'application/json' }
+      }).then(function (res) {
+        if (res.ok) {
+          form.hidden = true;
+          thanks.hidden = false;
+        } else {
+          throw new Error('Form service returned ' + res.status);
+        }
+      }).catch(function () {
+        // Show the error message and re-enable the button so the visitor can retry.
+        errBox.classList.add('show');
+        submitBtn.disabled = false;
+        submitBtn.textContent = 'Subscribe — Free';
+      });
+    });
+  });
+</script>
+
+</body>
+</html>
