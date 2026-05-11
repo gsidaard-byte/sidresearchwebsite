@@ -487,6 +487,9 @@
         headers: { 'Accept': 'application/json' }
       }).then(function (res) {
         if (res.ok) {
+          submitBtn.disabled = false;
+          submitBtn.textContent = 'Subscribe — Free';
+          form.reset();
           form.hidden = true;
           thanks.hidden = false;
         } else {
