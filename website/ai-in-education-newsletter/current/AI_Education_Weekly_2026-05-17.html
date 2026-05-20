@@ -571,7 +571,6 @@
     panel.offsetHeight; // force reflow for animation
     panel.classList.add('active');
     evt.currentTarget.classList.add('active');
-    window.scrollTo({ top: 0, behavior: 'smooth' });
   }
   document.querySelectorAll('.tab-panel').forEach(p => { if (!p.classList.contains('active')) p.style.display = 'none'; });
 </script>
