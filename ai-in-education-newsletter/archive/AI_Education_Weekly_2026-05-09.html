@@ -591,10 +591,6 @@
     void panel.offsetHeight; // force reflow for animation
     panel.classList.add('active');
     evt.currentTarget.classList.add('active');
-    // ensure the panel scrolls into view on mobile after tab nav click
-    if (window.innerWidth <= 820) {
-      window.scrollTo({ top: panel.offsetTop - 70, behavior: 'smooth' });
-    }
   }
   // Init: hide non-active panels
   document.querySelectorAll('.tab-panel').forEach(p => { if (!p.classList.contains('active')) p.style.display = 'none'; });
