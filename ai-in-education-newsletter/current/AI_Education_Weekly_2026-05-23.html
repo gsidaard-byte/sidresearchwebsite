@@ -495,7 +495,6 @@
     panel.offsetHeight; // force reflow for animation
     panel.classList.add('active');
     evt.currentTarget.classList.add('active');
-    window.scrollTo({ top: 0, behavior: 'smooth' });
   }
   // Init — hide all inactive panels
   document.querySelectorAll('.tab-panel').forEach(function(p) {
