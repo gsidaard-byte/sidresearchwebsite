@@ -226,6 +226,35 @@ Use these exact keywords as shorthand in future Codex sessions:
   - Run `./save_snapshot.sh "short description of today's changes"`
   - Report the snapshot commit hash back to the user
 
+- `NEWSLETTER_PREP`
+  - Prepare the latest AI in Education newsletter issue, but do not commit or push.
+  - Inspect `git status` first and work with existing user changes without reverting them.
+  - Treat `AI In Education Newsletter/` as the source/editorial working folder and `website/ai-in-education-newsletter/` as the deployable website copy.
+  - Identify the new current issue HTML and MP4 in `AI In Education Newsletter/Current Page/`.
+  - Move the previous current issue HTML and MP4 into `Archive/` in both the source tree and the website tree.
+  - Normalize the new issue shell to match the established newsletter palette and layout: navy `#132032`, UD red `#CE1126`, warm paper backgrounds, shared masthead/stat/video/nav/card styling, and existing issue typography.
+  - Preserve the new issue's article content. Only adjust reusable shell, styling, video block, tab behavior, and navigation/landing-page references unless the user asks for copy edits.
+  - Integrate the explainer video immediately below the stat bar, matching prior issues.
+  - Set source issue video paths to local relative MP4 filenames so local browser preview works, for example `AI_Weekly_Briefing.mp4`.
+  - Set deployed website issue video paths to raw GitHub URLs under `https://raw.githubusercontent.com/gsidaard-byte/sidresearchwebsite/gh-pages/ai-in-education-newsletter/...` because direct GitHub Pages MP4 serving has previously been unreliable.
+  - Set source issue `Newsletter Home` links to `../AIinEducationPage.html`; set deployed website issue `Newsletter Home` links to `../`.
+  - Remove tab-switching scroll jumps by ensuring `openTab` does not call `window.scrollTo(...)`.
+  - Update the newsletter landing pages (`AI In Education Newsletter/AIinEducationPage.html` and `website/ai-in-education-newsletter/index.html`) so the new issue is latest, previous issues are archived, and footer links list newest first.
+  - Validate before reporting ready: expected source and website files exist; MP4s are under GitHub's normal 100 MB file limit; source issue uses local MP4 paths; website issue uses raw GitHub MP4 paths; archived issue video paths point to archive locations; new issue has no `window.scrollTo`; landing-page links point to the new current issue and archived previous issue.
+  - Report a concise ready-to-preview summary and stop. Do not commit or push during `NEWSLETTER_PREP`.
+
+- `NEWSLETTER_PUBLISH`
+  - Publish the already-prepared AI in Education newsletter issue.
+  - Inspect `git status` and confirm the prepared newsletter changes are the only intended changes before committing.
+  - Commit the source repo with a clear message such as `Publish AI newsletter issue N` or a similarly specific title.
+  - Update the public-root deployment worktrees for both `gh-pages` and `main` from the prepared `website/ai-in-education-newsletter/` contents.
+  - In the public-root deployment worktrees, move old current issue files to archive, add the new current issue HTML/MP4, update the newsletter landing page, and remove obsolete current issue files.
+  - Commit the deployment worktrees with the same clear publish message.
+  - Push `gh-pages` and push the public-root `main` branch.
+  - Verify after push: raw GitHub landing page contains the new issue; raw GitHub issue HTML returns `200`; raw GitHub MP4 returns `200`; custom-domain landing page shows the new issue; custom-domain issue page returns `200`; custom-domain issue HTML contains the raw MP4 URL; issue HTML does not contain `window.scrollTo`.
+  - If the custom domain lags or shows stale content, verify branch contents and raw GitHub URLs first, then identify it as GitHub Pages/CDN propagation if raw branch content is correct.
+  - Report commit hashes, live verification results, and any workflow failures. Note that the `main` GitHub Actions workflow may fail while `gh-pages` Pages deployment still succeeds; live site verification should prioritize the successful `gh-pages` deployment.
+
 ## Known Rules for This Repo
 
 - Preserve the student-centered voice and purpose of the site.
