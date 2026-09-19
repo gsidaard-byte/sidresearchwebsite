@@ -22,7 +22,7 @@ Source: extracted from `Sid_Most Recent_CV (Jan 2026).pdf`
 ## Teaching and University Features
 
 - [`New classroom approach brings passion to the forefront of learning`](https://bit.ly/PassionProjectMEE401)
-- [`When passion takes flight`](https://bit.ly/WhenPassionTakesFlight)
+- [`When passion takes flight`](https://drive.google.com/file/d/1ioCZP0h0ApMeV9K-N99WdDtDq-2YAbP7/view?usp=sharing)
 - [`Merlin Flight Simulator Lab`](https://bit.ly/MerlinFlightSimulator)
 - [`A Look Inside the LTC Studio with Dr. Sidaard Gunasekaran`](https://bit.ly/TeachinginLTCStudio)
 - [`Our Competitive Edge`](https://bit.ly/EMLatUD)
