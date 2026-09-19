@@ -683,7 +683,7 @@ def student_photo_src(slug: str, prefix: str) -> str | None:
     filename = STUDENT_PHOTOS_BY_SLUG.get(slug)
     if not filename:
         return None
-    return f"{prefix}../Students/{quote(filename)}"
+    return f"{prefix}Students/{quote(filename)}"
 
 
 def render_contributor_card(name: str, slug: str, prefix: str) -> str:
