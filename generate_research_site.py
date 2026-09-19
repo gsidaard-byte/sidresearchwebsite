@@ -737,7 +737,7 @@ def render_citations(citations: list[str]) -> str:
     items = []
     for citation in citations:
         citation_html = escape(strip_citation_numbers(citation))
-        citation_html = re.sub(r"(https://doi\.org/[A-Za-z0-9./\-]+)", r'<a href="\1">\1</a>', citation_html)
+        citation_html = re.sub(r"(https://doi\.org/[A-Za-z0-9./\-]+)", r'<a href="\1" target="_blank" rel="noopener">\1</a>', citation_html)
         items.append(f"<li>{citation_html}</li>")
     return '<ul class="citation-list">' + "".join(items) + "</ul>"
 
@@ -751,7 +751,7 @@ def render_paper_card(filename: str, paper_details: dict[str, dict[str, object]]
         f"{render_students(data['students'], prefix)}"
         '<div class="paper-meta"><strong>Citation</strong></div>'
         f"{render_citations(data['citations'])}"
-        + (f'<div class="pub-links"><a href="{data["doi"]}">DOI</a></div>' if data["doi"] else "")
+        + (f'<div class="pub-links"><a href="{data["doi"]}" target="_blank" rel="noopener">DOI</a></div>' if data["doi"] else "")
         + "</article>"
     )
 
