@@ -10,7 +10,7 @@ Source: extracted from `Sid_Most Recent_CV (Jan 2026).pdf`
 4. [`Low-speed wind tunnel projects`](https://udayton.edu/engineering/research/research-labs/wind-tunnel/projects.php) - University of Dayton
 5. [`Researchers Study Drone Spray Drift Potential`](https://www.farmanddairy.com/news/researchers-study-drone-spray-drift-potential/766280.html) - Farm and Dairy (2023)
 6. [`Rise of the Spray Drone`](https://www.agweb.com/news/crops/crop-production/rise-spray-drone) - AgWeb (2023)
-7. [`University of Dayton research-industry partnership seeks answers to precision agriculture`](https://udayton.edu/news/articles/2023/04/sid_gunasekaran_spray_analytics_drone_testing.php) - University of Dayton News
+7. [`University of Dayton research-industry partnership seeks answers to precision agriculture`](https://udayton.edu/news/articles/2023/sid_gunasekaran_spray_analytics_drone_testing.php) - University of Dayton News
 8. [`Agriculture Drones Are Getting More Popular. Are They Accurate Enough to Spray Crops?`](https://www.wvxu.org/podcast/focus-on-technology/2023-04-10/agriculture-drones-crops-spray-drift) - WVXU
 9. [`U Dayton Industry Partnership Looks to Advance Drone Spraying in Precision Agriculture`](https://techtransfercentral.com/2023/04/11/u-dayton-industry-partnership-looks-to-advance-drone-spraying-in-precision-agriculture/) - Tech Transfer Central
 
