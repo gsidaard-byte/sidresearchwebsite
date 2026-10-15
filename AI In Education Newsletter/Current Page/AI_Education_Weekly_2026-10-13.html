@@ -1,0 +1,484 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>AI in Education — Weekly Briefing · October 7–13, 2026</title>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700;900&family=DM+Sans:wght@300;400;500;600&family=DM+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+:root {
+  --ink:         #132032;
+  --paper:       #f5f2eb;
+  --paper-warm:  #ede9df;
+  --accent:      #CE1126;
+  --accent-soft: #fde8e2;
+  --gold:        #c9a84c;
+  --mid:         #6b6760;
+  --rule:        #d4cfc5;
+  --card-bg:     #ffffff;
+  --highlight:   #fff3cd;
+}
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+body { font-family: 'DM Sans', sans-serif; background: var(--paper); color: var(--ink); min-height: 100vh; overflow-x: hidden; }
+a { color: inherit; }
+
+/* Masthead */
+.masthead { background: var(--ink); color: var(--paper); position: relative; overflow: hidden; }
+.masthead::before { content: ''; position: absolute; inset: 0; background: repeating-linear-gradient(90deg, transparent, transparent 79px, rgba(255,255,255,0.03) 79px, rgba(255,255,255,0.03) 80px); pointer-events: none; }
+.masthead-inner { max-width: 1100px; margin: 0 auto; padding: 0 40px; position: relative; z-index: 1; }
+.masthead-top { display: flex; justify-content: space-between; align-items: center; padding: 18px 0 14px; border-bottom: 1px solid rgba(255,255,255,0.12); gap: 16px; flex-wrap: wrap; }
+.meta-strip { font-family: 'DM Mono', monospace; font-size: 0.72rem; color: rgba(245,242,235,0.5); letter-spacing: 0.12em; text-transform: uppercase; }
+.edition-badge { background: var(--accent); color: white; font-family: 'DM Mono', monospace; font-size: 0.7rem; letter-spacing: 0.1em; text-transform: uppercase; padding: 4px 12px; border-radius: 2px; }
+.masthead-title-block { padding: 40px 0 36px; }
+.masthead-eyebrow { font-family: 'DM Mono', monospace; font-size: 0.72rem; color: var(--gold); letter-spacing: 0.2em; text-transform: uppercase; margin-bottom: 16px; display: flex; align-items: center; gap: 12px; }
+.masthead-eyebrow::after { content: ''; flex: 1; height: 1px; background: rgba(201,168,76,0.3); }
+h1.masthead-headline { font-family: 'Playfair Display', serif; font-size: clamp(3rem, 7vw, 5.5rem); font-weight: 900; line-height: 0.95; color: var(--paper); letter-spacing: -0.02em; margin-bottom: 24px; }
+h1.masthead-headline em { font-style: italic; color: var(--accent); }
+.masthead-deck { font-size: 1.05rem; color: rgba(245,242,235,0.65); font-weight: 300; max-width: 580px; line-height: 1.65; border-left: 2px solid var(--accent); padding-left: 16px; }
+.image-note { font-size: 0.78rem; color: rgba(245,242,235,0.45); font-style: italic; max-width: 580px; margin-top: 14px; }
+
+/* Stat bar */
+.stat-bar { background: var(--accent); }
+.stat-bar-inner { max-width: 1100px; margin: 0 auto; padding: 0 40px; display: grid; grid-template-columns: repeat(4, 1fr); }
+.stat-item { padding: 20px 24px; border-right: 1px solid rgba(255,255,255,0.2); animation: slideIn 0.6s ease both; }
+.stat-item:nth-child(2) { animation-delay: 0.1s; }
+.stat-item:nth-child(3) { animation-delay: 0.2s; }
+.stat-item:nth-child(4) { animation-delay: 0.3s; }
+.stat-item:last-child { border-right: none; }
+.stat-number { font-family: 'Playfair Display', serif; font-size: 1.8rem; font-weight: 700; color: white; line-height: 1; }
+.stat-label { font-size: 0.72rem; color: rgba(255,255,255,0.75); text-transform: uppercase; letter-spacing: 0.08em; font-weight: 500; margin-top: 4px; }
+@media (max-width: 820px) { .stat-bar-inner { grid-template-columns: repeat(2,1fr); padding: 0 20px; } }
+
+/* Nav */
+.nav-bar { background: var(--ink); position: sticky; top: 0; z-index: 100; border-bottom: 3px solid var(--accent); }
+.nav-bar-inner { max-width: 1100px; margin: 0 auto; padding: 0 40px; display: flex; overflow-x: auto; scrollbar-width: none; }
+.nav-bar-inner::-webkit-scrollbar { display: none; }
+.tab-btn { background: transparent; border: none; padding: 16px 28px; font-family: 'DM Sans', sans-serif; font-size: 0.82rem; font-weight: 600; color: rgba(245,242,235,0.5); cursor: pointer; text-transform: uppercase; letter-spacing: 0.1em; transition: all 0.25s ease; white-space: nowrap; position: relative; }
+.tab-btn::after { content: ''; position: absolute; bottom: -3px; left: 0; right: 0; height: 3px; background: var(--accent); transform: scaleX(0); transition: transform 0.25s ease; }
+.tab-btn.active { color: white; }
+.tab-btn.active::after { transform: scaleX(1); }
+.tab-btn:hover { color: rgba(245,242,235,0.9); background: rgba(255,255,255,0.05); }
+
+/* Panels */
+.content-wrap { max-width: 1100px; margin: 0 auto; padding: 0 40px; }
+.tab-panel { display: none; padding: 50px 0; animation: panelFade 0.4s ease both; }
+.tab-panel.active { display: block; }
+@keyframes panelFade { from { opacity: 0; transform: translateY(12px); } to { opacity: 1; transform: translateY(0); } }
+@keyframes slideIn { from { opacity: 0; transform: translateY(8px); } to { opacity: 1; transform: translateY(0); } }
+.section-label { font-family: 'DM Mono', monospace; font-size: 0.7rem; color: var(--accent); text-transform: uppercase; letter-spacing: 0.2em; display: flex; align-items: center; gap: 12px; margin-bottom: 32px; }
+.section-label::after { content: ''; flex: 1; height: 1px; background: var(--rule); }
+.section-heading { font-family: 'Playfair Display', serif; font-size: 2.4rem; font-weight: 700; color: var(--ink); line-height: 1.1; letter-spacing: -0.02em; margin-bottom: 8px; }
+.section-sub { font-size: 1rem; color: var(--mid); font-weight: 300; margin-bottom: 40px; }
+
+/* Summary cards */
+.summary-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 20px; }
+.summary-card { background: var(--card-bg); border: 1px solid var(--rule); border-radius: 4px; padding: 28px; position: relative; overflow: hidden; transition: transform 0.2s ease, box-shadow 0.2s ease; }
+.summary-card:hover { transform: translateY(-2px); box-shadow: 0 8px 32px rgba(0,0,0,0.08); }
+.summary-card:first-child { grid-column: span 2; background: var(--ink); color: var(--paper); border-color: var(--ink); }
+.summary-card:first-child .card-tag { color: var(--gold); }
+.summary-card:first-child .card-text { color: rgba(245,242,235,0.85); }
+.summary-card:first-child .story-link { color: var(--gold); border-bottom-color: var(--gold); }
+.summary-card::before { content: ''; position: absolute; top: 0; left: 0; width: 4px; height: 100%; background: var(--accent); }
+.card-tag { font-family: 'DM Mono', monospace; font-size: 0.68rem; text-transform: uppercase; letter-spacing: 0.15em; color: var(--accent); margin-bottom: 10px; }
+.card-number { font-family: 'Playfair Display', serif; font-size: 4rem; font-weight: 900; color: var(--accent); line-height: 1; margin-bottom: 6px; }
+.card-text { font-size: 1.05rem; color: var(--ink); line-height: 1.6; margin-bottom: 14px; }
+@media (max-width: 820px) { .summary-grid { grid-template-columns: 1fr; } .summary-card:first-child { grid-column: span 1; } }
+
+/* Story feature */
+.story-feature { display: grid; grid-template-columns: 1fr 380px; gap: 0; margin-bottom: 32px; background: var(--card-bg); border: 1px solid var(--rule); border-radius: 4px; overflow: hidden; transition: box-shadow 0.2s ease; }
+.story-feature:hover { box-shadow: 0 8px 40px rgba(0,0,0,0.08); }
+.story-feature-body { padding: 36px; }
+.story-feature-aside { background: var(--paper-warm); padding: 36px; border-left: 1px solid var(--rule); display: flex; flex-direction: column; justify-content: center; }
+.story-tag { font-family: 'DM Mono', monospace; font-size: 0.68rem; text-transform: uppercase; letter-spacing: 0.18em; color: var(--accent); margin-bottom: 14px; }
+.story-headline { font-family: 'Playfair Display', serif; font-size: 1.6rem; font-weight: 700; line-height: 1.2; color: var(--ink); margin-bottom: 16px; letter-spacing: -0.01em; }
+.story-body { font-size: 0.95rem; line-height: 1.72; color: #444; margin-bottom: 16px; }
+.story-body ul { margin: 0 0 16px 20px; }
+.story-body li { margin-bottom: 8px; }
+.story-link { font-family: 'DM Mono', monospace; font-size: 0.72rem; color: var(--accent); text-decoration: none; text-transform: uppercase; letter-spacing: 0.1em; border-bottom: 1px solid var(--accent); padding-bottom: 2px; transition: opacity 0.2s; }
+.story-link:hover { opacity: 0.65; }
+.aside-label { font-family: 'DM Mono', monospace; font-size: 0.65rem; text-transform: uppercase; letter-spacing: 0.15em; color: var(--mid); margin-bottom: 10px; }
+.aside-text { font-size: 0.92rem; line-height: 1.65; color: var(--ink); }
+.worth-noting { background: var(--highlight); border-radius: 4px; padding: 14px 18px; font-size: 0.88rem; line-height: 1.6; color: #4a3f10; margin-bottom: 16px; }
+.image-caption { font-size: 0.78rem; color: var(--mid); font-style: italic; margin-bottom: 18px; }
+@media (max-width: 820px) { .story-feature { grid-template-columns: 1fr; } .story-feature-aside { border-left: none; border-top: 1px solid var(--rule); } }
+
+/* Mini stories */
+.story-mini-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 20px; }
+.story-mini { background: var(--card-bg); border: 1px solid var(--rule); border-radius: 4px; padding: 28px; transition: box-shadow 0.2s ease; position: relative; }
+.story-mini:hover { box-shadow: 0 4px 20px rgba(0,0,0,0.07); }
+.story-mini::after { content: ''; position: absolute; bottom: 0; left: 0; right: 0; height: 3px; background: var(--gold); transform: scaleX(0); transition: transform 0.25s ease; transform-origin: left; }
+.story-mini:hover::after { transform: scaleX(1); }
+.story-mini-headline { font-family: 'Playfair Display', serif; font-size: 1.15rem; font-weight: 700; margin: 0 0 12px; line-height: 1.25; color: var(--ink); }
+@media (max-width: 820px) { .story-mini-grid { grid-template-columns: 1fr; } }
+
+/* Research columns */
+.research-layout { display: grid; grid-template-columns: 1fr 1fr; gap: 40px; }
+.research-col-title { font-family: 'Playfair Display', serif; font-size: 1.3rem; font-weight: 700; color: var(--ink); margin-bottom: 24px; padding-bottom: 14px; border-bottom: 2px solid var(--ink); }
+.research-item { padding: 22px 0; border-bottom: 1px solid var(--rule); }
+.research-item:last-child { border-bottom: none; }
+.research-item-label { font-family: 'DM Mono', monospace; font-size: 0.66rem; text-transform: uppercase; letter-spacing: 0.15em; color: var(--gold); margin-bottom: 8px; }
+.research-item-title { font-family: 'Playfair Display', serif; font-size: 1.05rem; font-weight: 700; color: var(--ink); line-height: 1.3; margin-bottom: 8px; }
+.research-item-body { font-size: 0.9rem; line-height: 1.65; color: #555; margin-bottom: 10px; }
+.research-item-body strong { color: var(--ink); }
+@media (max-width: 820px) { .research-layout { grid-template-columns: 1fr; } }
+
+/* Hits list */
+.hits-list { list-style: none; padding: 0; }
+.hit-item { display: flex; margin-bottom: 16px; background: var(--card-bg); border: 1px solid var(--rule); border-radius: 4px; overflow: hidden; transition: transform 0.2s ease; }
+.hit-item:hover { transform: translateX(4px); }
+.hit-number { background: var(--ink); color: var(--paper); font-family: 'Playfair Display', serif; font-size: 1.1rem; font-weight: 700; width: 52px; min-width: 52px; display: flex; align-items: center; justify-content: center; }
+.hit-body { padding: 16px 20px; }
+.hit-body a { font-size: 0.95rem; color: var(--ink); text-decoration: none; font-weight: 600; line-height: 1.4; display: block; margin-bottom: 4px; }
+.hit-body a:hover { color: var(--accent); }
+.hit-tag { font-family: 'DM Mono', monospace; font-size: 0.72rem; letter-spacing: 0.02em; color: var(--mid); text-transform: none; }
+
+/* Radar sidebar */
+.radar-layout { display: grid; grid-template-columns: 1fr 360px; gap: 40px; }
+.radar-sidebar { display: flex; flex-direction: column; gap: 24px; }
+.radar-card { background: var(--ink); color: var(--paper); border-radius: 4px; padding: 28px; }
+.radar-card-title { font-family: 'DM Mono', monospace; font-size: 0.68rem; text-transform: uppercase; letter-spacing: 0.18em; color: var(--gold); margin-bottom: 20px; }
+.timeline-item { display: flex; gap: 16px; margin-bottom: 18px; align-items: flex-start; }
+.timeline-item:last-child { margin-bottom: 0; }
+.timeline-dot { width: 10px; min-width: 10px; height: 10px; border-radius: 50%; background: var(--accent); margin-top: 5px; }
+.timeline-date { font-family: 'DM Mono', monospace; font-size: 0.68rem; color: var(--gold); margin-bottom: 4px; }
+.timeline-text { font-size: 0.88rem; color: rgba(245,242,235,0.8); line-height: 1.5; }
+.timeline-text a { color: rgba(245,242,235,0.95); border-bottom: 1px solid var(--gold); text-decoration: none; }
+.try-card { background: var(--accent); border-radius: 4px; padding: 28px; }
+.try-card-title { font-family: 'DM Mono', monospace; font-size: 0.68rem; text-transform: uppercase; letter-spacing: 0.18em; color: rgba(255,255,255,0.7); margin-bottom: 14px; }
+.try-card-list { list-style: none; padding: 0; margin: 0; }
+.try-card-list li { font-size: 0.9rem; color: white; line-height: 1.55; margin-bottom: 12px; padding-left: 16px; position: relative; }
+.try-card-list li:last-child { margin-bottom: 0; }
+.try-card-list li::before { content: '→'; position: absolute; left: 0; }
+@media (max-width: 820px) { .radar-layout { grid-template-columns: 1fr; } }
+
+/* Talk about it */
+.talk-block { background: var(--paper-warm); border-radius: 4px; padding: 28px 32px; margin-top: 36px; border-left: 4px solid var(--gold); }
+.talk-block-title { font-family: 'DM Mono', monospace; font-size: 0.68rem; text-transform: uppercase; letter-spacing: 0.18em; color: var(--mid); margin-bottom: 16px; }
+.talk-block ol { margin: 0 0 0 20px; }
+.talk-block li { font-size: 0.95rem; line-height: 1.65; color: var(--ink); margin-bottom: 14px; }
+.talk-block li:last-child { margin-bottom: 0; }
+
+/* Footer */
+.site-footer { background: var(--ink); color: rgba(245,242,235,0.4); padding: 28px 40px; text-align: center; font-family: 'DM Mono', monospace; font-size: 0.68rem; letter-spacing: 0.1em; text-transform: uppercase; }
+.issue-video-section { background: var(--paper-warm); border-bottom: 1px solid var(--rule); }
+.issue-video-inner { max-width: 1100px; margin: 0 auto; padding: 44px 40px 48px; }
+.issue-video-label { font-family: 'DM Mono', monospace; font-size: 0.7rem; color: var(--accent); text-transform: uppercase; letter-spacing: 0.18em; margin-bottom: 14px; }
+.issue-video-title { font-family: 'Playfair Display', serif; font-size: clamp(1.7rem, 3vw, 2.35rem); line-height: 1.12; margin-bottom: 10px; color: var(--ink); }
+.issue-video-copy { max-width: 720px; color: var(--mid); font-size: 1rem; margin-bottom: 24px; }
+.issue-video-frame { background: var(--ink); border-radius: 4px; overflow: hidden; box-shadow: 0 16px 40px rgba(19,32,50,0.16); }
+.issue-video-frame video { display: block; width: 100%; aspect-ratio: 16 / 9; background: var(--ink); }
+
+
+.edition-badge { text-decoration: none; white-space: nowrap; }
+@media (max-width: 820px) { .issue-video-inner { padding-left: 20px; padding-right: 20px; } }
+
+@media (max-width: 820px) { .masthead-inner, .nav-bar-inner, .content-wrap { padding-left: 20px; padding-right: 20px; } .story-feature-body, .story-feature-aside { padding: 24px; } }
+
+
+
+.content-wrap { overflow-wrap: anywhere; }
+.story-feature > *, .research-layout > *, .radar-layout > *, .hit-body { min-width: 0; }
+</style>
+</head>
+<body>
+
+<header class="masthead">
+  <div class="masthead-inner">
+    <div class="masthead-top">
+      <span class="meta-strip">For University Faculty &amp; Staff · ~10 min read · Oct 7–13, 2026 · Eastern Time</span>
+      <a class="edition-badge" href="../AIinEducationPage.html">Newsletter Home</a>
+    </div>
+    <div class="masthead-title-block">
+      <div class="masthead-eyebrow">Intelligence Briefing · Issue 23</div>
+      <h1 class="masthead-headline">AI in<br><em>Education</em></h1>
+      <p class="masthead-deck">The week a randomized trial found a campus AI tutor lowered grades, professors described the cost of policing AI, and OpenAI watermarked text that instructors still can't check.</p>
+      <p class="image-note">A note on images: this issue's generated images could not be embedded directly (the image host was unreachable this run), so each is linked from its story instead.</p>
+    </div>
+  </div>
+</header>
+
+<div class="stat-bar">
+  <div class="stat-bar-inner">
+    <div class="stat-item"><div class="stat-number">−0.37 SD</div><div class="stat-label">Grade effect of offering an AI tutor (UMD trial)</div></div>
+    <div class="stat-item"><div class="stat-number">78%</div><div class="stat-label">Faculty: harder to judge what students know</div></div>
+    <div class="stat-item"><div class="stat-number">6.6%</div><div class="stat-label">Say campus AI expectations are consistent</div></div>
+    <div class="stat-item"><div class="stat-number">0</div><div class="stat-label">Parent alerts in new teen test accounts</div></div>
+  </div>
+</div>
+
+<section class="issue-video-section" aria-labelledby="issue-video-title">
+  <div class="issue-video-inner">
+    <div class="issue-video-label">Issue briefing video</div>
+    <h2 id="issue-video-title" class="issue-video-title">Watch the Issue 23 briefing.</h2>
+    <p class="issue-video-copy">A short video companion to this AI in Education issue, placed here before the section navigation so readers can watch before diving into the full briefing.</p>
+    <div class="issue-video-frame">
+      <video controls preload="metadata">
+        <source src="AI_Education_Weekly_2026-10-13.mp4" type="video/mp4">
+        Your browser does not support the video tag.
+      </video>
+    </div>
+  </div>
+</section>
+
+<nav class="nav-bar">
+  <div class="nav-bar-inner">
+    <button class="tab-btn active" onclick="openTab(event,'summary')">⏱ 30 Seconds</button>
+    <button class="tab-btn" onclick="openTab(event,'main')">📰 Main Stories</button>
+    <button class="tab-btn" onclick="openTab(event,'research')">🔬 Research &amp; Practice</button>
+    <button class="tab-btn" onclick="openTab(event,'radar')">⚡ Quick Hits &amp; Radar</button>
+  </div>
+</nav>
+
+<main class="content-wrap">
+
+  <!-- ===== TAB: 30 SECONDS ===== -->
+  <div id="summary" class="tab-panel active">
+    <div class="section-label">This Week in 30 Seconds</div>
+    <h2 class="section-heading">Four things to know<br>before your first meeting</h2>
+    <p class="section-sub">The table of contents for a busy week. Read this, then decide whether to keep going.</p>
+
+    <div class="summary-grid">
+      <div class="summary-card">
+        <div class="card-tag">🎓 Higher Ed · 📊 Research</div>
+        <div class="card-number">−0.37</div>
+        <p class="card-text">In a University of Maryland randomized trial, offering students a course-specific AI tutor <strong>lowered final grades by 0.37 standard deviations</strong>, even though only about 15% ever used it.</p>
+        <a class="story-link" href="https://edworkingpapers.com/sites/default/files/ai26-1598.pdf" target="_blank">Source →</a>
+      </div>
+
+      <div class="summary-card">
+        <div class="card-tag">🎓 Higher Ed</div>
+        <div class="card-number">78%</div>
+        <p class="card-text">Professors are tracking keystrokes and moving writing back into class; 78% of faculty say AI makes it harder to judge what students know.</p>
+        <a class="story-link" href="https://www.chronicle.com/article/the-new-nanny-state" target="_blank">Source →</a>
+      </div>
+
+      <div class="summary-card">
+        <div class="card-tag">🌍 Global · 🛠️ Tools</div>
+        <div class="card-number">EU</div>
+        <p class="card-text">OpenAI starts watermarking ChatGPT text in the EU, but instructors can't run the detector.</p>
+        <a class="story-link" href="https://openai.com/index/eu-text-provenance/" target="_blank">Source →</a>
+      </div>
+
+      <div class="summary-card">
+        <div class="card-tag">🏫 K-12</div>
+        <div class="card-number">0</div>
+        <p class="card-text">Common Sense Media rates ChatGPT for Teens an "unacceptable risk," partly because teens can skip its tutoring mode.</p>
+        <a class="story-link" href="https://www.commonsensemedia.org/press-releases/chatgpt-for-teens-poses-unacceptable-risk-to-kids-common-sense-media-finds" target="_blank">Source →</a>
+      </div>
+
+      <div class="summary-card">
+        <div class="card-tag">🌍 Global · 🎓 Higher Ed · Update</div>
+        <div class="card-number">3</div>
+        <p class="card-text">Newcastle and Westminster join Southampton in leaving Turnitin (UK). Westminster says the core plagiarism checker is "largely ineffective" against AI.</p>
+        <a class="story-link" href="https://www.timeshighereducation.com/news/more-universities-end-turnitin-contracts-concerns-mount" target="_blank">Source →</a>
+      </div>
+    </div>
+  </div>
+
+  <!-- ===== TAB: MAIN STORIES ===== -->
+  <div id="main" class="tab-panel">
+    <div class="section-label">Main Stories</div>
+    <h2 class="section-heading">A tutor that backfired,<br>and a turn to surveillance</h2>
+    <p class="section-sub">Five developments with enough substance to change what you do this week.</p>
+
+    <div class="story-feature">
+      <div class="story-feature-body">
+        <div class="story-tag">🎓 Higher Ed · 📊 Research · Sept 30 – Oct 7</div>
+        <h3 class="story-headline">A randomized trial at Maryland found its AI tutor lowered grades</h3>
+        <div class="image-caption"><a href="https://rqkumunldqvmynqxibca.supabase.co/storage/v1/object/public/generated-images/1d665adb-c20f-4a08-8dfe-02fd632d5d42.jpeg" target="_blank" style="color:inherit;">View generated image</a> — Image source: Nano Banana 2</div>
+        <p class="story-body">The University of Maryland tested its own course-integrated AI study assistant before a campus rollout, randomizing 30 instructors teaching 2,379 undergraduates in fall 2025. Among sections of the same course, being offered the tutor reduced final grades by <strong>0.37 standard deviations</strong> and LMS participation by <strong>0.90 standard deviations</strong>.</p>
+        <div class="story-body">
+          <ul>
+            <li>The tool was a GPT-4o "virtual study assistant" inside the LMS that answered from course materials (EdWorkingPaper 26-1598, Annenberg Institute at Brown, dated Sept 30).</li>
+            <li>Only about <strong>15%</strong> of students offered access used it even once, so the drop is an effect of offering the tool, not of heavy use.</li>
+            <li>Estimated losses were larger for first-generation students (about −0.50 SD vs. −0.22 SD for others), though the authors flag limited statistical precision.</li>
+            <li>Faculty got only "light training"; a co-author told Inside Higher Ed, "we need to train instructors much more extensively to use these tools."</li>
+          </ul>
+        </div>
+        <div class="worth-noting"><strong>Worth noting:</strong> With 85% of students never opening the tool, the mechanism is unclear. The authors suggest it may have displaced other course activity or signalled that AI use was permitted, which could change use of ChatGPT and Gemini too. The paper is not yet peer-reviewed; a replication with higher uptake and instructor training would show whether the tool or the rollout caused the drop.</div>
+        <a class="story-link" href="https://edworkingpapers.com/sites/default/files/ai26-1598.pdf" target="_blank">Working paper →</a>&nbsp;&nbsp;
+        <a class="story-link" href="https://www.insidehighered.com/news/tech-innovation/artificial-intelligence/2026/10/07/maryland-ai-research-raised-more-questions" target="_blank">Inside Higher Ed →</a>
+      </div>
+      <div class="story-feature-aside">
+        <div class="aside-label">What this means for your campus</div>
+        <p class="aside-text">Before your institution switches on an AI tutor across courses, ask what it will measure and what result would make it switch the tool off.</p>
+      </div>
+    </div>
+
+    <div class="story-mini-grid">
+
+      <div class="story-mini" style="grid-column: span 2;">
+        <div class="story-tag">🎓 Higher Ed · Oct 1–12</div>
+        <h3 class="story-mini-headline">Professors are turning to surveillance, and say it is costing them</h3>
+        <div class="image-caption"><a href="https://rqkumunldqvmynqxibca.supabase.co/storage/v1/object/public/generated-images/a982b237-2f60-4322-8d98-e755f77e8b45.jpeg" target="_blank" style="color:inherit;">View generated image</a> — Image source: Nano Banana 2</div>
+        <p class="story-body">A Chronicle of Higher Education report (Oct 12) documents faculty tracking keystrokes, hiding prompts in assignments, and moving all writing into class to keep AI out. A National Center for Faculty Development and Diversity survey of <strong>1,659</strong> faculty and administrators finds nearly three-quarters rethinking what they assess, <strong>78%</strong> saying it is harder to judge what students know, and only <strong>6.6%</strong> saying AI expectations are consistent across their institution. Penn's Marie Gottschalk has dropped take-home papers for the first time in nearly 30 years. Laurel Ridge Community College's Lisa Dunick tracked students' typing in an online summer course and had the lowest success rates of her career; she switched to in-class drafting after reading about AI agents that mimic human typing. Ole Miss's Marc Watkins warns that detection mostly catches students without the resources to evade it, and Tyton Partners finds about a quarter of instructors have moved to in-class proctored exams.</p>
+        <p class="story-body"><strong>What this means for your campus:</strong> Process tracking and in-class writing carry real time and trust costs, so departments should decide together what monitoring they accept rather than leave each instructor to improvise.</p>
+        <a class="story-link" href="https://www.chronicle.com/article/the-new-nanny-state" target="_blank">The Chronicle →</a>&nbsp;&nbsp;
+        <a class="story-link" href="https://www.ncfdd.org/white-paper/faculty-perspectives-ai-higher-education/" target="_blank">NCFDD report →</a>
+      </div>
+
+      <div class="story-mini">
+        <div class="story-tag">🌍 Global · 🛠️ Tools · ⚖️ Policy · Oct 5</div>
+        <h3 class="story-mini-headline">OpenAI is watermarking ChatGPT text in the EU, but you can't check it</h3>
+        <div class="image-caption"><a href="https://rqkumunldqvmynqxibca.supabase.co/storage/v1/object/public/generated-images/1a24a4fc-c894-4eb5-adaa-3acd0b548d48.jpeg" target="_blank" style="color:inherit;">View generated image</a> — Image source: Nano Banana 2</div>
+        <p class="story-body">To comply with the EU AI Act, OpenAI will add an invisible watermark, textGrain, to eligible ChatGPT and Codex text generated in the EU over the coming weeks. Detector access is limited to approved researchers and expert organizations. Outside the EU it is opt-in for API customers and off by default. Light edits and copy-paste survive it, but "substantial paraphrasing, or translation" can remove it, and OpenAI warns a missing watermark "does not prove human authorship." Anthropic has announced comparable watermarking for Claude.</p>
+        <p class="story-body"><strong>What this means for your campus:</strong> Watermarks won't settle integrity cases this year: you can't run the detector, and a clean result proves nothing.</p>
+        <a class="story-link" href="https://openai.com/index/eu-text-provenance/" target="_blank">OpenAI →</a>&nbsp;&nbsp;
+        <a class="story-link" href="https://help.openai.com/en/articles/8912793-provenance-signals-in-openai-generated-content" target="_blank">Help Center →</a>
+      </div>
+
+      <div class="story-mini">
+        <div class="story-tag">🌍 Global · 🎓 Higher Ed · Update · Oct 9</div>
+        <h3 class="story-mini-headline">Newcastle and Westminster join Southampton in leaving Turnitin</h3>
+        <div class="image-caption"><a href="https://rqkumunldqvmynqxibca.supabase.co/storage/v1/object/public/generated-images/0657158e-3884-4b50-8981-b309fb2cd8a6.jpeg" target="_blank" style="color:inherit;">View generated image</a> — Image source: Nano Banana 2</div>
+        <p class="story-body" style="font-style:italic;color:var(--mid);">Update on the Turnitin licence story from the Oct 6 issue: two more UK universities are leaving, and one says the core product no longer does the job.</p>
+        <p class="story-body">Newcastle will stop after 2026–27, citing the "potential use of colleague and student data for AI purposes." Westminster retires it in July 2027, calling the checker "largely ineffective against the most significant current integrity risk" and its AI detectors "probabilistic rather than conclusive." Aberdeen is reviewing; Cambridge will "not accept any changes to the EULA that impact on data privacy or intellectual property." Southampton paid £87,621 for Sept 2024–Sept 2025.</p>
+        <p class="story-body"><strong>What this means for your campus:</strong> If you renew Turnitin mainly for similarity checking, ask what it still catches when most misconduct involves AI text it can't see.</p>
+        <a class="story-link" href="https://www.timeshighereducation.com/news/more-universities-end-turnitin-contracts-concerns-mount" target="_blank">Times Higher Education →</a>
+      </div>
+
+      <div class="story-mini" style="grid-column: span 2;">
+        <div class="story-tag">🏫 K-12 · Oct 7</div>
+        <h3 class="story-mini-headline">Common Sense Media rates ChatGPT for Teens an "unacceptable risk"</h3>
+        <div class="image-caption"><a href="https://rqkumunldqvmynqxibca.supabase.co/storage/v1/object/public/generated-images/67c88faa-fc8e-4aa7-b2f6-16dea93ae565.jpeg" target="_blank" style="color:inherit;">View generated image</a> — Image source: Nano Banana 2</div>
+        <p class="story-body">Common Sense Media's Youth AI Safety Institute tested OpenAI's teen experience with more than 4,000 prompts. New parent-linked accounts sent <strong>zero</strong> alerts after up to an hour of conversation about suicidal ideation, self-harm or disordered eating; alerts appeared only on accounts with weeks of history. A "Show me the answer" option lets teens skip Study mode's tutoring, and adult-registered test accounts never switched to the teen experience, even after the tester said they were 13. The same day, OpenAI announced a College Planner for ChatGPT for Teens to manage application deadlines and financial-aid steps.</p>
+        <div class="worth-noting"><strong>Worth noting:</strong> OpenAI says "the bulk of their testing may have begun and concluded before activation of parental controls was complete." Common Sense says it confirmed features were live before testing. Retesting on fully activated accounts would settle it.</div>
+        <p class="story-body"><strong>What this means for your campus:</strong> Next year's first-years will have had a one-click way to skip AI tutoring for their answers, so design early assignments that make students show their reasoning, not just the result.</p>
+        <a class="story-link" href="https://www.commonsensemedia.org/press-releases/chatgpt-for-teens-poses-unacceptable-risk-to-kids-common-sense-media-finds" target="_blank">Common Sense Media →</a>&nbsp;&nbsp;
+        <a class="story-link" href="https://www.cnbc.com/make-it/2026/10/09/chatgpt-for-teens-safety-common-sense-media.html" target="_blank">CNBC →</a>&nbsp;&nbsp;
+        <a class="story-link" href="https://openai.com/index/teens-learn-and-plan/" target="_blank">OpenAI →</a>
+      </div>
+
+    </div>
+  </div>
+
+  <!-- ===== TAB: RESEARCH & PRACTICE ===== -->
+  <div id="research" class="tab-panel">
+    <div class="section-label">Research &amp; Practice</div>
+    <h2 class="section-heading">What the studies say,<br>what a colleague tried</h2>
+    <p class="section-sub">Two findings and one classroom move worth borrowing.</p>
+
+    <div class="research-layout">
+      <div>
+        <h3 class="research-col-title">From the Research</h3>
+
+        <div class="research-item">
+          <div class="research-item-label">Research Methods · arXiv preprint · Oct 7</div>
+          <h4 class="research-item-title">Study participants rarely use AI, but are paid even when they break the rules</h4>
+          <p class="research-item-body"><strong>What was studied:</strong> Researchers linked donated ChatGPT histories to submission records on a high-quality online research platform, covering 712,930 submissions across more than 127,000 studies, plus a survey of 2,500 workers (Sehgal et al.).</p>
+          <p class="research-item-body"><strong>What they found:</strong> AI assistance appeared in only 1% of submissions, with no rise over three years, and 5% of workers accounted for 64% of it. Assisted submissions were approved at about the same rate as others, even when instructions banned AI. Half involved fixed-choice items that the platform's detector doesn't check.</p>
+          <p class="research-item-body"><strong>What you could do with this:</strong> If you run online studies, don't assume AI contamination is ruining your data, but don't rely on the platform to enforce a no-AI rule either.</p>
+          <a class="story-link" href="https://arxiv.org/abs/2610.09279" target="_blank">Source →</a>
+        </div>
+
+        <div class="research-item">
+          <div class="research-item-label">Management Education · ScienceDirect · Oct 8</div>
+          <h4 class="research-item-title">Business schools describe their AI adoption, but rarely what their degree certifies</h4>
+          <p class="research-item-body"><strong>What was studied:</strong> Weng Marc Lim (Sunway University) reviewed public reports from 84 business schools for evidence that their degrees still certify what graduates can do without AI.</p>
+          <p class="research-item-body"><strong>What they found:</strong> Schools describe AI access, curriculum integration and faculty development in more detail than any evidence of what the degree certifies. Only one in seven reports a safeguard, such as a defended capstone or work kept free of AI.</p>
+          <p class="research-item-body"><strong>What you could do with this:</strong> Pick one assessment in your program that could serve as that safeguard, such as a capstone defense or oral exam, and check whether it really is AI-free.</p>
+          <a class="story-link" href="https://www.sciencedirect.com/science/article/pii/S1472811726001977" target="_blank">Source →</a>
+        </div>
+      </div>
+
+      <div>
+        <h3 class="research-col-title">How Others Are Doing It</h3>
+
+        <div class="research-item">
+          <div class="research-item-label">Indiana University Indianapolis · Africana Studies</div>
+          <h4 class="research-item-title">Students wrote their own AI policy, then had it stress-tested</h4>
+          <p class="research-item-body"><strong>Who:</strong> Patricia Turley, assistant professor of Africana Studies, IU Indianapolis.</p>
+          <p class="research-item-body"><strong>What she did:</strong> A three-part assignment. Students wrote an acceptable-use policy with green (permitted), yellow (caution) and red (restricted) tiers, each with three higher-ed examples, benefits, risks and an implementation plan. Two outside readers then "stress-tested" each policy against a rubric, and students wrote a reflection.</p>
+          <p class="research-item-body"><strong>What happened:</strong> Students voiced concern about their own dependence on technology, and some admitted they weren't following their own rules. One wrote, "I noticed how quickly AI could influence my thinking." These are anecdotal reflections, not measured outcomes.</p>
+          <p class="research-item-body"><strong>What you could borrow:</strong> Make the policy itself the assignment, and add the outside stress test, which turns a syllabus rule into something students have to defend.</p>
+          <a class="story-link" href="https://blogs.iu.edu/connectedprof/students-write-their-own-tech-policies/" target="_blank">Source →</a>
+        </div>
+      </div>
+    </div>
+
+    <div class="talk-block">
+      <div class="talk-block-title">Talk About It</div>
+      <ol>
+        <li>Maryland's AI tutor lowered grades in a randomized trial. If our institution switched one on, what would we measure, and who would decide to switch it off?</li>
+        <li>Faculty are tracking keystrokes and banning take-home writing. How much monitoring of students' writing should we accept before it costs more trust than it protects, and should the department set that limit?</li>
+      </ol>
+    </div>
+  </div>
+
+  <!-- ===== TAB: QUICK HITS & RADAR ===== -->
+  <div id="radar" class="tab-panel">
+    <div class="section-label">Quick Hits &amp; Radar</div>
+    <h2 class="section-heading">Five fast items,<br>two dates, three actions</h2>
+    <p class="section-sub">Scannable in under a minute, plus what's coming and what to try this week.</p>
+
+    <div class="radar-layout">
+      <div>
+        <ul class="hits-list">
+          <li class="hit-item"><div class="hit-number">1</div><div class="hit-body">
+            <a href="https://www.theverge.com/ai-artificial-intelligence/1006111/you-can-use-claude-directly-in-google-docs-slides-and-sheets-with-a-new-add-on" target="_blank">Claude now works inside Google Docs, Sheets and Slides</a>
+            <span class="hit-tag">A sidebar add-on in public beta on all paid Claude plans edits Workspace files directly (Oct 6).</span></div></li>
+          <li class="hit-item"><div class="hit-number">2</div><div class="hit-body">
+            <a href="https://orieladmissions.com/college-ai-policies/" target="_blank">19 of 50 highly selective colleges publish no rule on applicants' AI use</a>
+            <span class="hit-tag">An audit by admissions consultancy Oriel finds only Brown, Georgetown and Harvard prohibit AI in application content; just 6 say whether a human or a machine reads applications (Oct 11).</span></div></li>
+          <li class="hit-item"><div class="hit-number">3</div><div class="hit-body">
+            <a href="https://www.cybersecuritydive.com/news/ai-cybersecurity-education-university/832132/" target="_blank">Colleges expand AI security degrees and certificates</a>
+            <span class="hit-tag">The roughly three dozen schools in the Pentagon-funded National Cybersecurity Workforce Development Program are building AI-security career pathways (Oct 9).</span></div></li>
+          <li class="hit-item"><div class="hit-number">4</div><div class="hit-body">
+            <a href="https://papers.academic-conferences.org/index.php/ecel/article/view/5340" target="_blank">Knowing the AI rules didn't reduce students' acceptance of misuse</a>
+            <span class="hit-tag">In a survey of 304 university students in Kuwait, awareness of AI-plagiarism policy was positively associated with accepting AI-assisted misuse (ECEL proceedings, Oct 7).</span></div></li>
+          <li class="hit-item"><div class="hit-number">5</div><div class="hit-body">
+            <a href="https://www.foxbusiness.com/technology/openai-launches-college-planner-chatgpt-teens-track-application-financial-aid" target="_blank">OpenAI: 1.2 million teens used Learning Visualizations</a>
+            <span class="hit-tag">OpenAI's teen-tier figures also show more than 180,000 teens used Study mode, a sign of how many incoming students already study with ChatGPT (Oct 8).</span></div></li>
+        </ul>
+      </div>
+
+      <div class="radar-sidebar">
+        <div class="radar-card">
+          <div class="radar-card-title">On My Radar — Dates</div>
+          <div class="timeline-item">
+            <div class="timeline-dot"></div>
+            <div>
+              <div class="timeline-date">Nov 15, 2026</div>
+              <div class="timeline-text"><a href="https://www.govtech.com/education/k-12/ted-google-seek-educator-perspectives-on-ai" target="_blank">TED and Google "AI in education" idea search closes</a>. Open to K-12 and higher-ed instructors; starts with a free one-hour online workshop. Five educators speak at TED2027 in San Diego in March.</div>
+            </div>
+          </div>
+          <div class="timeline-item">
+            <div class="timeline-dot"></div>
+            <div>
+              <div class="timeline-date">"Over the coming weeks"</div>
+              <div class="timeline-text"><a href="https://openai.com/index/eu-text-provenance/" target="_blank">OpenAI's EU watermark rollout</a>. News test: whether any university or academic-integrity body gets detector access, and whether OpenAI open-sources textGrain as promised.</div>
+            </div>
+          </div>
+        </div>
+        <div class="try-card">
+          <div class="try-card-title">Try This Week</div>
+          <ul class="try-card-list">
+            <li>Ask whether an AI tutor is on by default in your LMS courses, and what evidence supports it.</li>
+            <li>Have students draft green/yellow/red AI rules for one assignment; compare their rules with yours.</li>
+            <li>Log the hours you spent checking for AI use last month; share the total with your chair.</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </div>
+
+</main>
+
+<footer class="site-footer">
+  AI in Education Weekly · Week of October 7–13, 2026 · For university faculty and staff
+</footer>
+
+<script>
+function openTab(evt, tabId) {
+  document.querySelectorAll('.tab-panel').forEach(p => { p.classList.remove('active'); p.style.display = 'none'; });
+  document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
+  const panel = document.getElementById(tabId);
+  panel.style.display = 'block';
+  panel.offsetHeight;
+  panel.classList.add('active');
+  evt.currentTarget.classList.add('active');
+}
+document.querySelectorAll('.tab-panel').forEach(p => { if (!p.classList.contains('active')) p.style.display = 'none'; });
+</script>
+</body>
+</html>
