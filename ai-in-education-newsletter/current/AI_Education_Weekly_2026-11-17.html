@@ -1,0 +1,483 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>AI in Education — Weekly Briefing · Nov 11–17, 2026</title>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700;900&family=DM+Sans:wght@300;400;500;600&family=DM+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+:root {
+  --ink:         #132032;
+  --paper:       #f5f2eb;
+  --paper-warm:  #ede9df;
+  --accent:      #CE1126;
+  --accent-soft: #fde8e2;
+  --gold:        #c9a84c;
+  --mid:         #6b6760;
+  --rule:        #d4cfc5;
+  --card-bg:     #ffffff;
+  --highlight:   #fff3cd;
+}
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+body { font-family: 'DM Sans', sans-serif; background: var(--paper); color: var(--ink); min-height: 100vh; overflow-x: hidden; }
+
+/* Masthead */
+.masthead { background: var(--ink); color: var(--paper); position: relative; overflow: hidden; }
+.masthead::before { content: ''; position: absolute; inset: 0; background: repeating-linear-gradient(90deg, transparent, transparent 79px, rgba(255,255,255,0.03) 79px, rgba(255,255,255,0.03) 80px); pointer-events: none; }
+.masthead-inner { max-width: 1100px; margin: 0 auto; padding: 0 40px; position: relative; z-index: 1; }
+.masthead-top { display: flex; justify-content: space-between; align-items: center; gap: 16px; padding: 18px 0 14px; border-bottom: 1px solid rgba(255,255,255,0.12); }
+.meta-strip { font-family: 'DM Mono', monospace; font-size: 0.72rem; color: rgba(245,242,235,0.5); letter-spacing: 0.12em; text-transform: uppercase; }
+.edition-badge { background: var(--accent); color: white; font-family: 'DM Mono', monospace; font-size: 0.7rem; letter-spacing: 0.1em; text-transform: uppercase; padding: 4px 12px; border-radius: 2px; white-space: nowrap; }
+.masthead-title-block { padding: 40px 0 36px; }
+.masthead-eyebrow { font-family: 'DM Mono', monospace; font-size: 0.72rem; color: var(--gold); letter-spacing: 0.2em; text-transform: uppercase; margin-bottom: 16px; display: flex; align-items: center; gap: 12px; }
+.masthead-eyebrow::after { content: ''; flex: 1; height: 1px; background: rgba(201,168,76,0.3); }
+h1.masthead-headline { font-family: 'Playfair Display', serif; font-size: clamp(3rem, 7vw, 5.5rem); font-weight: 900; line-height: 0.95; color: var(--paper); letter-spacing: -0.02em; margin-bottom: 24px; }
+h1.masthead-headline em { font-style: italic; color: var(--accent); }
+.masthead-deck { font-size: 1.05rem; color: rgba(245,242,235,0.65); font-weight: 300; max-width: 560px; line-height: 1.65; border-left: 2px solid var(--accent); padding-left: 16px; }
+
+/* Stat bar */
+.stat-bar { background: var(--accent); }
+.stat-bar-inner { max-width: 1100px; margin: 0 auto; padding: 0 40px; display: grid; grid-template-columns: repeat(4, 1fr); }
+.stat-item { padding: 20px 24px; border-right: 1px solid rgba(255,255,255,0.2); animation: slideIn 0.6s ease both; }
+.stat-item:nth-child(2) { animation-delay: 0.1s; } .stat-item:nth-child(3) { animation-delay: 0.2s; } .stat-item:nth-child(4) { animation-delay: 0.3s; }
+.stat-item:last-child { border-right: none; }
+.stat-number { font-family: 'Playfair Display', serif; font-size: 1.8rem; font-weight: 700; color: white; line-height: 1; }
+.stat-label { font-size: 0.72rem; color: rgba(255,255,255,0.8); text-transform: uppercase; letter-spacing: 0.08em; font-weight: 500; margin-top: 4px; }
+
+/* Nav */
+.nav-bar { background: var(--ink); position: sticky; top: 0; z-index: 100; border-bottom: 3px solid var(--accent); }
+.nav-bar-inner { max-width: 1100px; margin: 0 auto; padding: 0 40px; display: flex; overflow-x: auto; scrollbar-width: none; }
+.nav-bar-inner::-webkit-scrollbar { display: none; }
+.tab-btn { background: transparent; border: none; padding: 16px 28px; font-family: 'DM Sans', sans-serif; font-size: 0.82rem; font-weight: 600; color: rgba(245,242,235,0.5); cursor: pointer; text-transform: uppercase; letter-spacing: 0.1em; transition: all 0.25s ease; white-space: nowrap; position: relative; }
+.tab-btn::after { content: ''; position: absolute; bottom: -3px; left: 0; right: 0; height: 3px; background: var(--accent); transform: scaleX(0); transition: transform 0.25s ease; }
+.tab-btn.active { color: white; }
+.tab-btn.active::after { transform: scaleX(1); }
+.tab-btn:hover { color: rgba(245,242,235,0.9); background: rgba(255,255,255,0.05); }
+
+/* Panels */
+.content-wrap { max-width: 1100px; margin: 0 auto; padding: 0 40px; }
+.tab-panel { display: none; padding: 50px 0; animation: panelFade 0.4s ease both; }
+.tab-panel.active { display: block; }
+.section-label { font-family: 'DM Mono', monospace; font-size: 0.7rem; color: var(--accent); text-transform: uppercase; letter-spacing: 0.2em; display: flex; align-items: center; gap: 12px; margin-bottom: 32px; }
+.section-label::after { content: ''; flex: 1; height: 1px; background: var(--rule); }
+.section-heading { font-family: 'Playfair Display', serif; font-size: 2.4rem; font-weight: 700; color: var(--ink); line-height: 1.1; letter-spacing: -0.02em; margin-bottom: 8px; }
+.section-sub { font-size: 1rem; color: var(--mid); font-weight: 300; margin-bottom: 40px; }
+
+/* Summary cards */
+.summary-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 20px; }
+.summary-card { background: var(--card-bg); border: 1px solid var(--rule); border-radius: 4px; padding: 28px; position: relative; overflow: hidden; transition: transform 0.2s ease, box-shadow 0.2s ease; }
+.summary-card:hover { transform: translateY(-2px); box-shadow: 0 8px 32px rgba(0,0,0,0.08); }
+.summary-card:first-child { grid-column: span 2; background: var(--ink); color: var(--paper); border-color: var(--ink); }
+.summary-card:first-child .card-tag { color: var(--gold); }
+.summary-card:first-child .card-text { color: rgba(245,242,235,0.85); }
+.summary-card:first-child .story-link { color: var(--gold); border-bottom-color: var(--gold); }
+.summary-card::before { content: ''; position: absolute; top: 0; left: 0; width: 4px; height: 100%; background: var(--accent); }
+.card-tag { font-family: 'DM Mono', monospace; font-size: 0.68rem; text-transform: uppercase; letter-spacing: 0.15em; color: var(--accent); margin-bottom: 10px; }
+.card-number { font-family: 'Playfair Display', serif; font-size: 4rem; font-weight: 900; color: var(--accent); line-height: 1; margin-bottom: 6px; }
+.card-text { font-size: 1.05rem; color: var(--ink); line-height: 1.6; margin-bottom: 16px; }
+
+/* Feature stories */
+.story-feature { display: grid; grid-template-columns: 1fr 340px; margin-bottom: 32px; background: var(--card-bg); border: 1px solid var(--rule); border-radius: 4px; overflow: hidden; transition: box-shadow 0.2s ease; }
+.story-feature:hover { box-shadow: 0 8px 40px rgba(0,0,0,0.08); }
+.story-feature-body { padding: 36px; min-width: 0; }
+.story-feature-aside { background: var(--paper-warm); padding: 36px; border-left: 1px solid var(--rule); display: flex; flex-direction: column; justify-content: center; }
+.story-tag { font-family: 'DM Mono', monospace; font-size: 0.68rem; text-transform: uppercase; letter-spacing: 0.18em; color: var(--accent); margin-bottom: 14px; }
+.story-headline { font-family: 'Playfair Display', serif; font-size: 1.6rem; font-weight: 700; line-height: 1.2; color: var(--ink); margin-bottom: 16px; letter-spacing: -0.01em; }
+.story-body { font-size: 0.95rem; line-height: 1.72; color: #444; margin-bottom: 16px; }
+.story-body strong { color: var(--ink); }
+.story-details { margin: 0 0 16px 18px; }
+.story-details li { font-size: 0.93rem; line-height: 1.65; color: #444; margin-bottom: 8px; }
+.story-body a, .story-details a, .research-item-body a, .timeline-text a { color: var(--ink); text-decoration-color: var(--accent); text-underline-offset: 2px; }
+.worth-noting { background: var(--highlight); border-left: 3px solid var(--gold); padding: 14px 16px; font-size: 0.9rem; line-height: 1.65; color: #444; margin-bottom: 18px; }
+.worth-noting strong { color: var(--ink); }
+.update-flag { display: inline-block; font-family: 'DM Mono', monospace; font-size: 0.62rem; text-transform: uppercase; letter-spacing: 0.12em; background: var(--accent-soft); color: var(--accent); padding: 2px 8px; border-radius: 2px; margin-bottom: 8px; }
+.image-caption { font-size: 0.75rem; margin-bottom: 18px; }
+.story-link { font-family: 'DM Mono', monospace; font-size: 0.72rem; color: var(--accent); text-decoration: none; text-transform: uppercase; letter-spacing: 0.1em; border-bottom: 1px solid var(--accent); padding-bottom: 2px; transition: opacity 0.2s; }
+.story-link:hover { opacity: 0.65; }
+.aside-label { font-family: 'DM Mono', monospace; font-size: 0.65rem; text-transform: uppercase; letter-spacing: 0.15em; color: var(--mid); margin-bottom: 10px; }
+.aside-text { font-size: 0.95rem; line-height: 1.65; color: var(--ink); }
+
+/* Research */
+.research-layout { display: grid; grid-template-columns: 1fr 1fr; gap: 40px; }
+.research-col-title { font-family: 'Playfair Display', serif; font-size: 1.3rem; font-weight: 700; color: var(--ink); margin-bottom: 24px; padding-bottom: 14px; border-bottom: 2px solid var(--ink); }
+.research-col-title.spaced { margin-top: 36px; }
+.research-item { padding: 22px 0; border-bottom: 1px solid var(--rule); }
+.research-item:last-child { border-bottom: none; }
+.research-item-label { font-family: 'DM Mono', monospace; font-size: 0.66rem; text-transform: uppercase; letter-spacing: 0.15em; color: var(--gold); margin-bottom: 8px; }
+.research-item-title { font-family: 'Playfair Display', serif; font-size: 1.05rem; font-weight: 700; color: var(--ink); line-height: 1.3; margin-bottom: 8px; }
+.research-item-body { font-size: 0.9rem; line-height: 1.65; color: #555; margin-bottom: 10px; }
+.research-item-body strong { color: var(--ink); }
+
+/* Hits + radar */
+.radar-layout { display: grid; grid-template-columns: 1fr 360px; gap: 40px; }
+.hits-list { list-style: none; padding: 0; }
+.hit-item { display: flex; margin-bottom: 16px; background: var(--card-bg); border: 1px solid var(--rule); border-radius: 4px; overflow: hidden; transition: transform 0.2s ease; }
+.hit-item:hover { transform: translateX(4px); }
+.hit-number { background: var(--ink); color: var(--paper); font-family: 'Playfair Display', serif; font-size: 1.1rem; font-weight: 700; width: 52px; min-width: 52px; display: flex; align-items: center; justify-content: center; }
+.hit-body { padding: 16px 20px; }
+.hit-body a { font-size: 0.95rem; color: var(--ink); text-decoration: none; font-weight: 600; line-height: 1.4; display: block; margin-bottom: 4px; }
+.hit-body a:hover { color: var(--accent); }
+.hit-desc { font-size: 0.88rem; color: #555; line-height: 1.55; margin-bottom: 6px; }
+.hit-tag { font-family: 'DM Mono', monospace; font-size: 0.64rem; text-transform: uppercase; letter-spacing: 0.1em; color: var(--mid); }
+.radar-sidebar { display: flex; flex-direction: column; gap: 24px; }
+.radar-card { background: var(--ink); color: var(--paper); border-radius: 4px; padding: 28px; }
+.radar-card-title { font-family: 'DM Mono', monospace; font-size: 0.68rem; text-transform: uppercase; letter-spacing: 0.18em; color: var(--gold); margin-bottom: 20px; }
+.timeline-item { display: flex; gap: 16px; margin-bottom: 18px; align-items: flex-start; }
+.timeline-item:last-child { margin-bottom: 0; }
+.timeline-dot { width: 10px; min-width: 10px; height: 10px; border-radius: 50%; background: var(--accent); margin-top: 5px; }
+.timeline-date { font-family: 'DM Mono', monospace; font-size: 0.68rem; color: var(--gold); margin-bottom: 4px; }
+.timeline-text { font-size: 0.88rem; color: rgba(245,242,235,0.8); line-height: 1.5; }
+.timeline-text a { color: var(--paper); }
+.try-card { background: var(--accent); border-radius: 4px; padding: 28px; }
+.try-card-title { font-family: 'DM Mono', monospace; font-size: 0.68rem; text-transform: uppercase; letter-spacing: 0.18em; color: rgba(255,255,255,0.75); margin-bottom: 14px; }
+.try-card ol { margin-left: 18px; }
+.try-card li { font-size: 0.92rem; color: white; line-height: 1.6; margin-bottom: 10px; }
+.try-card li:last-child { margin-bottom: 0; }
+
+.site-footer { background: var(--ink); color: rgba(245,242,235,0.45); padding: 28px 40px; text-align: center; font-family: 'DM Mono', monospace; font-size: 0.68rem; letter-spacing: 0.1em; text-transform: uppercase; line-height: 1.8; }
+
+@keyframes panelFade { from { opacity: 0; transform: translateY(12px); } to { opacity: 1; transform: translateY(0); } }
+@keyframes slideIn { from { opacity: 0; transform: translateY(8px); } to { opacity: 1; transform: translateY(0); } }
+
+@media (max-width: 820px) {
+  .masthead-inner, .stat-bar-inner, .nav-bar-inner, .content-wrap { padding-left: 20px; padding-right: 20px; }
+  .masthead-top { flex-wrap: wrap; }
+  .stat-bar-inner { grid-template-columns: repeat(2,1fr); }
+  .stat-item:nth-child(2) { border-right: none; }
+  .tab-btn { padding: 14px 16px; }
+  .section-heading { font-size: 1.9rem; }
+  .summary-grid { grid-template-columns: 1fr; }
+  .summary-card:first-child { grid-column: span 1; }
+  .card-number { font-size: 3rem; }
+  .story-feature { grid-template-columns: 1fr; }
+  .story-feature-body, .story-feature-aside { padding: 24px; }
+  .story-feature-aside { border-left: none; border-top: 1px solid var(--rule); }
+  .research-layout, .radar-layout { grid-template-columns: 1fr; }
+  .site-footer { padding: 24px 20px; }
+}
+.issue-video-section { background: var(--paper-warm); border-bottom: 1px solid var(--rule); }
+.issue-video-inner { max-width: 1100px; margin: 0 auto; padding: 44px 40px 48px; }
+.issue-video-label { font-family: 'DM Mono', monospace; font-size: 0.7rem; color: var(--accent); text-transform: uppercase; letter-spacing: 0.18em; margin-bottom: 14px; }
+.issue-video-title { font-family: 'Playfair Display', serif; font-size: clamp(1.7rem, 3vw, 2.35rem); line-height: 1.12; margin-bottom: 10px; color: var(--ink); }
+.issue-video-copy { max-width: 720px; color: var(--mid); font-size: 1rem; margin-bottom: 24px; }
+.issue-video-frame { background: var(--ink); border-radius: 4px; overflow: hidden; box-shadow: 0 16px 40px rgba(19,32,50,0.16); }
+.issue-video-frame video { display: block; width: 100%; aspect-ratio: 16 / 9; background: var(--ink); }
+
+/* Shared newsletter shell and responsive layout. */
+a { color: inherit; }
+.masthead-top { flex-wrap: wrap; }
+.masthead-deck { max-width: 580px; }
+.edition-badge { text-decoration: none; }
+.story-feature { grid-template-columns: minmax(0, 1fr) 380px; }
+.content-wrap { overflow-wrap: anywhere; }
+.summary-grid > *, .story-feature > *, .research-layout > *, .radar-layout > *, .hit-body { min-width: 0; }
+@media (max-width: 820px) {
+  .issue-video-inner { padding-left: 20px; padding-right: 20px; }
+  .story-feature { grid-template-columns: minmax(0, 1fr); }
+  .card-number { font-size: clamp(2.5rem, 15vw, 4rem); }
+}
+</style>
+</head>
+<body>
+
+<header class="masthead">
+  <div class="masthead-inner">
+    <div class="masthead-top">
+      <span class="meta-strip">For University Faculty &amp; Staff · ~10 min read · Week of Nov 11–17, 2026 (ET)</span>
+      <a class="edition-badge" href="../">Newsletter Home</a>
+    </div>
+    <div class="masthead-title-block">
+      <div class="masthead-eyebrow">Intelligence Briefing · Issue 28</div>
+      <h1 class="masthead-headline">AI in<br><em>Education</em></h1>
+      <p class="masthead-deck">England’s regulator pushes universities toward AI-free assessment, a quarter of students write to dodge detectors, Stanford funds whole-major redesigns, and Harvard maps when AI helps learning by age.</p>
+    </div>
+  </div>
+</header>
+
+<div class="stat-bar">
+  <div class="stat-bar-inner">
+    <div class="stat-item"><div class="stat-number">94%</div><div class="stat-label">UK students using AI for assessments, late 2025</div></div>
+    <div class="stat-item"><div class="stat-number">25%</div><div class="stat-label">Students who write differently to avoid detector flags</div></div>
+    <div class="stat-item"><div class="stat-number">$10M</div><div class="stat-label">Stanford fund to redesign majors for AI</div></div>
+    <div class="stat-item"><div class="stat-number">5,000+</div><div class="stat-label">Studies behind Harvard’s AI-by-age matrix</div></div>
+  </div>
+</div>
+
+<section class="issue-video-section" aria-labelledby="issue-video-title">
+  <div class="issue-video-inner">
+    <div class="issue-video-label">Issue briefing video</div>
+    <h2 id="issue-video-title" class="issue-video-title">Watch the Issue 28 briefing.</h2>
+    <p class="issue-video-copy">A short video companion to this AI in Education issue, placed here before the section navigation so readers can watch before diving into the full briefing.</p>
+    <div class="issue-video-frame">
+      <video controls preload="metadata">
+        <source src="https://raw.githubusercontent.com/gsidaard-byte/sidresearchwebsite/gh-pages/ai-in-education-newsletter/current/AI_Education_Weekly_2026-11-17.mp4" type="video/mp4">
+        Your browser does not support the video tag.
+      </video>
+    </div>
+  </div>
+</section>
+
+<nav class="nav-bar">
+  <div class="nav-bar-inner">
+    <button class="tab-btn active" onclick="openTab(event,'summary')">⏱ 30 Seconds</button>
+    <button class="tab-btn" onclick="openTab(event,'main')">📰 Main Stories</button>
+    <button class="tab-btn" onclick="openTab(event,'research')">🔬 Research &amp; Practice</button>
+    <button class="tab-btn" onclick="openTab(event,'radar')">⚡ Quick Hits &amp; Radar</button>
+  </div>
+</nav>
+
+<main class="content-wrap">
+
+  <!-- 30 SECONDS -->
+  <div id="summary" class="tab-panel active">
+    <div class="section-label">This week in 30 seconds</div>
+    <h2 class="section-heading">Four stories,<br>one coffee</h2>
+    <p class="section-sub">The week’s biggest developments for anyone teaching or working in a university.</p>
+    <div class="summary-grid">
+      <div class="summary-card">
+        <div class="card-tag">🌍 Global · ⚖️ Policy · England</div>
+        <div class="card-number">AI-free</div>
+        <p class="card-text"><strong>England’s Office for Students</strong> says assessments must reliably measure what students know, and that in many cases this will mean secure, AI-free formats such as in-person exams and orals.</p>
+        <a class="story-link" href="https://www.officeforstudents.org.uk/news-blog-and-events/press-and-media/universities-should-help-students-develop-ai-skills-while-protecting-confidence-in-degrees/" target="_blank">Source →</a>
+      </div>
+      <div class="summary-card">
+        <div class="card-tag">🎓 Higher Ed · 📊 Research</div>
+        <div class="card-number">25%</div>
+        <p class="card-text"><strong>A quarter of U.S. undergraduates</strong> say they have changed how they write to avoid being falsely flagged by AI detectors.</p>
+        <a class="story-link" href="https://www.insidehighered.com/news/student-success/academic-life/2026/11/17/ai-changing-college-old-challenges-persist" target="_blank">Source →</a>
+      </div>
+      <div class="summary-card">
+        <div class="card-tag">🎓 Higher Ed</div>
+        <div class="card-number">$10M</div>
+        <p class="card-text"><strong>Stanford</strong> commits $10 million to help about 15 departments redesign whole majors for the AI era.</p>
+        <a class="story-link" href="https://news.stanford.edu/stories/2026/11/provost-initiative-college-majors-ai" target="_blank">Source →</a>
+      </div>
+      <div class="summary-card">
+        <div class="card-tag">🏫 K-12 · 🎓 Higher Ed · 📊 Research</div>
+        <div class="card-number">5,000+</div>
+        <p class="card-text"><strong>Harvard researchers</strong> release an age-by-age guide to when AI helps or hinders learning, from early childhood through college.</p>
+        <a class="story-link" href="https://www.insidehighered.com/news/tech-innovation/artificial-intelligence/2026/11/12/new-ai-learning-matrix-brings-nuance-wild" target="_blank">Source →</a>
+      </div>
+    </div>
+  </div>
+
+  <!-- MAIN STORIES -->
+  <div id="main" class="tab-panel">
+    <div class="section-label">Main stories</div>
+    <h2 class="section-heading">What happened,<br>and what it means</h2>
+    <p class="section-sub">Three stories, each with a takeaway for your campus.</p>
+
+    <!-- Story 1 -->
+    <div class="story-feature">
+      <div class="story-feature-body">
+        <div class="story-tag">🌍 Global · ⚖️ Policy · England · Nov 11</div>
+        <img src="https://rqkumunldqvmynqxibca.supabase.co/storage/v1/object/public/generated-images/3bbd52f6-3d9b-403b-8fd1-b16588f33493.jpeg" alt="A quiet university exam hall with paper booklets and no laptops" loading="lazy" style="display:block;width:100%;height:auto;aspect-ratio:16/9;object-fit:cover;border-radius:4px;margin:6px 0;background:var(--paper-warm);">
+        <div class="image-caption" style="font-style:italic;color:#808080;">Image source: Nano Banana 2</div>
+        <h3 class="story-headline">England’s regulator tells universities to move toward secure, AI-free assessment</h3>
+        <p class="story-body"><strong>The brief:</strong> On November 11 the Office for Students said universities must ensure assessments are valid and reliable measures of what students know, and that “in many cases” this will require secure, AI-free assessment (<a href="https://www.officeforstudents.org.uk/news-blog-and-events/press-and-media/universities-should-help-students-develop-ai-skills-while-protecting-confidence-in-degrees/" target="_blank">OfS, Nov 11</a>). It issued guidance applying its existing quality conditions to AI, alongside a joint report with Advance HE, <em>Making AI Work for Students</em> (<a href="https://advance-he.ac.uk/news-and-views/universities-should-help-students-develop-ai-skills-while-protecting-confidence-in-degrees/" target="_blank">Advance HE, Nov 11</a>).</p>
+        <p class="story-body"><strong>The details:</strong></p>
+        <ul class="story-details">
+          <li>The research drew on about 300 students and staff at more than 120 institutions over four months. It found many unsupervised assessments can be completed with AI, and that neither human markers nor detection tools reliably identify AI-generated text. It cites student AI use for assessments at 94% in late 2025, up from 53% in late 2023 (<a href="https://www.officeforstudents.org.uk/publications/making-ai-work-for-students-reflections-on-institutional-practice/" target="_blank">OfS/Advance HE report, Nov 11</a>; <a href="https://wonkhe.com/blogs/ofs-and-advance-he-assess-the-state-of-the-sector-for-ai-in-education" target="_blank">Wonkhe</a>).</li>
+          <li>“Secure” means formats designed to prevent AI use: in-person exams, presentations, oral exams, performances, and practical or applied tasks.</li>
+          <li>OfS strategy director Josh Fleming called AI a “generational risk to the system as it stands” (<a href="https://www.theguardian.com/education/2026/nov/11/ai-close-to-impossible-assess-university-coursework-regulator" target="_blank">The Guardian, Nov 11</a>). Providers that fall short could face monetary penalties or suspension of OfS grant funding, and the Department for Education said it expects the OfS to “enforce the existing standards effectively” (<a href="https://www.yahoo.com/news/us/articles/universities-face-fines-fail-prevent-090000367.html" target="_blank">Telegraph via Yahoo, Nov 11</a>). No redesign deadline was set.</li>
+          <li>Universities UK said many institutions have already made “substantial changes” and that “different subjects will require different approaches” (<a href="https://www.timeshighereducation.com/node/745996" target="_blank">Times Higher Education, Nov 11</a>).</li>
+        </ul>
+        <div class="worth-noting"><strong>Worth noting:</strong> Times Higher Education reports the guidance stops short of mandating AI-free assessment, while the OfS release says it will often be required. How OfS handles its first case against a provider that relied on unsupervised coursework will show which reading holds.</div>
+        <a class="story-link" href="https://www.officeforstudents.org.uk/news-blog-and-events/press-and-media/universities-should-help-students-develop-ai-skills-while-protecting-confidence-in-degrees/" target="_blank">Read the full story →</a>
+      </div>
+      <div class="story-feature-aside">
+        <div class="aside-label">What this means for your campus</div>
+        <p class="aside-text">A national regulator now says detectors can’t reliably identify AI text; if your integrity process still leans on them, decide what evidence replaces them.</p>
+      </div>
+    </div>
+
+    <!-- Story 2 -->
+    <div class="story-feature">
+      <div class="story-feature-body">
+        <div class="story-tag">🎓 Higher Ed · 📊 Research · Nov 17</div>
+        <img src="https://rqkumunldqvmynqxibca.supabase.co/storage/v1/object/public/generated-images/bc48d838-5338-4812-b611-a686b5fa4f74.jpeg" alt="A student hesitating over an essay draft at a library table" loading="lazy" style="display:block;width:100%;height:auto;aspect-ratio:16/9;object-fit:cover;border-radius:4px;margin:6px 0;background:var(--paper-warm);">
+        <div class="image-caption" style="font-style:italic;color:#808080;">Image source: Nano Banana 2</div>
+        <h3 class="story-headline">A quarter of undergraduates say they now write to dodge AI detectors</h3>
+        <p class="story-body"><strong>The brief:</strong> In Inside Higher Ed’s main Student Voice survey of 5,034 undergraduates at 310 mostly public institutions, 25% said they have changed how they write to avoid being falsely flagged by AI detectors (<a href="https://www.insidehighered.com/news/student-success/academic-life/2026/11/17/ai-changing-college-old-challenges-persist" target="_blank">Inside Higher Ed, Nov 17</a>). Eight in 10 use generative or agentic AI routinely.</p>
+        <p class="story-body"><strong>The details:</strong></p>
+        <ul class="story-details">
+          <li>Top effects students report: studying more efficiently (34%), more confidence with hard concepts (33%), relying less on professors or tutoring centers (30%), and relying on AI too heavily to think or write on their own (16%).</li>
+          <li>Asked what responsible AI use means, 65% said helping them learn rather than doing the work for them, and 60% said transparency about when and how AI is used.</li>
+          <li>The survey was fielded in October; 20% said they do not use AI for college work.</li>
+          <li>UCLA’s Tina Austin: students are “distinguishing between AI just being there as a productivity tool and completing their work, and actually coming home and feeling like they learned something.”</li>
+        </ul>
+        <a class="story-link" href="https://www.insidehighered.com/news/student-success/academic-life/2026/11/17/ai-changing-college-old-challenges-persist" target="_blank">Read the full story →</a>
+      </div>
+      <div class="story-feature-aside">
+        <div class="aside-label">What this means for your campus</div>
+        <p class="aside-text">If a detector is part of your process, one in four students may be writing worse on purpose to avoid it; tell them how you will and won’t use detection.</p>
+      </div>
+    </div>
+
+    <!-- Story 3 -->
+    <div class="story-feature">
+      <div class="story-feature-body">
+        <div class="story-tag">🎓 Higher Ed · California · Announced Nov 3, covered through Nov 13</div>
+        <img src="https://rqkumunldqvmynqxibca.supabase.co/storage/v1/object/public/generated-images/67576921-c9b1-435c-8d14-26e291c451a5.jpeg" alt="Faculty planning a curriculum redesign around a seminar table" loading="lazy" style="display:block;width:100%;height:auto;aspect-ratio:16/9;object-fit:cover;border-radius:4px;margin:6px 0;background:var(--paper-warm);">
+        <div class="image-caption" style="font-style:italic;color:#808080;">Image source: Nano Banana 2</div>
+        <h3 class="story-headline">Stanford puts $10 million into redesigning whole majors, not single courses</h3>
+        <p class="story-body"><strong>The brief:</strong> Stanford’s provost is funding a $10 million initiative for departments to rethink undergraduate majors “from introductory courses through capstones” for the AI era (<a href="https://news.stanford.edu/stories/2026/11/provost-initiative-college-majors-ai" target="_blank">Stanford Report, Nov 3</a>; <a href="https://www.forbes.com/sites/avivalegatt/2026/11/11/stanfords-10-million-ai-bet-rethinking-the-college-major/" target="_blank">Forbes, Nov 11</a>). Applications open in winter quarter 2027.</p>
+        <p class="story-body"><strong>The details:</strong></p>
+        <ul class="story-details">
+          <li>Rolling one- to two-year grants of $250,000 to $750,000, expected to support about 15 departments or programs through 2028–29. (Stanford’s release gives the $750,000 ceiling; the $250,000 floor comes from press coverage.)</li>
+          <li>Run by the Vice Provost for Undergraduate Education’s AI Meets Education at Stanford effort with the Stanford Accelerator for Learning.</li>
+          <li>The driving question: what should students “learn, demonstrate, and do on their own when AI tools can write, code, and create at their behest?”</li>
+          <li>Proposals may include ways to assess learning without AI, such as oral assessments and in-class work.</li>
+        </ul>
+        <a class="story-link" href="https://news.stanford.edu/stories/2026/11/provost-initiative-college-majors-ai" target="_blank">Read the full story →</a>
+      </div>
+      <div class="story-feature-aside">
+        <div class="aside-label">What this means for your campus</div>
+        <p class="aside-text">Course-by-course fixes are giving way to program-level redesign; ask your chair whether your major has mapped where students build and show skills without AI.</p>
+      </div>
+    </div>
+  </div>
+
+  <!-- RESEARCH & PRACTICE -->
+  <div id="research" class="tab-panel">
+    <div class="section-label">Research &amp; practice</div>
+    <h2 class="section-heading">What the evidence says,<br>what colleagues are trying</h2>
+    <p class="section-sub">Two research items distilled to the takeaway, two implementation stories, and two questions for your next department meeting.</p>
+    <div class="research-layout">
+      <div>
+        <h3 class="research-col-title">From the Research</h3>
+        <div class="research-item">
+          <div class="research-item-label">Evidence synthesis · Harvard GSE · Nov 12</div>
+          <h4 class="research-item-title">Harvard’s Compass Collaborative turns 5,000 studies into age-specific AI guidance</h4>
+          <p class="research-item-body"><strong>What was studied:</strong> Researchers at the Harvard Graduate School of Education reviewed more than 5,000 education, psychology and human-development studies to build the <a href="https://compass.gse.harvard.edu/explore/" target="_blank">AI Guidance by Age matrix</a>, launched the week of November 12.</p>
+          <p class="research-item-body"><strong>What they found:</strong> Users pick a role (including higher-education educator), a developmental domain and an age range; the tool returns best uses, assessment advice and likely help-or-hinder effects. For 18- to 25-year-olds in language and literacy, it advises using AI to “widen what a young adult reads, reflect their writing back to them,” and to “leave the composing and the puzzling-out” to the student. Caveat: much of the underlying evidence predates generative AI.</p>
+          <p class="research-item-body"><strong>What you could do with this:</strong> Run your course’s age range and domain through the matrix and compare its advice with your current AI policy.</p>
+          <a class="story-link" href="https://www.insidehighered.com/news/tech-innovation/artificial-intelligence/2026/11/12/new-ai-learning-matrix-brings-nuance-wild" target="_blank">Source →</a>
+        </div>
+        <div class="research-item">
+          <div class="research-item-label">Randomized experiment · arXiv · Oct 2026 version</div>
+          <h4 class="research-item-title">AI helps students learn when it tutors, not when it writes</h4>
+          <p class="research-item-body"><strong>What was studied:</strong> Middlebury economists Zara Contractor and Germán Reyes randomly gave about 210 undergraduates access to generative AI while writing an essay on an unfamiliar topic, then tested them unaided right away and a week later (<a href="https://www.socialscienceregistry.org/trials/15806" target="_blank">preregistration</a>). Not new this week, and not covered in previous issues.</p>
+          <p class="research-item-body"><strong>What they found:</strong> AI access raised test scores, with a smaller gain a week later. The gains held for students who used AI as a tutor and faded for those who had AI write for them.</p>
+          <p class="research-item-body"><strong>What you could do with this:</strong> Allow AI for questioning and feedback on drafts, but require students to compose the text themselves.</p>
+          <a class="story-link" href="https://arxiv.org/abs/2607.08849" target="_blank">Source →</a>
+        </div>
+      </div>
+      <div>
+        <h3 class="research-col-title">How Others Are Doing It</h3>
+        <div class="research-item">
+          <div class="research-item-label">University of Chicago · Inside Higher Ed · Nov 9</div>
+          <h4 class="research-item-title">UChicago will make an AI-free writing course mandatory for all first-years</h4>
+          <p class="research-item-body"><strong>Who:</strong> The new Chicago Center for Writing at the University of Chicago, led by executive director Abigail Reardon (<a href="https://news.uchicago.edu/story/new-hub-writing-age-ai" target="_blank">UChicago News</a>).</p>
+          <p class="research-item-body"><strong>What they did:</strong> Launched the center in late October. Starting next fall, every first-year must take an AI-free writing course run through it. The center is also building labs where students and faculty can “experiment with the practices and technologies of writing, both old and new.”</p>
+          <p class="research-item-body"><strong>What happened:</strong> Too early for outcomes; the course begins in fall 2027.</p>
+          <p class="research-item-body"><strong>What you could borrow:</strong> Protect one early, foundational writing experience from AI, and tell students explicitly when AI-assisted writing comes later.</p>
+          <a class="story-link" href="https://www.insidehighered.com/news/tech-innovation/artificial-intelligence/2026/11/09/new-ai-chicago-rethinks-writing-eiu" target="_blank">Source →</a>
+        </div>
+        <div class="research-item">
+          <div class="research-item-label">Eastern Illinois University · Petition &amp; Student Senate</div>
+          <h4 class="research-item-title">Eastern Illinois students ask the university to regulate faculty AI use</h4>
+          <p class="research-item-body"><strong>Who:</strong> Students and the Student Senate at Eastern Illinois University (<a href="https://www.change.org/p/a-petition-against-ai-in-the-classroom" target="_blank">petition</a>; <a href="https://www.dailyeasternnews.com/2026/10/11/student-senate-asks-university-to-regulate-use-of-ai-by-faculty/" target="_blank">Daily Eastern News, Oct 11</a>).</p>
+          <p class="research-item-body"><strong>What they did:</strong> A petition (529 signatures as of Nov 8) argues that while students face AI rules, “we have nothing preventing professors from using AI as a substitute for learning materials.” The Student Senate then passed a resolution asking administrators to regulate faculty AI use.</p>
+          <p class="research-item-body"><strong>What happened:</strong> Organizers don’t want a ban; they want professors to disclose when and how they use AI, and the university to address the faculty workloads behind it. No administrative response has been reported.</p>
+          <p class="research-item-body"><strong>What you could borrow:</strong> Ask students which kinds of faculty AI use they’d want disclosed, then publish your own norm in the syllabus.</p>
+          <a class="story-link" href="https://www.insidehighered.com/news/tech-innovation/artificial-intelligence/2026/11/09/new-ai-chicago-rethinks-writing-eiu" target="_blank">Source →</a>
+        </div>
+        <h3 class="research-col-title spaced">Talk About It</h3>
+        <div class="research-item">
+          <div class="research-item-label">Tied to: detectors &amp; the OfS report</div>
+          <p class="research-item-body">One in four students say they write differently to avoid detector flags, and England’s regulator says detectors don’t reliably work. Should our department stop treating detector scores as evidence, and say so publicly?</p>
+        </div>
+        <div class="research-item">
+          <div class="research-item-label">Tied to: Student Voice &amp; EIU petition</div>
+          <p class="research-item-body">60% of students say responsible AI use means transparency, and EIU students want faculty AI use regulated. Should our department agree on what faculty disclose about AI in course materials and grading?</p>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- QUICK HITS & RADAR -->
+  <div id="radar" class="tab-panel">
+    <div class="section-label">Quick hits &amp; radar</div>
+    <h2 class="section-heading">Scan in a minute,<br>act this week</h2>
+    <p class="section-sub">Eight more stories worth knowing, two things to watch, and three things to try.</p>
+    <div class="radar-layout">
+      <ul class="hits-list">
+        <li class="hit-item"><div class="hit-number">1</div><div class="hit-body">
+          <a href="https://www.thelantern.com/2026/11/ohio-state-academic-report-reveals-spike-in-ai-cheating-experts-speak-on-the-effect-it-has-on-students/" target="_blank">Ohio State’s AI misconduct cases jump from 4 to 816</a>
+          <p class="hit-desc">The Committee on Academic Misconduct’s 2025–26 report shows unauthorized-AI cases up from four in 2023, nearly one in five of all cases.</p>
+          <span class="hit-tag">🎓 Higher Ed · The Lantern · Nov 12</span></div></li>
+        <li class="hit-item"><div class="hit-number">2</div><div class="hit-body">
+          <a href="https://www.forbes.com/sites/christopherrim/2026/11/12/do-ivy-league-and-top-tier-colleges-use-ai-detectors-dartmouth-and-brown-just-answered/" target="_blank">Dartmouth and Brown say they don’t use AI detectors in admissions</a>
+          <p class="hit-desc">Neither plans to adopt detection software for application essays; Brown also says it doesn’t use AI to evaluate applications.</p>
+          <span class="hit-tag">🎓 Admissions · Forbes · Nov 13</span></div></li>
+        <li class="hit-item"><div class="hit-number">3</div><div class="hit-body">
+          <a href="https://dailynous.com/2026/11/16/philosophy-department-bans-ai-use/" target="_blank">Trinity College philosophy department bans student AI use</a>
+          <p class="hit-desc">The Hartford, Connecticut department now bars AI in classrooms and coursework.</p>
+          <span class="hit-tag">🎓 Higher Ed · Daily Nous · Nov 16</span></div></li>
+        <li class="hit-item"><div class="hit-number">4</div><div class="hit-body">
+          <a href="https://www.edweek.org/technology/anthropic-agrees-to-protections-for-teachers-who-use-claude/2026/11" target="_blank">Anthropic signs teachers’ unions’ binding AI safety and privacy standard</a>
+          <p class="hit-desc">The AFT/UFT standard bars using student and educator data for training or ads; it covers Claude for Teachers only.</p>
+          <span class="hit-tag">🏫 K-12 · Education Week · Nov 11</span></div></li>
+        <li class="hit-item"><div class="hit-number">5</div><div class="hit-body">
+          <a href="https://www.techradar.com/pro/the-next-chapter-is-shaped-by-what-education-leaders-are-asking-for-microsoft-is-pulling-free-emails-for-schools-colleges-and-universities-who-now-face-big-bills-to-keep-student-mailboxes" target="_blank">Microsoft will retire free A1 student email in 2028</a>
+          <p class="hit-desc">The free Microsoft 365 Education A1 tier ends January 1, 2028, leaving institutions to budget for student mailboxes.</p>
+          <span class="hit-tag">🛠️ Campus IT · TechRadar · Nov 13</span></div></li>
+        <li class="hit-item"><div class="hit-number">6</div><div class="hit-body">
+          <a href="https://www.edtechinnovationhub.com/news/openai-calls-for-teacher-training-as-student-ai-homework-use-outpaces-guidance" target="_blank">OpenAI report says students’ AI use outpaces guidance</a>
+          <p class="hit-desc">Citing ThinkYoung data, 79% of surveyed students use AI for homework but only 47% were shown how to use it well.</p>
+          <span class="hit-tag">🏫 K-12 · EdTech Innovation Hub · Nov 10</span></div></li>
+        <li class="hit-item"><div class="hit-number">7</div><div class="hit-body">
+          <a href="https://www.insidehighered.com/news/tech-innovation/artificial-intelligence/2026/11/09/new-ai-chicago-rethinks-writing-eiu" target="_blank">A Berkeley grad student’s tool grades handwritten exams with AI</a>
+          <p class="hit-desc">Rubrica scores against an instructor’s rubric; a small study found 85% agreement with human graders.</p>
+          <span class="hit-tag">🛠️ Tools · Inside Higher Ed · Nov 9</span></div></li>
+        <li class="hit-item"><div class="hit-number">8</div><div class="hit-body">
+          <a href="https://www.nysut.org/news/2026/november/ai-on-campus" target="_blank">New York teachers’ union convenes a higher-ed AI working group</a>
+          <p class="hit-desc">NYSUT locals at SUNY, CUNY and community colleges will study AI’s effects on teaching, labor and governance.</p>
+          <span class="hit-tag">🎓 Higher Ed · NYSUT · Nov 9</span></div></li>
+      </ul>
+      <div class="radar-sidebar">
+        <div class="radar-card">
+          <div class="radar-card-title">On My Radar</div>
+          <div class="timeline-item"><div class="timeline-dot"></div><div>
+            <div class="timeline-date">Early 2027</div>
+            <div class="timeline-text"><a href="https://wonkhe.com/blogs/ofs-and-advance-he-assess-the-state-of-the-sector-for-ai-in-education" target="_blank">OfS follow-up research and Advance HE’s AI Change Academy</a>. News test: whether OfS names a provider or opens an investigation over assessment reliability.</div>
+          </div></div>
+          <div class="timeline-item"><div class="timeline-dot"></div><div>
+            <div class="timeline-date">Winter quarter 2027</div>
+            <div class="timeline-text"><a href="https://news.stanford.edu/stories/2026/11/provost-initiative-college-majors-ai" target="_blank">Stanford’s major-redesign grant applications open</a>. News test: which departments win first-round awards, and whether any drop take-home assessment.</div>
+          </div></div>
+        </div>
+        <div class="try-card">
+          <div class="try-card-title">Try This Week</div>
+          <ol>
+            <li>Tell students in one sentence whether you use AI detectors, and what happens if one flags them.</li>
+            <li>On your next writing task, let students use AI to question drafts, not write them; say so explicitly.</li>
+            <li>Try Harvard’s AI Guidance by Age matrix for your students’ age range and subject domain.</li>
+          </ol>
+        </div>
+      </div>
+    </div>
+  </div>
+
+</main>
+
+<footer class="site-footer">
+  AI in Education Weekly · Week of November 11–17, 2026 (ET) · For university faculty and staff<br>
+  Researched Nov 11–17, 2026 with web search and primary sources; re-checked Nov 18 with AIBMM grounded search · Publication dates as reported by each source
+</footer>
+
+<script>
+function openTab(evt, tabId) {
+  document.querySelectorAll('.tab-panel').forEach(p => { p.classList.remove('active'); p.style.display = 'none'; });
+  document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
+  const panel = document.getElementById(tabId);
+  panel.style.display = 'block';
+  panel.offsetHeight;
+  panel.classList.add('active');
+  evt.currentTarget.classList.add('active');
+}
+document.querySelectorAll('.tab-panel').forEach(p => { if (!p.classList.contains('active')) p.style.display = 'none'; });
+</script>
+</body>
+</html>
